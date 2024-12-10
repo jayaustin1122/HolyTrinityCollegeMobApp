@@ -1,30 +1,8 @@
 package com.holytrinity
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
-import android.view.MenuItem
-import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
-import com.holytrinity.api.DiscountFeeService
-import com.holytrinity.api.RetrofitInstance
-import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.ActivityMainBinding
-import com.holytrinity.databinding.FragmentSignInBinding
-import com.holytrinity.model.DiscountFee
-import com.holytrinity.model.Student
-import com.holytrinity.users.registrar.RegistrarDashBoardFragment
-import com.holytrinity.users.registrar.RegistrarEnrollmentFragment
-import com.holytrinity.users.registrar.RegistrarStudentLedgerFragment
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

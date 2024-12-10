@@ -1,8 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Holy Trinity College Seminary Foundation Inc."
+
+        />
 
     <!-- Files Section -->
-    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/menu_section_files"
+        android:title="Files"
+        android:enabled="false"
+      />
+
+    <group
+        android:id="@+id/menu_section_files_section"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_general"
             android:title="General"
@@ -15,30 +27,31 @@
             app:actionViewClass="android.widget.TextView" />
     </group>
 
-    <!-- Divider -->
-    <item
-        android:id="@+id/menu_divider_1"
-        android:title=""
-        android:enabled="false"
-        android:icon="@drawable/white_divider"/>
-
     <!-- Transaction Section -->
-    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/menu_section_transaction"
+        android:title="Transaction"
+        android:enabled="false" />
+
+    <group
+        android:id="@+id/menu_section_transaction_section"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_enrollment"
             android:title="Enrollment"
             android:icon="@drawable/icon_add_24" />
     </group>
 
-    <!-- Divider -->
-    <item
-        android:id="@+id/menu_divider_2"
-        android:title=""
-        android:enabled="false"
-        android:icon="@drawable/white_divider" />
-
     <!-- Reports Section -->
-    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/menu_section_reports"
+        android:title="Reports"
+        android:enabled="false"
+  />
+
+    <group
+        android:id="@+id/menu_section_reportSection"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_ledger"
             android:title="Student Ledger"
@@ -49,15 +62,16 @@
             android:icon="@drawable/icon_add_24" />
     </group>
 
-    <!-- Divider -->
-    <item
-        android:id="@+id/menu_divider_3"
-        android:title=""
-        android:enabled="false"
-        android:icon="@drawable/white_divider" />
-
     <!-- Settings and Other Section -->
-    <group android:checkableBehavior="none">
+    <item
+        android:id="@+id/menu_section_settings"
+        android:title="Settings"
+        android:enabled="false"
+      />
+
+    <group
+        android:id="@+id/menu_section_settings_section"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_setup"
             android:title="Setup"
