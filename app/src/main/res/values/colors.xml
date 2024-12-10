@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="violet_primary">#5E17EB</color>
+    <color name="yellow_primary">#E4E21C</color>
+    <color name="dark_primary">#222831</color>
+
+    <color name="violet_secondary">#9747FF</color>
+
+    <color name="dark_text_color">#1D1B20</color>
+    <color name="light_text_color">#E6E0E9</color>
+
+    <color name="dark_icon_color">#49454F</color>
+    <color name="light_icon_color">#CAC4D0</color>
+
+    <color name="outline_color">#79747E</color>
+
+
+
+
+</resources>

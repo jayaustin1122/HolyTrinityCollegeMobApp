@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_dashboard"
+        android:title="Dashboard" />
+    <item
+        android:id="@+id/nav_enrollment"
+        android:title="Enrollment" />
+    <item
+        android:id="@+id/nav_ledger"
+        android:title="Student Ledger" />
+    <!-- Add more items here as needed -->
+</menu>
