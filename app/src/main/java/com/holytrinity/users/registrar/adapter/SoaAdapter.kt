@@ -7,7 +7,7 @@ import com.holytrinity.databinding.ItemSummaryOfAccountsBinding
 import com.holytrinity.model.Soa
 
 class SoaAdapter(
-    private val soaList: List<Soa>,
+    private var soaList: List<Soa>,
     private val studentNames: Map<String, String> // Add a map for studentId to studentName
 ) : RecyclerView.Adapter<SoaAdapter.SoaViewHolder>() {
 
@@ -16,6 +16,13 @@ class SoaAdapter(
         val binding = ItemSummaryOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SoaViewHolder(binding)
     }
+
+    fun updateSoaList(newSoaList: List<Soa>) {
+        this.soaList = newSoaList
+        this.filteredList = newSoaList
+        notifyDataSetChanged()
+    }
+
     fun filter(query: String) {
         filteredList = if (query.isEmpty()) {
             soaList // If the query is empty, show all items
