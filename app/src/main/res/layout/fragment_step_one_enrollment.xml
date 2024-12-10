@@ -1,14 +1,331 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".users.registrar.enrollment.StepOneEnrollmentFragment">
+    android:background="@color/white">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/studentInfoTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Student Information"
+            android:textColor="@color/dark_text_color"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentInfoTitleTextView" />
+
+        <!-- ============================================================================ -->
+
+        <TextView
+            android:id="@+id/studentIDTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Student ID"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+        <TextView
+            android:id="@+id/studentIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="21-0594"
+            android:textColor="@color/dark_text_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/studentIDTitleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/studentIDTitleTextView" />
+
+        <!-- ============================================================================ -->
+
+        <TextView
+            android:id="@+id/studentNameTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Name"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentIDTextView" />
+
+        <TextView
+            android:id="@+id/studentNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Wells D. Fargo"
+            android:textColor="@color/dark_text_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/studentNameTitleTextView"
+            app:layout_constraintTop_toBottomOf="@+id/studentNameTitleTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Enrollment Data"
+            android:textColor="@color/dark_text_color"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/studentNameTextView" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/departmentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:paddingBottom="5dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Department"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <Spinner
+            android:id="@+id/departmentSpinner"
+            android:layout_width="180dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background_spinner"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/departmentTextView"
+            app:layout_constraintTop_toBottomOf="@+id/departmentTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/levelTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingBottom="5dp"
+            android:text="Level"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/departmentSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <Spinner
+            android:id="@+id/levelSpinner"
+            android:layout_width="180dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background_spinner"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/levelTextView"
+            app:layout_constraintTop_toBottomOf="@+id/levelTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/courseTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:paddingBottom="5dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Course"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/departmentSpinner" />
+
+        <Spinner
+            android:id="@+id/courseSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/background_spinner"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/courseTextView"
+            app:layout_constraintTop_toBottomOf="@+id/courseTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/curriculumTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingBottom="5dp"
+            android:text="Curriculum"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/courseSpinner" />
+
+        <Spinner
+            android:id="@+id/curriculumSpinner"
+            android:layout_width="180dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background_spinner"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/curriculumTextView"
+            app:layout_constraintTop_toBottomOf="@+id/curriculumTextView" />
+
+        <!--  ================================================== -->
+
+        <TextView
+            android:id="@+id/sectionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingBottom="5dp"
+            android:text="Section"
+            android:textColor="@color/dark_icon_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/curriculumSpinner"
+            app:layout_constraintTop_toBottomOf="@+id/courseSpinner" />
+
+        <Spinner
+            android:id="@+id/sectionSpinner"
+            android:layout_width="180dp"
+            android:layout_height="56dp"
+            android:background="@drawable/background_spinner"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/sectionTextView"
+            app:layout_constraintTop_toBottomOf="@+id/sectionTextView" />
+
+        <!--  ================================================== -->
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/curriculumSpinner"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="5"
+                android:columnCount="2"
+                android:layout_marginHorizontal="20dp"
+                android:layout_gravity="center"
+                android:columnOrderPreserved="false">
+
+                <RadioButton
+                    android:id="@+id/radio_new_student"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Student"
+                    android:layout_marginEnd="80dp"/>
+
+                <RadioButton
+                    android:id="@+id/radio_freshman"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Freshman"/>
+
+                <RadioButton
+                    android:id="@+id/radio_transferee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transferee"/>
+
+                <RadioButton
+                    android:id="@+id/radio_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Regular"/>
+
+                <RadioButton
+                    android:id="@+id/radio_returnee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Returnee"/>
+
+                <RadioButton
+                    android:id="@+id/radio_shifter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shifter"/>
+
+                <RadioButton
+                    android:id="@+id/radio_cross_enrollee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cross Enrollee"/>
+
+                <RadioButton
+                    android:id="@+id/radio_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Online"/>
+
+                <RadioButton
+                    android:id="@+id/radio_transnational"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transnational"/>
+
+                <RadioButton
+                    android:id="@+id/radio_graduating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Graduating"/>
+
+            </GridLayout>
+        </RadioGroup>
+
+        <!--  ================================================== -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
