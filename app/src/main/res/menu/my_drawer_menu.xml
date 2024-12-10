@@ -1,12 +1,75 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Files Section -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_general"
+            android:title="General"
+            android:icon="@drawable/icon_add_24"
+            app:actionViewClass="android.widget.TextView" />
+        <item
+            android:id="@+id/nav_offerings"
+            android:title="Offerings"
+            android:icon="@drawable/icon_add_24"
+            app:actionViewClass="android.widget.TextView" />
+    </group>
+
+    <!-- Divider -->
     <item
-        android:id="@+id/nav_dashboard"
-        android:title="Dashboard" />
+        android:id="@+id/menu_divider_1"
+        android:title=""
+        android:enabled="false"
+        android:icon="@drawable/white_divider"/>
+
+    <!-- Transaction Section -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_enrollment"
+            android:title="Enrollment"
+            android:icon="@drawable/icon_add_24" />
+    </group>
+
+    <!-- Divider -->
     <item
-        android:id="@+id/nav_enrollment"
-        android:title="Enrollment" />
+        android:id="@+id/menu_divider_2"
+        android:title=""
+        android:enabled="false"
+        android:icon="@drawable/white_divider" />
+
+    <!-- Reports Section -->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_ledger"
+            android:title="Student Ledger"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_registrar"
+            android:title="Registrar"
+            android:icon="@drawable/icon_add_24" />
+    </group>
+
+    <!-- Divider -->
     <item
-        android:id="@+id/nav_ledger"
-        android:title="Student Ledger" />
-    <!-- Add more items here as needed -->
+        android:id="@+id/menu_divider_3"
+        android:title=""
+        android:enabled="false"
+        android:icon="@drawable/white_divider" />
+
+    <!-- Settings and Other Section -->
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_setup"
+            android:title="Setup"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_help"
+            android:title="Help"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Logout"
+            android:icon="@drawable/icon_add_24" />
+    </group>
+
 </menu>

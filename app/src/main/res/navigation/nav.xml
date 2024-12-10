@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/registrarDrawerHolderFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -20,4 +20,9 @@
         android:name="com.holytrinity.main.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/registrarDrawerHolderFragment"
+        android:name="com.holytrinity.users.registrar.RegistrarDrawerHolderFragment"
+        android:label="fragment_registrar_drawer_holder"
+        tools:layout="@layout/fragment_registrar_drawer_holder" />
 </navigation>
