@@ -13,8 +13,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentRegistrarDrawerHolderBinding
-import com.holytrinity.users.registrar.RegistrarDashBoardFragment
-import com.holytrinity.users.registrar.RegistrarEnrollmentFragment
+import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
+import com.holytrinity.users.registrar.enrollment.RegistrarEnrollmentFragment
 import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
 
 class RegistrarDrawerHolderFragment : Fragment() {

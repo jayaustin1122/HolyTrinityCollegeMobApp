@@ -39,7 +39,6 @@
 
     <!-- LinearLayout for Student Information -->
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/studentInfoLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -108,7 +107,6 @@
     <!-- Statement of Accounts Title and PDF Button -->
     <LinearLayout
         android:id="@+id/pdfLayout"
-        android:visibility="gone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -140,7 +138,6 @@
 
     <!-- RecyclerView for Statement of Accounts -->
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         tools:listitem="@layout/item_summary_of_accounts"
