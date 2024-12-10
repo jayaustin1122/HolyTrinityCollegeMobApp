@@ -11,9 +11,23 @@ class SoaAdapter(
     private val studentNames: Map<String, String> // Add a map for studentId to studentName
 ) : RecyclerView.Adapter<SoaAdapter.SoaViewHolder>() {
 
+    private var filteredList: List<Soa> = soaList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoaViewHolder {
         val binding = ItemSummaryOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SoaViewHolder(binding)
+    }
+    fun filter(query: String) {
+        filteredList = if (query.isEmpty()) {
+            soaList // If the query is empty, show all items
+        } else {
+            val lowerCaseQuery = query.lowercase()
+            soaList.filter {
+                // Check if student name or student ID contains the query string
+                studentNames[it.studentID]?.lowercase()?.contains(lowerCaseQuery) == true ||
+                        it.studentID.lowercase().contains(lowerCaseQuery)
+            }
+        }
+        notifyDataSetChanged() // Update the RecyclerView with filtered data
     }
 
     override fun onBindViewHolder(holder: SoaViewHolder, position: Int) {
@@ -22,7 +36,7 @@ class SoaAdapter(
     }
 
     override fun getItemCount(): Int {
-        return soaList.size
+        return filteredList.size
     }
 
     class SoaViewHolder(private val binding: ItemSummaryOfAccountsBinding) : RecyclerView.ViewHolder(binding.root) {

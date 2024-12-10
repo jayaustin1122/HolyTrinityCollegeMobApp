@@ -14,6 +14,7 @@ import com.holytrinity.users.registrar.adapter.MyFragmentStateAdapter
 
 class RegistrarStudentLedgerFragment : Fragment() {
     private lateinit var binding : FragmentRegistrarStudentLedgerBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

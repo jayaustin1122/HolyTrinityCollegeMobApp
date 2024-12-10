@@ -48,7 +48,7 @@ class RegistrarDrawerHolderFragment : Fragment() {
         )
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
+        actionBarDrawerToggle.drawerArrowDrawable.color = resources.getColor(R.color.white);
         setHasOptionsMenu(true)
 
         // Open Dashboard fragment on first load
