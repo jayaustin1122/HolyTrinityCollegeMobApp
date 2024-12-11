@@ -1,12 +1,13 @@
 package com.example.canorecoapp.utils
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import cn.pedant.SweetAlert.SweetAlertDialog
 import cn.pedant.SweetAlert.SweetAlertDialog.OnSweetClickListener
 
 object DialogUtils {
-    fun showLoading(activity: Activity?): SweetAlertDialog {
+    fun showLoading(activity: Context): SweetAlertDialog {
         val pDialog = SweetAlertDialog(activity, SweetAlertDialog.PROGRESS_TYPE)
         pDialog.progressHelper.barColor = Color.parseColor("#A5DC86")
         pDialog.setTitleText("Loading")
@@ -39,7 +40,7 @@ object DialogUtils {
     }
 
     fun showWarningMessage(
-        activity: Activity?, title: String?, content: String?,
+        activity: Context, title: String?, content: String?,
         confirmListener: OnSweetClickListener?
     ): SweetAlertDialog {
         val dialog = SweetAlertDialog(activity, SweetAlertDialog.WARNING_TYPE)

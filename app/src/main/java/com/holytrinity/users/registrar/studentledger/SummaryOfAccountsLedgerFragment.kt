@@ -10,7 +10,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.canorecoapp.utils.DialogUtils
-import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.SoaService
 import com.holytrinity.api.StudentService
@@ -20,7 +19,6 @@ import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.SoaAdapter
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Response
 
 class SummaryOfAccountsLedgerFragment : Fragment() {
     private lateinit var binding : FragmentSummaryOfAccountsLedgerBinding

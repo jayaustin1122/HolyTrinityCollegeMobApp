@@ -1,28 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:title="Holy Trinity College Seminary Foundation Inc."
-
-        />
 
     <!-- Files Section -->
-    <item
-        android:id="@+id/menu_section_files"
-        android:title="Files"
-        android:enabled="false"
-      />
 
     <group
         android:id="@+id/menu_section_files_section"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_general"
-            android:title="General"
-            android:icon="@drawable/icon_add_24"
-            app:actionViewClass="android.widget.TextView" />
-        <item
-            android:id="@+id/nav_offerings"
-            android:title="Offerings"
+            android:id="@+id/nav_cashier_dashboard"
+            android:title="Dashboard"
             android:icon="@drawable/icon_add_24"
             app:actionViewClass="android.widget.TextView" />
     </group>
@@ -37,8 +23,12 @@
         android:id="@+id/menu_section_transaction_section"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_enrollment"
-            android:title="Enrollment"
+            android:id="@+id/nav_payment_transaction"
+            android:title="Payment Transaction"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_payment_management"
+            android:title="Payment Management"
             android:icon="@drawable/icon_add_24" />
     </group>
 
@@ -56,16 +46,12 @@
             android:id="@+id/nav_ledger"
             android:title="Student Ledger"
             android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_registrar"
-            android:title="Registrar"
-            android:icon="@drawable/icon_add_24" />
     </group>
 
     <!-- Settings and Other Section -->
     <item
         android:id="@+id/menu_section_settings"
-        android:title="Settings"
+        android:title="Options"
         android:enabled="false"
       />
 
@@ -73,15 +59,11 @@
         android:id="@+id/menu_section_settings_section"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_setup"
+            android:id="@+id/nav_cashier_setup"
             android:title="Setup"
             android:icon="@drawable/icon_add_24" />
         <item
-            android:id="@+id/nav_help"
-            android:title="Help"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_registrar_logout"
+            android:id="@+id/nav_cashier_logout"
             android:title="Logout"
             android:icon="@drawable/icon_add_24" />
     </group>

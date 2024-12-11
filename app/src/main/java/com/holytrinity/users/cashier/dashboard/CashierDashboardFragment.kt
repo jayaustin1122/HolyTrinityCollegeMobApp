@@ -1,4 +1,4 @@
-package com.holytrinity.users.cashier.drawer
+package com.holytrinity.users.cashier.dashboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.holytrinity.R
-import com.holytrinity.databinding.FragmentCashierDrawerBinding
+import com.holytrinity.databinding.FragmentCashierDashboardBinding
 
 
-class CashierDrawerFragment : Fragment() {
-    private lateinit var binding : FragmentCashierDrawerBinding
+class CashierDashboardFragment : Fragment() {
+    private lateinit var binding : FragmentCashierDashboardBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        binding = FragmentCashierDashboardBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        binding = FragmentCashierDrawerBinding.inflate(layoutInflater)
         return binding.root
     }
 
