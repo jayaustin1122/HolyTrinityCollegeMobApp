@@ -6,7 +6,7 @@
 
     android:layout_height="match_parent"
     android:id="@+id/myDrawerLayout"
-    tools:context=".users.registrar.drawer.RegistrarDrawerHolderFragment">
+    tools:context=".users.registrar.RegistrarDrawerHolderFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

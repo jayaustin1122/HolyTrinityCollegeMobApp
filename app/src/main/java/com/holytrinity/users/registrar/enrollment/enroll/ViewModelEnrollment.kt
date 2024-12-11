@@ -1,8 +1,6 @@
-package com.holytrinity.users.registrar.enrollment
+package com.holytrinity.users.registrar.enrollment.enroll
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.PhoneAuthProvider
 
 class ViewModelEnrollment  : ViewModel() {
     var studentID: String = ""

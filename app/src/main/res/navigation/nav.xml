@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_sign_up" />
     <fragment
         android:id="@+id/registrarDrawerHolderFragment"
-        android:name="com.holytrinity.users.registrar.drawer.RegistrarDrawerHolderFragment"
+        android:name="com.holytrinity.users.registrar.RegistrarDrawerHolderFragment"
         android:label="fragment_registrar_drawer_holder"
         tools:layout="@layout/fragment_registrar_drawer_holder" />
 </navigation>

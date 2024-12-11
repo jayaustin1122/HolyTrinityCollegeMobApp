@@ -1,6 +1,5 @@
-package com.holytrinity.users.registrar.enrollment
+package com.holytrinity.users.registrar.enrollment.enroll
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,13 +10,11 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.canorecoapp.utils.DialogUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
-import com.holytrinity.api.SoaService
 import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentRegistrarEnrollmentBinding
 import com.holytrinity.model.Soa

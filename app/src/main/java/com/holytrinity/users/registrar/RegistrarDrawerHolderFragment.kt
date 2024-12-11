@@ -1,4 +1,4 @@
-package com.holytrinity.users.registrar.drawer
+package com.holytrinity.users.registrar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,7 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentRegistrarDrawerHolderBinding
 import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
-import com.holytrinity.users.registrar.enrollment.RegistrarEnrollmentFragment
+import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
 import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
 
 class RegistrarDrawerHolderFragment : Fragment() {

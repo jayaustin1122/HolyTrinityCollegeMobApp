@@ -1,4 +1,4 @@
-package com.holytrinity.users.registrar.enrollment
+package com.holytrinity.users.registrar.registrar
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,20 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.holytrinity.R
-import com.holytrinity.databinding.FragmentStepTwoEnrollmentBinding
+import com.holytrinity.databinding.FragmentRegistarEnrollmentSubjectBinding
 
 
-class StepTwoEnrollmentFragment : Fragment() {
-    private lateinit var binding : FragmentStepTwoEnrollmentBinding
+class RegistarEnrollmentSubjectFragment : Fragment() {
+    private lateinit var binding : FragmentRegistarEnrollmentSubjectBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStepTwoEnrollmentBinding.inflate(layoutInflater)
+        binding = FragmentRegistarEnrollmentSubjectBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
