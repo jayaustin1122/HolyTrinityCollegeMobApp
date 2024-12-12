@@ -1,0 +1,80 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Holy Trinity College Seminary Foundation Inc."
+
+        />
+
+    <!-- Files Section -->
+
+    <group
+        android:id="@+id/menu_section_files_section"
+        android:checkableBehavior="none"/>
+
+    <!-- Transaction Section -->
+    <item
+        android:id="@+id/menu_section_transaction"
+        android:title="Transaction"
+        android:enabled="false" />
+
+    <group
+        android:id="@+id/menu_section_transaction_section"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_student_change_password"
+            android:title="Change Password"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_student_profile"
+            android:title="Student Profile"
+            android:icon="@drawable/icon_add_24" />
+        <item
+        android:id="@+id/nav_student_due_amount"
+        android:title="Due Amount"
+        android:icon="@drawable/icon_add_24" />
+    </group>
+
+    <!-- Reports Section -->
+    <item
+        android:id="@+id/menu_section_reports"
+        android:title="Reports"
+        android:enabled="false"
+  />
+
+    <group
+        android:id="@+id/menu_section_reportSection"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_student_enrolled_subs"
+            android:title="Enrolled Subjects"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_student_curr_eval"
+            android:title="Curriculum Evaluaion"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_student_soa"
+            android:title="Statement of Accounts"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_student_calender"
+            android:title="School Calender"
+            android:icon="@drawable/icon_add_24" />
+    </group>
+
+    <!-- Settings and Other Section -->
+
+    <group
+        android:id="@+id/menu_section_settings_section"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_student_help"
+            android:title="Help"
+            android:icon="@drawable/icon_add_24" />
+        <item
+            android:id="@+id/nav_student_logout"
+            android:title="Logout"
+            android:icon="@drawable/icon_add_24" />
+    </group>
+
+</menu>
