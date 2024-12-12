@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
@@ -80,7 +81,47 @@ class RegistrarDrawerHolderFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+
+        val constraintLayout = binding.constraint
+        val constraintSet = ConstraintSet()
+
+
+        constraintSet.clone(constraintLayout)
+
+        if (fragment is RegistrarDashBoardFragment) {
+
+            binding.toolbar.visibility = View.VISIBLE
+
+
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.TOP,
+                R.id.toolbar,
+                ConstraintSet.BOTTOM
+            )
+        } else {
+
+            binding.toolbar.visibility = View.GONE
+
+
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP
+            )
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM
+            )
+        }
+
+
+        constraintSet.applyTo(constraintLayout)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
