@@ -1,4 +1,4 @@
-package com.holytrinity.users.student.admit
+package com.holytrinity.users.student.admit.steps
 
 import androidx.lifecycle.ViewModel
 
