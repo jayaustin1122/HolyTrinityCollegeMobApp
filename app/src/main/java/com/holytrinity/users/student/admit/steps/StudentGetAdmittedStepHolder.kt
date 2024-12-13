@@ -162,7 +162,6 @@ class StudentGetAdmittedStepHolder : Fragment() {
 
         if (lrn.isEmpty() || attended.isEmpty() || form137 == null || diploma == null ||
             tor == null || coh == null || esc == null) {
-            nextItem()
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
         } else {
             nextItem()
@@ -184,7 +183,6 @@ class StudentGetAdmittedStepHolder : Fragment() {
         if (baptismal == null || confirmCert == null || nso == null || marriageCert == null ||
             brgyCert == null || indigency == null || birForm == null ||
             recommLetter == null || parish.isEmpty() || medCert == null) {
-            nextItem()
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
         } else {
                 nextItem()
@@ -207,7 +205,6 @@ class StudentGetAdmittedStepHolder : Fragment() {
         if (firstName.isEmpty() || lastName.isEmpty() || middleName.isEmpty() ||
             sex.isEmpty() || dateOfBirth.isEmpty() || email.isEmpty() ||
             phone.isEmpty() || municipality.isEmpty() || barangay.isEmpty()) {
-            nextItem()
             Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
         } else {
            nextItem()
