@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputBinding
+import androidx.navigation.fragment.findNavController
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentSignInBinding
 
@@ -23,6 +24,8 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.admitTextButton.setOnClickListener {
+            findNavController().navigate(R.id.studentGetAdmittedFragment)
+        }
     }
 }
