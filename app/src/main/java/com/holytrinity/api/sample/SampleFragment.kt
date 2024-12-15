@@ -169,9 +169,16 @@ class SampleFragment : Fragment() {
                             Log.d("SampleFragment", "Book uploaded but no ID returned: $responseBody")
                         }
                     } else {
-                        Log.d("SampleFragment", "Error uploading book: ${response.message()}")
+                        Log.e("SampleFragment", "Error uploading book: ${response.message()}")
+                        try {
+                            val errorResponse = response.errorBody()?.string()
+                            Log.e("SampleFragment", "Error body: $errorResponse")
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                     }
                 }
+
 
                 override fun onFailure(call: Call<BookResponse>, t: Throwable) {
                     Log.d("SampleFragment", "Failed to upload book: ${t.message}")

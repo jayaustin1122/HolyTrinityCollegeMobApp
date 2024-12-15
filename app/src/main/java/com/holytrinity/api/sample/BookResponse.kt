@@ -10,5 +10,6 @@ data class BookResponse(
     val book_title: String,
     val cover_image: String,
     val content: String,
+    val file_path: String,
     val message: String? = null
 )
