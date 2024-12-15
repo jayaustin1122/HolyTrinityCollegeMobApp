@@ -20,6 +20,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="sampleFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-349" />
+                            <option name="y" value="-451" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="signInFragment">
                     <value>
                       <LayoutPositions>
@@ -37,8 +49,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-215" />
-                            <option name="y" value="-182" />
+                            <option name="x" value="-176" />
+                            <option name="y" value="-177" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -51,6 +63,42 @@
                           <Point>
                             <option name="x" value="40" />
                             <option name="y" value="40" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="studentGetAdmittedFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-350" />
+                            <option name="y" value="80" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="studentGetAdmittedStepHolder">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-343" />
+                            <option name="y" value="-427" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="studentGetAdmittedStepTwoFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-162" />
+                            <option name="y" value="-432" />
                           </Point>
                         </option>
                       </LayoutPositions>

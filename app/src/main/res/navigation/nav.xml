@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/registrarDrawerHolderFragment">
+    app:startDestination="@id/sampleFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -25,4 +25,22 @@
         android:name="com.holytrinity.users.registrar.RegistrarDrawerHolderFragment"
         android:label="fragment_registrar_drawer_holder"
         tools:layout="@layout/fragment_registrar_drawer_holder" />
+    <fragment
+        android:id="@+id/studentGetAdmittedFragment"
+        android:name="com.holytrinity.users.student.admit.StudentGetAdmittedFragment"
+        android:label="StudentGetAdmittedFragment" />
+    <fragment
+        android:id="@+id/studentGetAdmittedStepHolder"
+        android:name="com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepHolder"
+        android:label="fragment_student_get_admitted_step_holder"
+        tools:layout="@layout/fragment_student_get_admitted_step_holder" />
+    <fragment
+        android:id="@+id/studentGetAdmittedStepTwoFragment"
+        android:name="com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepTwoFragment"
+        android:label="fragment_sample"
+        tools:layout="@layout/fragment_sample" />
+    <fragment
+        android:id="@+id/sampleFragment"
+        android:name="com.holytrinity.api.sample.SampleFragment"
+        android:label="SampleFragment" />
 </navigation>

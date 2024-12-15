@@ -3,12 +3,213 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".users.student.admit.steps.StudentGetAdmittedStepTwoFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Canonical Section -->
+            <TextView
+                android:id="@+id/text_canonical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Canonical"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:paddingBottom="8dp"
+                android:importantForAccessibility="yes" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_baptismal_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Baptismal Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_baptismal_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_confirmation_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Confirmation Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_confirmation_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Civil Section -->
+            <TextView
+                android:id="@+id/text_civil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Civil"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:importantForAccessibility="yes" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_nso_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="NSO/PSA Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_nso_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_marriage_certificate"
+                android:layout_width="match_parent"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:layout_height="wrap_content"
+                android:hint="Marriage Certificate of Parents*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_marriage_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_brgy_residence_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Brgy Residence Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_brgy_residence_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_certificate_of_indigency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Certificate of Indigency*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_certificate_of_indigency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_bir_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="BIR Form 2305 Parent Guardian*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_bir_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Other Documents Section -->
+            <TextView
+                android:id="@+id/text_other_documents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Other Documents"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:importantForAccessibility="yes" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_recommendation_letter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Recommendation Letter from the Parish Priest"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_recommendation_letter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_parish"
+                android:layout_width="match_parent"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:layout_height="wrap_content"
+                android:hint="Parish"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_parish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_medical_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Medical Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_medical_certificate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>
