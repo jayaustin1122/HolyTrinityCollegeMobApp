@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".users.student.admit.steps.StudentGetAdmittedStepTwoFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Canonical Section -->
+            <ImageView
+                android:id="@+id/addimage"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/baseline_cloud_upload_24"
+                android:text="add Image"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:paddingBottom="8dp"
+                android:importantForAccessibility="yes" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_baptismal_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Baptismal Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bookTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_confirmation_certificate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+                app:endIconMode="custom"
+                android:hint="Confirmation Certificate*"
+                android:importantForAccessibility="yes">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bookcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAccessibility="yes"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/uploadFile"
+                android:text="upload File"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/upload"
+                android:text="upload data"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
