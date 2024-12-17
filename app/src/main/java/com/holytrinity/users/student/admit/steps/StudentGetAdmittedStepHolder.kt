@@ -32,6 +32,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -115,7 +116,10 @@ class StudentGetAdmittedStepHolder : Fragment() {
             val REQUEST_CODE = 1
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                arrayOf(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
                 REQUEST_CODE
             )
         }
@@ -152,25 +156,14 @@ class StudentGetAdmittedStepHolder : Fragment() {
             uploadData()
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun uploadData() {
+        // Retrieve basic form fields
+        val userName = viewModel.userName
+        val password = viewModel.password
         val lrn = viewModel.lrn
         val attended = viewModel.attended
-        val form137 = viewModel.form137 // file
-        val diploma = viewModel.diploma // file
-        val tor = viewModel.tor // file
-        val coh = viewModel.coh // file
-        val esc = viewModel.esc // file
-        val baptismal = viewModel.baptismalCert // file
-        val confirmCert = viewModel.confirmationCert // file
-        val nso = viewModel.nso // file
-        val marriageCert = viewModel.marriageCert // file
-        val brgyCert = viewModel.brgyResCert // file
-        val indigency = viewModel.indigency // file
-        val birForm = viewModel.birForm // file
-        val recommLetter = viewModel.recommLetter // file
-        val medCert = viewModel.medCert // file
-        val userType = viewModel.userType
         val email = viewModel.email
         val fullName = "${viewModel.firstName} ${viewModel.lastName}"
         val lastName = viewModel.lastName
@@ -181,60 +174,100 @@ class StudentGetAdmittedStepHolder : Fragment() {
         val phone = viewModel.phone
         val municipality = viewModel.municipality
         val barangay = viewModel.barangay
-        val curriculum = ""
-        val entryPeriod = ""
+        val parish = viewModel.parish
+        val curriculum = ""  // You can assign values here if needed
+        val entryPeriod = "" // You can assign values here if needed
         val currentDate = LocalDateTime.now()
         val formattedDate = currentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
-        // Convert files to MultipartBody.Part
-        val form137Part = createFilePart("form137", form137,requireContext())
-        val diplomaPart = createFilePart("diploma", diploma, requireContext())
-        val torPart = createFilePart("tor", tor, requireContext())
-        val cohPart = createFilePart("coh", coh, requireContext())
-        val escPart = createFilePart("esc", esc, requireContext())
-        val baptismalPart = createFilePart("baptismalCert", baptismal, requireContext())
-        val confirmCertPart = createFilePart("confirmationCert", confirmCert, requireContext())
-        val nsoPart = createFilePart("nso", nso, requireContext())
-        val marriageCertPart = createFilePart("marriageCert", marriageCert, requireContext())
-        val brgyCertPart = createFilePart("brgyResCert", brgyCert, requireContext())
-        val indigencyPart = createFilePart("indigency", indigency, requireContext())
-        val birFormPart = createFilePart("birForm", birForm, requireContext())
-        val recommLetterPart = createFilePart("recommLetter", recommLetter, requireContext())
-        val medCertPart = createFilePart("medCert", medCert, requireContext())
+        // Create RequestBody for text fields
+        val lrnRequestBody = lrn.toRequestBody("text/plain".toMediaTypeOrNull())
+        val parishRequestBody = parish.toRequestBody("text/plain".toMediaTypeOrNull())
+        val userTypeRequestBody = "student".toRequestBody("text/plain".toMediaTypeOrNull())
+        val userNameRequestBody = userName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val passwordRequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val attendedRequestBody = attended.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailRequestBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
+        val fullNameRequestBody = fullName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val lastNameRequestBody = lastName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val firstNameRequestBody = firstName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val middleNameRequestBody = middleName.toRequestBody("text/plain".toMediaTypeOrNull())
+        val sexRequestBody = sex.toRequestBody("text/plain".toMediaTypeOrNull())
+        val birthdateRequestBody = dateOfBirth.toRequestBody("text/plain".toMediaTypeOrNull())
+        val phoneRequestBody = phone.toRequestBody("text/plain".toMediaTypeOrNull())
+        val municipalityRequestBody = municipality.toRequestBody("text/plain".toMediaTypeOrNull())
+        val barangayRequestBody = barangay.toRequestBody("text/plain".toMediaTypeOrNull())
+        val curriculumRequestBody = curriculum.toRequestBody("text/plain".toMediaTypeOrNull())
+        val entryPeriodRequestBody = entryPeriod.toRequestBody("text/plain".toMediaTypeOrNull())
+        val studentIDPeriodRequestBody = entryPeriod.toRequestBody("text/plain".toMediaTypeOrNull())
+        val createdAtRequestBody = formattedDate.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        // Convert text data to RequestBody
-        val lrnRequestBody = createRequestBody(lrn)
-        val emailRequestBody = createRequestBody(email)
-        val attendedRequestBody = createRequestBody(attended)
-        val userNameRequestBody = createRequestBody(viewModel.userName)
-        val passwordRequestBody = createRequestBody(viewModel.password)
-        val fullNameRequestBody = createRequestBody(fullName)
-        val lastNameRequestBody = createRequestBody(lastName)
-        val firstNameRequestBody = createRequestBody(firstName)
-        val middleNameRequestBody = createRequestBody(middleName)
-        val sexRequestBody = createRequestBody(sex)
-        val birthdateRequestBody = createRequestBody(dateOfBirth)
-        val phoneRequestBody = createRequestBody(phone)
-        val municipalityRequestBody = createRequestBody(municipality)
-        val barangayRequestBody = createRequestBody(barangay)
-        val curriculumRequestBody = createRequestBody(curriculum)
-        val entryPeriodRequestBody = createRequestBody(entryPeriod)
-        val createdAtRequestBody = createRequestBody(formattedDate)
+        // Function to prepare file parts
+
+
+        // Prepare multipart file parts
+        val selectedFileForm137 = prepareFilePart("form137", viewModel.form137)
+        val diplomaPart = prepareFilePart("diploma", viewModel.diploma)
+        val torPart = prepareFilePart("tor", viewModel.tor)
+        val cohPart = prepareFilePart("coh", viewModel.coh)
+        val escPart = prepareFilePart("esc", viewModel.esc)
+        val baptismalPart = prepareFilePart("baptismal", viewModel.baptismalCert)
+        val confirmCertPart = prepareFilePart("confirmCert", viewModel.confirmationCert)
+        val nsoPart = prepareFilePart("nso", viewModel.nso)
+        val marriageCertPart = prepareFilePart("marriageCert", viewModel.marriageCert)
+        val brgyCertPart = prepareFilePart("brgyCert", viewModel.brgyResCert)
+        val indigencyPart = prepareFilePart("indigency", viewModel.indigency)
+        val birFormPart = prepareFilePart("birForm", viewModel.birForm)
+        val recommLetterPart = prepareFilePart("recommLetter", viewModel.recommLetter)
+        val medCertPart = prepareFilePart("medCert", viewModel.medCert)
 
         // API call setup
         val apiService = RetrofitInstance.create(StudentService::class.java)
         val call = apiService.uploadStudentData(
-            lrnRequestBody, emailRequestBody, attendedRequestBody, userNameRequestBody, passwordRequestBody, fullNameRequestBody,
-            lastNameRequestBody, firstNameRequestBody, middleNameRequestBody, sexRequestBody, birthdateRequestBody,
-            phoneRequestBody, municipalityRequestBody, barangayRequestBody, curriculumRequestBody, entryPeriodRequestBody,
+            lrnRequestBody,
+            attendedRequestBody,
+            selectedFileForm137,
+            diplomaPart,
+            torPart,
+            cohPart,
+            escPart,
+            userNameRequestBody,
+            passwordRequestBody,
+            baptismalPart,
+            confirmCertPart,
+            nsoPart,
+            marriageCertPart,
+            brgyCertPart,
+            indigencyPart,
+            birFormPart,
+            recommLetterPart,
+            parishRequestBody,
+            medCertPart,
+            userTypeRequestBody,
+            emailRequestBody,
+            fullNameRequestBody,
+            lastNameRequestBody,
+            firstNameRequestBody,
+            middleNameRequestBody,
+            sexRequestBody,
+            birthdateRequestBody,
+            phoneRequestBody,
+            municipalityRequestBody,
+            barangayRequestBody,
+            curriculumRequestBody,
+            entryPeriodRequestBody,
+            studentIDPeriodRequestBody,
             createdAtRequestBody,
-            form137Part, diplomaPart, torPart, cohPart, escPart, baptismalPart, confirmCertPart, nsoPart,
-            marriageCertPart, brgyCertPart, indigencyPart, birFormPart, recommLetterPart, medCertPart
+
+
         )
 
         // Log the request details (request body and files)
-        Log.d("UploadData", "LRN: $lrn, FullName: $fullName, Email: $email")
-        Log.d("UploadData", "Files: form137=${form137?.path}, diploma=${diploma?.path}, tor=${tor?.path}")
+        Log.d("UploadData", "LRN: ${viewModel.form137}, FullName: $fullName, Email: $email")
+        Log.d(
+            "UploadData",
+            "Files: form137=${viewModel.form137?.path}, diploma=${viewModel.diploma?.path}, tor=${viewModel.tor?.path}"
+        )
 
         // Execute the call asynchronously
         call.enqueue(object : Callback<Void> {
@@ -244,9 +277,17 @@ class StudentGetAdmittedStepHolder : Fragment() {
                 Log.d("UploadData", "Response message: ${response.message()}")
 
                 if (response.isSuccessful) {
-                    Toast.makeText(requireActivity(), "Student data uploaded successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Student data uploaded successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(requireActivity(), "Failed to upload data: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Failed to upload data: ${response.message()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Log.e("UploadData", "Error response: ${response.errorBody()?.string()}")
                 }
             }
@@ -259,36 +300,14 @@ class StudentGetAdmittedStepHolder : Fragment() {
         })
     }
 
-    private fun createFilePart(partName: String, fileUri: Uri?, context: Context): MultipartBody.Part? {
-        if (fileUri == null) return null
-
-        // Convert the Uri to a File
-        val file = getFileFromUri(fileUri, context) ?: return null
-
-        // Create RequestBody from the file
-        val fileRequestBody = file.asRequestBody("application/*".toMediaTypeOrNull())
-
-        // Create the MultipartBody.Part using form data
-        return MultipartBody.Part.createFormData(partName, file.name, fileRequestBody)
+    private fun prepareFilePart(partName: String, uri: Uri?): MultipartBody.Part? {
+        return uri?.let { fileUri ->
+            getFileFromUri(requireContext(), fileUri)?.let { file ->
+                val requestFile = file.asRequestBody("application/pdf".toMediaTypeOrNull())
+                MultipartBody.Part.createFormData(partName, file.name, requestFile)
+            }
+        }
     }
-    private fun getFileFromUri(uri: Uri, context: Context): File? {
-        // Use content resolver to get the file from Uri
-        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = context.contentResolver.query(uri, filePathColumn, null, null, null)
-
-        cursor?.moveToFirst()
-        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
-        val filePath = columnIndex?.let { cursor.getString(it) }
-        cursor?.close()
-
-        return filePath?.let { File(it) }
-    }
-
-    private fun createRequestBody(data: String): RequestBody {
-        return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), data)
-    }
-
-
     private fun validateFragmentThree() {
         val lrn = viewModel.lrn
         val attended = viewModel.attended
