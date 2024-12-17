@@ -1,89 +1,71 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Holy Trinity College Seminary Foundation Inc." />
+
     <item
-        android:title="Holy Trinity College Seminary Foundation Inc."
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/icon_dashboard_24"
+        android:title="Dashboard" />
 
-        />
+    <item android:title="Transaction">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_transaction">
+                <item
+                    android:id="@+id/nav_enrollment"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Enrollment" />
+                <item
+                    android:id="@+id/nav_assessment"
+                    android:icon="@drawable/icon_assessment_24"
+                    android:title="Assessment" />
+                <item
+                    android:id="@+id/nav_payment"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Payment" />
+                <item
+                    android:id="@+id/nav_payment_management"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Payment Management" />
+                <item
+                    android:id="@+id/nav_fee_management"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Fee Management" />
 
-    <!-- Files Section -->
-    <item
-        android:id="@+id/menu_section_files"
-        android:title="Files"
-        android:enabled="false"
-      />
+            </group>
+        </menu>
+    </item>
 
-    <group
-        android:id="@+id/menu_section_files_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_general"
-            android:title="General"
-            android:icon="@drawable/icon_add_24"
-            app:actionViewClass="android.widget.TextView" />
-        <item
-            android:id="@+id/nav_offerings"
-            android:title="Offerings"
-            android:icon="@drawable/icon_add_24"
-            app:actionViewClass="android.widget.TextView" />
-    </group>
+    <item android:title="Reports">
+        <menu>
+            <group
+                android:id="@+id/menu_google_apps">
+                <item
+                    android:id="@+id/nav_ledger"
+                    android:icon="@drawable/icon_topic_24"
+                    android:title="Student Ledger" />
+                <item
+                    android:id="@+id/nav_registrar"
+                    android:icon="@drawable/icon_topic_24"
+                    android:title="Registrar" />
+            </group>
+        </menu>
+    </item>
 
-    <!-- Transaction Section -->
-    <item
-        android:id="@+id/menu_section_transaction"
-        android:title="Transaction"
-        android:enabled="false" />
-
-    <group
-        android:id="@+id/menu_section_transaction_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_enrollment"
-            android:title="Enrollment"
-            android:icon="@drawable/icon_add_24" />
-    </group>
-
-    <!-- Reports Section -->
-    <item
-        android:id="@+id/menu_section_reports"
-        android:title="Reports"
-        android:enabled="false"
-  />
-
-    <group
-        android:id="@+id/menu_section_reportSection"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_ledger"
-            android:title="Student Ledger"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_registrar"
-            android:title="Registrar"
-            android:icon="@drawable/icon_add_24" />
-    </group>
-
-    <!-- Settings and Other Section -->
-    <item
-        android:id="@+id/menu_section_settings"
-        android:title="Settings"
-        android:enabled="false"
-      />
-
-    <group
-        android:id="@+id/menu_section_settings_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_setup"
-            android:title="Setup"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_help"
-            android:title="Help"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_registrar_logout"
-            android:title="Logout"
-            android:icon="@drawable/icon_add_24" />
-    </group>
+    <item android:title="Options">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_settings">
+                <item
+                    android:id="@+id/nav_setup"
+                    android:icon="@drawable/icon_setup_24"
+                    android:title="Setup" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/icon_logout_24"
+                    android:title="Logout" />
+            </group>
+        </menu>
+    </item>
 
 </menu>

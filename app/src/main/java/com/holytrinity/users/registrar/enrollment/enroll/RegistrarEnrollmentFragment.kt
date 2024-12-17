@@ -26,7 +26,7 @@ import retrofit2.Callback
 
 
 class RegistrarEnrollmentFragment : Fragment() {
-    private lateinit var binding : FragmentRegistrarEnrollmentBinding
+    private lateinit var binding: FragmentRegistrarEnrollmentBinding
     private lateinit var soaList: List<Soa>
     private lateinit var loadingDialog: SweetAlertDialog
     private lateinit var soaAdapter: SoaAdapter
@@ -34,6 +34,7 @@ class RegistrarEnrollmentFragment : Fragment() {
     private lateinit var studentNamesMap: MutableMap<String, String>
     private lateinit var studentNames: MutableMap<String, String>
     private lateinit var viewModel: ViewModelEnrollment
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,6 +43,7 @@ class RegistrarEnrollmentFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[ViewModelEnrollment::class.java]
@@ -92,15 +94,34 @@ class RegistrarEnrollmentFragment : Fragment() {
         loadingDialog.show()
 
         getAllStudents()
+
+        binding.toolbarBackButton.setOnClickListener {
+            DialogUtils.showWarningMessage(requireActivity(), "Confirm Exit", "Click \"Yes\" to cancel discard any changes made."
+            ) { sweetAlertDialog ->
+                sweetAlertDialog.dismissWithAnimation()
+
+                val bundle = Bundle().apply {
+                    putInt("selectedFragmentId", null ?: R.id.nav_dashboard)
+                }
+                findNavController().navigate(R.id.registrarDrawerHolderFragment, bundle)
+            }
+        }
     }
+
     private fun getAllStudents() {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents().enqueue(object : Callback<List<Student>> {
-            override fun onResponse(call: Call<List<Student>>, response: retrofit2.Response<List<Student>>) {
+            override fun onResponse(
+                call: Call<List<Student>>,
+                response: retrofit2.Response<List<Student>>
+            ) {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        Log.d("StudentData", "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}")
+                        Log.d(
+                            "StudentData",
+                            "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}"
+                        )
                     }
                     studentNamesMap = students.associate { it.name to it.studentID }.toMutableMap()
                     loadingDialog.dismiss()
@@ -117,9 +138,14 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         })
     }
+
     private fun setupAutoCompleteTextView() {
         val studentNamesList = studentNamesMap.keys.toList()
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, studentNamesList)
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            studentNamesList
+        )
         binding.useridTextView.setAdapter(adapter)
 
         binding.useridTextView.setOnItemClickListener { parent, _, position, _ ->
