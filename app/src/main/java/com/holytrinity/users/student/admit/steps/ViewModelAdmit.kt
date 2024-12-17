@@ -3,10 +3,10 @@ package com.holytrinity.users.student.admit.steps
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 
-class ViewModelAdmit  : ViewModel() {
-    //
-    var userType: String = ""
+class ViewModelAdmit : ViewModel() {
 
+    // User Data
+    var userType: String = ""
     var firstName: String = ""
     var lastName: String = ""
     var middleName: String = ""
@@ -17,6 +17,7 @@ class ViewModelAdmit  : ViewModel() {
     var municipality: String = ""
     var barangay: String = ""
 
+    // File Data (Uri? for files)
     var baptismalCert: Uri? = null
     var confirmationCert: Uri? = null
     var nso: Uri? = null
@@ -28,7 +29,7 @@ class ViewModelAdmit  : ViewModel() {
     var parish: String = ""
     var medCert: Uri? = null
 
-
+    // Enrollment Data
     var lrn: String = ""
     var attended: String = ""
     var form137: Uri? = null
@@ -37,8 +38,45 @@ class ViewModelAdmit  : ViewModel() {
     var coh: Uri? = null
     var esc: Uri? = null
 
+    // Authentication Data
     var userName: String = ""
     var password: String = ""
     var confirmPassword: String = ""
 
+    // Function to reset all fields
+    fun resetFields() {
+        userType = ""
+        firstName = ""
+        lastName = ""
+        middleName = ""
+        sex = ""
+        dateOfBirth = ""
+        email = ""
+        phone = ""
+        municipality = ""
+        barangay = ""
+
+        baptismalCert = null
+        confirmationCert = null
+        nso = null
+        marriageCert = null
+        brgyResCert = null
+        indigency = null
+        birForm = null
+        recommLetter = null
+        parish = ""
+        medCert = null
+
+        lrn = ""
+        attended = ""
+        form137 = null
+        diploma = null
+        tor = null
+        coh = null
+        esc = null
+
+        userName = ""
+        password = ""
+        confirmPassword = ""
+    }
 }

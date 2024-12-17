@@ -41,6 +41,7 @@
                     android:id="@+id/edit_baptismal_certificate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,6 +57,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_confirmation_certificate"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -82,6 +84,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_nso_certificate"
+                    android:inputType="none"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
@@ -99,6 +102,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_marriage_certificate"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,6 +120,7 @@
                     android:id="@+id/edit_brgy_residence_certificate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,6 +137,7 @@
                     android:id="@+id/edit_certificate_of_indigency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,6 +153,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_bir_form"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -172,6 +179,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_recommendation_letter"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -179,7 +187,6 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_parish"
                 android:layout_width="match_parent"
-                app:endIconDrawable="@drawable/baseline_cloud_upload_24"
                 app:endIconMode="custom"
                 android:layout_height="wrap_content"
                 android:hint="Parish"
@@ -204,6 +211,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_medical_certificate"
                     android:layout_width="match_parent"
+                    android:inputType="none"
                     android:layout_height="wrap_content"
                     android:importantForAccessibility="yes"/>
             </com.google.android.material.textfield.TextInputLayout>

@@ -1,23 +1,58 @@
 package com.holytrinity.api
 
-import com.holytrinity.model.Soa
 import com.holytrinity.model.Student
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface StudentService {
 
-    @GET("crud-android//trinity/getAllStudents.php")
+    @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(@Query("studentID") studentId: String? = null): Call<List<Student>>
     // Add a new student
-    @GET("crud-android/getAllstudents.php")
-    fun addStudent(@Body student: Student): Call<Void>
+    @POST("crud-android/trinity/addStudent.php")
+    @Multipart
+    fun uploadStudentData(
+        @Part("lrn") lrn: RequestBody,
+        @Part("attended") attended: RequestBody,
+        @Part("email") email: RequestBody,
+        @Part("userName") userName: RequestBody,
+        @Part("password") password: RequestBody,
+        @Part("fullName") fullName: RequestBody,
+        @Part("lastName") lastName: RequestBody,
+        @Part("firstName") firstName: RequestBody,
+        @Part("middleName") middleName: RequestBody,
+        @Part("sex") sex: RequestBody,
+        @Part("dateOfBirth") dateOfBirth: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("municipality") municipality: RequestBody,
+        @Part("barangay") barangay: RequestBody,
+        @Part("curriculum") curriculum: RequestBody,
+        @Part("entryPeriod") entryPeriod: RequestBody,
+        @Part("createdAt") createdAt: RequestBody,
+
+        // File parts
+        @Part form137: MultipartBody.Part?,
+        @Part diploma: MultipartBody.Part?,
+        @Part tor: MultipartBody.Part?,
+        @Part coh: MultipartBody.Part?,
+        @Part esc: MultipartBody.Part?,
+        @Part baptismal: MultipartBody.Part?,
+        @Part confirmCert: MultipartBody.Part?,
+        @Part nso: MultipartBody.Part?,
+        @Part marriageCert: MultipartBody.Part?,
+        @Part brgyCert: MultipartBody.Part?,
+        @Part indigency: MultipartBody.Part?,
+        @Part birForm: MultipartBody.Part?,
+        @Part recommLetter: MultipartBody.Part?,
+        @Part medCert: MultipartBody.Part?
+    ): Call<Void>
+
 
     // Update a student by ID
     @GET("crud-android/getAllstudents.php")
     fun updateStudent(@Query("id") studentId: String, @Body student: Student): Call<Void>
 
-    // Delete a student by ID
-    @GET("crud-android/getAllstudents.php")
-    fun deleteStudent(@Query("id") studentId: String): Call<Void>
+
 }
