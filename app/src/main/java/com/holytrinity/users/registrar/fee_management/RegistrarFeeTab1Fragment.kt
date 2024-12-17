@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.holytrinity.databinding.FragmentRegistrarFeeTab1Binding
 
 
-class CashierTab1Fragment : Fragment() {
+class RegistrarFeeTab1Fragment : Fragment() {
     private lateinit var binding : FragmentRegistrarFeeTab1Binding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

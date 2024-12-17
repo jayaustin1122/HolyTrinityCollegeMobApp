@@ -15,9 +15,15 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentRegistrarDrawerHolderBinding
+import com.holytrinity.users.cashier.payment_management.CashierPaymentManagementFragment
+import com.holytrinity.users.cashier.payment_transaction.CashierPaymentHolderFragment
+import com.holytrinity.users.registrar.assestment.AssesmentFragment
 import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
 import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
+import com.holytrinity.users.registrar.fee_management.CashierFeeManagementHolderFragment
+import com.holytrinity.users.registrar.registrar.RegistrarHolderFragment
 import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
+import com.holytrinity.users.setup.SetUpFragment
 import com.holytrinity.util.LogoutHelper
 
 class RegistrarDrawerHolderFragment : Fragment() {
@@ -62,10 +68,16 @@ class RegistrarDrawerHolderFragment : Fragment() {
         // Set Navigation Item click listener
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_general -> openFragment(RegistrarDashBoardFragment())
+                R.id.nav_dashboard -> openFragment(RegistrarDashBoardFragment())
                 R.id.nav_enrollment -> openFragment(RegistrarEnrollmentFragment())
                 R.id.nav_ledger -> openFragment(RegistrarStudentLedgerFragment())
-                R.id.nav_registrar_logout -> {
+                R.id.nav_payment_management -> openFragment(CashierPaymentManagementFragment())
+                R.id.nav_payment_transaction -> openFragment(CashierPaymentHolderFragment())
+                R.id.nav_fee_management -> openFragment(CashierFeeManagementHolderFragment())
+                R.id.nav_registrar -> openFragment(RegistrarHolderFragment())
+                R.id.nav_assessment -> openFragment(AssesmentFragment())
+                R.id.nav_setup -> openFragment(SetUpFragment())
+                R.id.nav_logout -> {
                     LogoutHelper.logout(requireContext()) {
                         findNavController().navigate(R.id.signInFragment)
                     }
@@ -85,14 +97,10 @@ class RegistrarDrawerHolderFragment : Fragment() {
         val constraintLayout = binding.constraint
         val constraintSet = ConstraintSet()
 
-
         constraintSet.clone(constraintLayout)
 
         if (fragment is RegistrarDashBoardFragment) {
-
             binding.toolbar.visibility = View.VISIBLE
-
-
             constraintSet.connect(
                 R.id.fragment_container,
                 ConstraintSet.TOP,
@@ -100,10 +108,7 @@ class RegistrarDrawerHolderFragment : Fragment() {
                 ConstraintSet.BOTTOM
             )
         } else {
-
             binding.toolbar.visibility = View.GONE
-
-
             constraintSet.connect(
                 R.id.fragment_container,
                 ConstraintSet.TOP,
@@ -117,11 +122,8 @@ class RegistrarDrawerHolderFragment : Fragment() {
                 ConstraintSet.BOTTOM
             )
         }
-
-
         constraintSet.applyTo(constraintLayout)
     }
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

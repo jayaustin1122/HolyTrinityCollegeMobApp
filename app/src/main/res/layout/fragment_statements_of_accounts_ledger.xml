@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".users.registrar.studentledger.StatementsOfAccountsLedgerFragment">
 
     <!-- Title for Statement of Accounts -->
@@ -25,7 +26,7 @@
     <AutoCompleteTextView
         android:id="@+id/searchStudentTextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:hint="Search Student"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -45,20 +46,21 @@
     <LinearLayout
         android:id="@+id/studentInfoLayout"
         android:layout_width="0dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:paddingHorizontal="20dp"
+        android:layout_margin="20dp"
         app:layout_constraintTop_toBottomOf="@id/searchStudentTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+        
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subjectsDataTextView" />
+
         <!-- Student Information Header -->
         <TextView
             android:layout_marginTop="10dp"
@@ -66,59 +68,75 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Student Information"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textColor="@color/dark_text_color"
-            android:fontFamily="@font/roboto_medium" />
+            android:fontFamily="@font/roboto_regular" />
 
         <!-- Student Number -->
         <TextView
             android:id="@+id/studentNumberLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
             android:text="Student Number"
-            android:textColor="@color/black"
             android:textSize="14sp"
-            android:layout_marginTop="10dp" />
+            android:textColor="@color/dark_text_color"
+            android:fontFamily="@font/roboto_medium" />
 
         <TextView
             android:id="@+id/studentNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text="21-1238"
-            android:textColor="@color/dark_text_color"
             android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textColor="@color/dark_text_color"
+            android:fontFamily="@font/roboto_medium" />
 
         <!-- Student Name -->
         <TextView
             android:id="@+id/studentNameLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:text="Student Name"
+            android:textSize="14sp"
+            android:textColor="@color/dark_text_color"
+            android:fontFamily="@font/roboto_medium"  />
 
         <TextView
             android:id="@+id/studentName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
             android:text="Wells D. Fargo"
-            android:textColor="@color/dark_text_color"
             android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/dark_text_color"
+            android:fontFamily="@font/roboto_medium"/>
 
     </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@id/studentInfoLayout" />
 
     <!-- Statement of Accounts Title and PDF Button -->
     <LinearLayout
         android:id="@+id/pdfLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:paddingHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@id/studentInfoLayout"
+        android:gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:paddingTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/divider1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -127,18 +145,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Statement of Accounts"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textColor="@color/dark_text_color"
-            android:fontFamily="@font/roboto_medium" />
+            android:fontFamily="@font/roboto_regular" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnPdf"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/pdfChip"
             android:layout_width="wrap_content"
-            app:cornerRadius="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/roboto_regular"
             android:text="PDF"
+            android:textColor="@color/dark_icon_color"
             android:backgroundTint="@color/white"
-            android:textColor="@color/black" />
+            app:chipCornerRadius="20dp"
+            app:chipStrokeColor="@color/dark_icon_color"
+            app:layout_constraintEnd_toStartOf="@+id/xlsChip"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 
@@ -146,7 +169,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
-        android:visibility="gone"
+        android:visibility="visible"
         tools:listitem="@layout/item_summary_of_accounts"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.canorecoapp.utils.DialogUtils
@@ -117,7 +118,6 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
             }
         })
     }
-
 
     private fun searchStudents() {
         val studentService = RetrofitInstance.create(StudentService::class.java)
