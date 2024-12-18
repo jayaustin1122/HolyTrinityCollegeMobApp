@@ -40,10 +40,27 @@ class StepTwoEnrollmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val yearLevel = viewModel.level
+
+        // Get the level and add the correct suffix
+        val level = viewModel.level
+        val yearLevel = when (level) {
+            1.toString() -> "${level}st Year"
+            2.toString() -> "${level}nd Year"
+            3.toString() -> "${level}rd Year"
+            4.toString() -> "${level}th Year"
+            else -> "${level}th Year"
+        }
+
+        // Log the level
+        Log.d("API_RESPONSE", "$yearLevel")
+
+        // Get the curriculum ID
         val curriculum = viewModel.curr_id
-        getAllSubjects(yearLevel,curriculum)
+
+        // Call the function to get all subjects
+        getAllSubjects(yearLevel, curriculum)
     }
+
 
     private fun getAllSubjects(yearLevel: String,curriculum:String) {
         // Create the Retrofit instance

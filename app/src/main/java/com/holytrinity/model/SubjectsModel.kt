@@ -8,5 +8,6 @@ data class SubjectsModel(
     val schedule: String,
     val units: Int,
     val type: String,
-    val year: String
+    val year: String,
+    val section: String
 )
