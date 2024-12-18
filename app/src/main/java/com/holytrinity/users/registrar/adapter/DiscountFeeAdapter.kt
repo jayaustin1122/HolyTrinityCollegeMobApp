@@ -1,5 +1,6 @@
 package com.holytrinity.users.registrar.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.holytrinity.api.DiscountFee
 class DiscountFeeAdapter(
     private val discountFees: MutableList<DiscountFee>,
     private val deleteListener: (DiscountFee) -> Unit,
-    private val editListener: (AssessmentFee) -> Unit
+    private val editListener: (DiscountFee) -> Unit
 ) : RecyclerView.Adapter<DiscountFeeAdapter.DiscountFeeViewHolder>() {
 
     inner class DiscountFeeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,6 +30,11 @@ class DiscountFeeAdapter(
             deleteChip.setOnClickListener {
                 val fee = discountFees[adapterPosition]
                 deleteListener(fee) // Trigger the delete callback
+            }
+            editChip.setOnClickListener {
+                val fee = discountFees[adapterPosition]
+                Log.d("fee", "$fee")
+                editListener(fee) // Trigger the edit callback
             }
         }
     }
