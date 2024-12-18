@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.holytrinity.databinding.FragmentStudentGetAdmittedStepTwoBinding
+import java.io.File
 
 class StudentGetAdmittedStepTwoFragment : Fragment() {
     private lateinit var binding: FragmentStudentGetAdmittedStepTwoBinding
@@ -79,45 +81,71 @@ class StudentGetAdmittedStepTwoFragment : Fragment() {
             getFile()
         }
     }
+    private fun getFileNameFromUri(uri: Uri): String {
+        var fileName = ""
+        val context = context ?: return fileName  // Ensure context is not null
+        if (uri.scheme.equals("content")) {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor?.let {
+                if (it.moveToFirst()) {
+                    val columnIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (columnIndex != -1) {
+                        fileName = it.getString(columnIndex)
+                    }
+                }
+                it.close()
+            }
+        } else if (uri.scheme.equals("file")) {
+            fileName = File(uri.path!!).name  // For file URI, get file name from path
+        }
+        return fileName
+    }
 
-    // Activity result launcher for picking a file
     private val pickFileLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val selectedFileUri: Uri? = result.data?.data
                 selectedFileUri?.let { uri ->
+                    val fileName = getFileNameFromUri(uri) // Get the file name
                     when (currentFileType) {
                         FileType.BAPTISMAL_CERT -> {
                             viewModel.baptismalCert = uri
-                            Log.d("ViewModelUpdate", "Batismal set in ViewModel: ${uri.path}")
+                            binding.editBaptismalCertificate.setText(fileName)  // Set file name instead of URI path
+                            Log.d("ViewModelUpdate", "Baptismal set in ViewModel: $fileName")
                         }
 
                         FileType.BIR_FORM -> {
                             viewModel.birForm = uri
-
+                            binding.editBirForm.setText(fileName)
                         }
 
                         FileType.CONFIMATION_CERTIFICATE -> {
                             viewModel.confirmationCert = uri
-
+                            binding.editConfirmationCertificate.setText(fileName)
                         }
                         FileType.NSO -> {
                             viewModel.nso = uri
+                            binding.editNsoCertificate.setText(fileName)
                         }
                         FileType.MARRIAGE_CERTIFICATE -> {
                             viewModel.marriageCert = uri
+                            binding.editMarriageCertificate.setText(fileName)
                         }
                         FileType.BRGY_RESIDENCE_CERTIFICATE -> {
                             viewModel.brgyResCert = uri
+                            binding.editBrgyResidenceCertificate.setText(fileName)
                         }
                         FileType.CERTIFICATE_OF_INDIGENCY -> {
                             viewModel.indigency = uri
+                            binding.editCertificateOfIndigency.setText(fileName)
                         }
                         FileType.RECOMMENDATION_LETTER -> {
                             viewModel.recommLetter = uri
+                            binding.editRecommendationLetter.setText(fileName)
                         }
                         FileType.MEDICAL_CERTIFICATE -> {
                             viewModel.medCert = uri
+                            binding.editMedicalCertificate.setText(fileName)
                         }
                         else -> {
                             // Handle other cases if needed

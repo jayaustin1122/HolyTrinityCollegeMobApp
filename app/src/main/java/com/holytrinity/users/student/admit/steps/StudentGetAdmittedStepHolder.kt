@@ -18,8 +18,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.canorecoapp.utils.DialogUtils
+import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.StudentService
 import com.holytrinity.api.sample.getFileFromUri
@@ -153,6 +156,8 @@ class StudentGetAdmittedStepHolder : Fragment() {
         } else if (password != confirmPassword) {
             Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
         } else {
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
             uploadData()
         }
     }
@@ -277,11 +282,14 @@ class StudentGetAdmittedStepHolder : Fragment() {
                 Log.d("UploadData", "Response message: ${response.message()}")
 
                 if (response.isSuccessful) {
-                    Toast.makeText(
+                    loadingDialog.dismiss()
+                    DialogUtils.showSuccessMessage(
                         requireActivity(),
-                        "Student data uploaded successfully!",
-                        Toast.LENGTH_SHORT
+                        "Success",
+                        "Student Added"
                     ).show()
+                    findNavController().navigate(R.id.studentGetAdmittedFragment)
+
                 } else {
                     Toast.makeText(
                         requireActivity(),
@@ -356,8 +364,6 @@ class StudentGetAdmittedStepHolder : Fragment() {
         val phone = viewModel.phone
         val municipality = viewModel.municipality
         val barangay = viewModel.barangay
-
-
 
         if (firstName.isEmpty() || lastName.isEmpty() || middleName.isEmpty() ||
             sex.isEmpty() || dateOfBirth.isEmpty() || email.isEmpty() ||
