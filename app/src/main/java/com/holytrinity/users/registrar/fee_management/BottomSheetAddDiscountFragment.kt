@@ -1,60 +1,115 @@
 package com.holytrinity.users.registrar.fee_management
 
+import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.holytrinity.R
+import android.widget.Toast
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.canorecoapp.utils.DialogUtils
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.holytrinity.api.ApiResponse
+import com.holytrinity.api.DiscountFeeService
+import com.holytrinity.api.RetrofitInstance
+import com.holytrinity.databinding.FragmentBottomSheetAddDiscountBinding
+import com.holytrinity.model.DiscountFee
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [BottomSheetAddDiscountFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class BottomSheetAddDiscountFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentBottomSheetAddDiscountBinding? = null
+    private val binding get() = _binding!!
+    private val apiService: DiscountFeeService by lazy {
+        RetrofitInstance.create(DiscountFeeService::class.java)
     }
+
+    // Callback to refresh data on dismissal
+    var onDismissListener: (() -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_bottom_sheet_add_discount, container, false)
+    ): View {
+        _binding = FragmentBottomSheetAddDiscountBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BottomSheetAddDiscountFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BottomSheetAddDiscountFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.doneButton.setOnClickListener {
+            validateAndConfirmData()
+        }
+    }
+
+    private fun validateAndConfirmData() {
+        val title = binding.titleEditText.text.toString().trim()
+        val code = binding.codeEditText.text.toString().trim()
+        val amountText = binding.amountEditText.text.toString().trim()
+        val description = binding.descriptionEditText.text.toString().trim()
+
+        if (title.isEmpty() || code.isEmpty() || amountText.isEmpty() || description.isEmpty()) {
+            Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val amount = amountText.toDoubleOrNull()
+        if (amount == null) {
+            Toast.makeText(context, "Invalid input for Amount", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
+            .setTitleText("Add Discount Fee")
+            .setContentText("Click \"Done\" to add this new discount fee.")
+            .setConfirmText("Done")
+            .setCancelText("Cancel")
+            .setConfirmClickListener { dialog ->
+                dialog.dismissWithAnimation()
+                addDiscountFee(title, code, amount, description)
+            }
+            .setCancelClickListener { dialog ->
+                dialog.dismissWithAnimation()
+                Log.d("addDiscountFragment", "Add Cancelled")
+            }
+            .show()
+    }
+
+    private fun addDiscountFee(title: String, code: String, amount: Double, description: String) {
+        val discountFee = DiscountFee(title, code, amount, description)
+
+        apiService.addDiscountFee(discountFee).enqueue(object : Callback<ApiResponse> {
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    DialogUtils.showSuccessMessage(
+                        requireActivity(),
+                        "Success",
+                        "Discount Fee Added Successfully"
+                    ).show()
+                    dismiss()
+                } else {
+                    Toast.makeText(context, "Failed to insert data", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("addDiscountFee", "Error: ${t.message}")
+            }
+        })
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        onDismissListener?.invoke() // Trigger the callback when dialog is dismissed
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
