@@ -55,7 +55,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                     students.forEach { student ->
                         Log.d("StudentData", "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}")
                     }
-                    studentNamesMap = students.associate { it.name to it.studentID }.toMutableMap()
+                    studentNamesMap = students.associate { it.name.toString() to it.studentID.toString() }.toMutableMap()
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
@@ -129,7 +129,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        studentNames[student.studentID] = student.name
+                        studentNames[student.studentID.toString()] = student.name.toString()
                     }
                     if (::soaAdapter.isInitialized) {
                         soaAdapter.updateSoaList(soaList)

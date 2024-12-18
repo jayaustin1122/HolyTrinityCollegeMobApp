@@ -87,7 +87,7 @@ class SummaryOfAccountsLedgerFragment : Fragment() {
                     // Populate the studentNames map with studentId to studentName
                     students.forEach { student ->
                         // Access student properties directly without casting
-                        studentNames[student.studentID] = student.name
+                        studentNames[student.studentID.toString()] = student.name.toString()
                     }
                     setupRecyclerView()
                 } else {

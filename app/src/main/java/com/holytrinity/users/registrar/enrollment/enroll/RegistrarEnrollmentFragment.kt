@@ -123,7 +123,7 @@ class RegistrarEnrollmentFragment : Fragment() {
                             "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}"
                         )
                     }
-                    studentNamesMap = students.associate { it.name to it.studentID }.toMutableMap()
+                    studentNamesMap = students.associate { it.name.toString() to it.studentID.toString() }.toMutableMap()
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
