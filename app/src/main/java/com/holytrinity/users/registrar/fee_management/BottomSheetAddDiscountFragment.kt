@@ -30,6 +30,10 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
     // Callback to refresh data on dismissal
     var onDismissListener: (() -> Unit)? = null
 
+    // Variables to determine if we are in edit mode
+    private var editMode = false
+    private var editId: Int? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +44,18 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Check if arguments are passed (means edit mode)
+        arguments?.let {
+            if (it.containsKey("id")) {
+                editMode = true
+                editId = it.getInt("id")
+                binding.titleEditText.setText(it.getString("title"))
+                binding.codeEditText.setText(it.getString("code"))
+                binding.amountEditText.setText(it.getDouble("amount").toString())
+                binding.descriptionEditText.setText(it.getString("description"))
+            }
+        }
 
         binding.doneButton.setOnClickListener {
             validateAndConfirmData()
@@ -63,18 +79,25 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
             return
         }
 
+        val confirmTitle = if (editMode) "Update Discount Fee" else "Add Discount Fee"
+        val confirmContent = if (editMode) "Click \"Done\" to update this discount fee." else "Click \"Done\" to add this new discount fee."
+
         SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Add Discount Fee")
-            .setContentText("Click \"Done\" to add this new discount fee.")
+            .setTitleText(confirmTitle)
+            .setContentText(confirmContent)
             .setConfirmText("Done")
             .setCancelText("Cancel")
             .setConfirmClickListener { dialog ->
                 dialog.dismissWithAnimation()
-                addDiscountFee(title, code, amount, description)
+                if (editMode && editId != null) {
+                    updateDiscountFee(editId!!, title, code, amount, description)
+                } else {
+                    addDiscountFee(title, code, amount, description)
+                }
             }
             .setCancelClickListener { dialog ->
                 dialog.dismissWithAnimation()
-                Log.d("addDiscountFragment", "Add Cancelled")
+                Log.d("addDiscountFragment", "Add/Update Cancelled")
             }
             .show()
     }
@@ -99,6 +122,35 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("addDiscountFee", "Error: ${t.message}")
+            }
+        })
+    }
+
+    private fun updateDiscountFee(id: Int, title: String, code: String, amount: Double, description: String) {
+        // We'll reuse the same model (AssessmentFee from model) but we need id as well, so let's create a map or extend the model
+        // Let's just create a map for simplicity:
+        val discountFee =
+            com.holytrinity.api.DiscountFee(id, title, code, amount, description)
+
+        Log.d("discountFee", "$discountFee");
+
+        apiService.updateDiscountFee(discountFee).enqueue(object : Callback<ApiResponse> {
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                if (response.isSuccessful && response.body() != null && response.body()?.status == "success") {
+                    DialogUtils.showSuccessMessage(
+                        requireActivity(),
+                        "Success",
+                        "Discount Fee Updated Successfully"
+                    ).show()
+                    dismiss()
+                } else {
+                    Toast.makeText(context, "Failed to update data", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("updateDiscountFee", "Error: ${t.message}")
             }
         })
     }
