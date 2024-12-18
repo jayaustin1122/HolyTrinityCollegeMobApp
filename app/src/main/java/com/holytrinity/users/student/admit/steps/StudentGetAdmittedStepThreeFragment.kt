@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.util.Log
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.holytrinity.databinding.FragmentStudentGetAdmittedStepThreeBinding
+import java.io.File
 
 class StudentGetAdmittedStepThreeFragment : Fragment() {
     private lateinit var binding: FragmentStudentGetAdmittedStepThreeBinding
@@ -89,32 +91,56 @@ class StudentGetAdmittedStepThreeFragment : Fragment() {
             binding.esc.visibility = View.VISIBLE
         }
     }
-
+    private fun getFileNameFromUri(uri: Uri): String {
+        var fileName = ""
+        val context = context ?: return fileName  // Ensure context is not null
+        if (uri.scheme.equals("content")) {
+            val cursor = context.contentResolver.query(uri, null, null, null, null)
+            cursor?.let {
+                if (it.moveToFirst()) {
+                    val columnIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                    if (columnIndex != -1) {
+                        fileName = it.getString(columnIndex)
+                    }
+                }
+                it.close()
+            }
+        } else if (uri.scheme.equals("file")) {
+            fileName = File(uri.path!!).name  // For file URI, get file name from path
+        }
+        return fileName
+    }
     // Activity result launcher for picking a file
     private val pickFileLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val selectedFileUri: Uri? = result.data?.data
                 selectedFileUri?.let { uri ->
+                    val fileName = getFileNameFromUri(uri) // Get the file name
                     when (currentFileType) {
                         FileType.FORM137 -> {
                             viewModel.form137 = uri
+                            binding.inputForm137.setText(fileName)
                             Log.d("ViewModelUpdate", "Form 137 set in ViewModel: ${uri.path}")
                         }
                         FileType.DIPLOMA -> {
                             viewModel.diploma = uri
+                            binding.inputDiploma.setText(fileName)
                             Log.d("ViewModelUpdate", "Diploma set in ViewModel: ${uri.path}")
                         }
                         FileType.TOR -> {
                             viewModel.tor = uri
+                            binding.inputTranscript.setText(fileName)
                             Log.d("ViewModelUpdate", "Transcript set in ViewModel: ${uri.path}")
                         }
                         FileType.DISMISSCERT -> {
                             viewModel.coh = uri
+                            binding.inputDismissalCertificate.setText(fileName)
                             Log.d("ViewModelUpdate", "Dismissal Certificate set in ViewModel: ${uri.path}")
                         }
                         FileType.ESC -> {
                             viewModel.esc = uri
+                            binding.inputEsc.setText(fileName)
                             Log.d("ViewModelUpdate", "ESC set in ViewModel: ${uri.path}")
                         }
                         else -> {

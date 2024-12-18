@@ -51,7 +51,7 @@
                 android:id="@+id/inputSHS"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:inputType="text" />
+                android:longClickable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -67,6 +67,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputForm137"
                 android:layout_width="match_parent"
+                android:focusable="false"
+                android:clickable="true"
+                android:longClickable="false"
+                android:cursorVisible="false"
                 android:layout_height="56dp"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -85,6 +89,10 @@
                 android:id="@+id/inputDiploma"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:longClickable="false"
+                android:cursorVisible="false"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,6 +112,10 @@
                 android:id="@+id/inputTranscript"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:focusable="false"
+                android:clickable="true"
+                android:longClickable="false"
+                android:cursorVisible="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,6 +133,10 @@
                 android:id="@+id/inputDismissalCertificate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="false"
+                android:clickable="true"
+                android:longClickable="false"
+                android:cursorVisible="false"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
