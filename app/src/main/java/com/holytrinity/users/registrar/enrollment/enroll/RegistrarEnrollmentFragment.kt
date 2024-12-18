@@ -65,8 +65,6 @@ class RegistrarEnrollmentFragment : Fragment() {
         )
 
         binding.viewPager.adapter = adapter
-
-        // Link TabLayout with ViewPager2 for dots indicator
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ -> }.attach()
 
         binding.backButton.setOnClickListener {
@@ -74,18 +72,17 @@ class RegistrarEnrollmentFragment : Fragment() {
             if (currentItem < fragmentList.size - 1) {
                 binding.viewPager.currentItem = currentItem - 1
             } else {
-                // If on the last page, you can navigate to another screen
+
                 findNavController().navigate(R.id.registrarDrawerHolderFragment)
             }
         }
 
-        // Handle Next button click
         binding.nextButton.setOnClickListener {
             val currentItem = binding.viewPager.currentItem
             if (currentItem < fragmentList.size - 1) {
                 binding.viewPager.currentItem = currentItem + 1
             } else {
-                // If on the last page, you can navigate to another screen
+
                 findNavController().navigate(R.id.registrarDrawerHolderFragment)
             }
         }

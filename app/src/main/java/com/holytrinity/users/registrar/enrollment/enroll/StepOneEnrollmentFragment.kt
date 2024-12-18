@@ -20,9 +20,9 @@ class StepOneEnrollmentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStepOneEnrollmentBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[ViewModelEnrollment::class.java]
@@ -35,11 +35,11 @@ class StepOneEnrollmentFragment : Fragment() {
         val courseList = listOf(viewModel.course,"Computer Science", "Business Administration", "Engineering")
         val curriculumList = listOf(viewModel.curr_id,"Curriculum A", "Curriculum B")
         val sectionList = listOf(viewModel.section,"Section 1", "Section 2", "Section 3")
-        // Set TextView fields
+
         binding.studentIDTextView.text = viewModel.studentID
         binding.studentNameTextView.text = viewModel.name
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            // When a RadioButton is checked, set the value to the ViewModel
+
             when (checkedId) {
                 R.id.radio_new_student -> viewModel.classification_of_student = "New Student"
                 R.id.radio_freshman -> viewModel.classification_of_student = "Freshman"
@@ -53,7 +53,7 @@ class StepOneEnrollmentFragment : Fragment() {
                 R.id.radio_graduating -> viewModel.classification_of_student = "Graduating"
             }
         }
-        // Set Spinners based on the viewModel values
+
         setSpinnerSelection(binding.departmentSpinner, viewModel.department_id, departmentList)
         setSpinnerSelection(binding.levelSpinner, viewModel.level, levelList)
         setSpinnerSelection(binding.courseSpinner, viewModel.course, courseList)
