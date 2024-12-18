@@ -1,56 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_dimen"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_primary"
+            android:paddingTop="@dimen/dimen_30dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/toolbarTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Admission"
+                android:textColor="@color/light_text_color"
+                android:textSize="22sp" />
+
+            <ImageButton
+                android:id="@+id/toolbarBackButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/icon_arrow_back_24"
+                app:tint="@color/light_text_color" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Title/Question -->
     <TextView
-        android:id="@+id/question_text"
+        android:id="@+id/text_canonical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/roboto_medium"
         android:text="What are you applying for?"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="sans-serif-medium" />
+        android:textColor="@color/dark_text_color"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <!-- RadioGroup containing two options -->
     <RadioGroup
         android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_canonical">
 
         <!-- Senior High School Option -->
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radio_senior_high"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/roboto_regular"
             android:text="Senior High School"
             android:textSize="16sp"
-            android:layout_marginBottom="12dp"
-            app:buttonTint="@color/black"
-            android:theme="@style/Widget.MaterialComponents.CompoundButton.RadioButton" />
+            android:theme="@style/Widget.MaterialComponents.CompoundButton.RadioButton"
+            app:buttonTint="@color/black" />
 
         <!-- College Option -->
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/radio_college"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
             android:text="College"
             android:textSize="16sp"
-            app:buttonTint="@color/black"
-            android:theme="@style/Widget.MaterialComponents.CompoundButton.RadioButton" />
+            android:theme="@style/Widget.MaterialComponents.CompoundButton.RadioButton"
+            app:buttonTint="@color/black" />
+
     </RadioGroup>
+
     <Button
         android:id="@+id/btn_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/violet_primary"
+        android:fontFamily="@font/roboto_medium"
         android:text="Continue"
-        />
-</LinearLayout>
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

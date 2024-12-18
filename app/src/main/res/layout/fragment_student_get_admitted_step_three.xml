@@ -1,55 +1,57 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".users.student.admit.steps.StudentGetAdmittedStepThreeFragment"
-    android:fillViewport="true">
+    android:background="@color/white"
+    tools:context=".users.student.admit.steps.StudentGetAdmittedStepThreeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <!-- College Scholastic Section -->
         <TextView
+            android:id="@+id/text_canonical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="College Scholastic"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingBottom="8dp"/>
+            android:textColor="@color/dark_text_color"
+            android:textSize="22sp" />
 
         <!-- Learner Reference Number (LRN) -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:hint="Learner Reference Number (LRN)*"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputLRN"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:layout_height="56dp"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- SHS Attended -->
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
             android:id="@+id/attended"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:hint="SHS Attended*"
-            app:hintEnabled="true"
-            android:layout_marginTop="8dp">
+            app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputSHS"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:layout_height="56dp"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -57,86 +59,85 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:hint="Form 137/138*"
             app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-            app:endIconMode="custom"
-        android:layout_marginTop="8dp">
+            app:endIconMode="custom">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputForm137"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputForm137"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- SHS Diploma Upload -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="SHS Diploma*"
-                    android:id="@+id/diploma"
-                    app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-                app:endIconMode="custom"
-                android:layout_marginTop="8dp">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputDiploma"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <!-- Transcript of Records (if undergrad) -->
-            <com.google.android.material.textfield.TextInputLayout
+        <!-- SHS Diploma Upload -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/diploma"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Transcript of Records (if undergrad)"
+            android:layout_marginBottom="3dp"
+            android:hint="SHS Diploma*"
             app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-            app:endIconMode="custom"
-                android:id="@+id/tor"
-            android:layout_marginTop="8dp">
+            app:endIconMode="custom">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputDiploma"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Transcript of Records (if undergrad) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:hint="Transcript of Records"
+            app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+            app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputTranscript"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="56dp"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Certificate of Honorable Dismissal (if undergrad) -->
-            <com.google.android.material.textfield.TextInputLayout
+        <!-- Certificate of Honorable Dismissal (if undergrad) -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/coh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Certificate of Honorable Dismissal (if undergrad)"
+            android:layout_marginBottom="3dp"
+            android:hint="Certificate of Honorable Dismissal"
             app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-            app:endIconMode="custom"
-                android:id="@+id/coh"
-            android:layout_marginTop="8dp">
+            app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputDismissalCertificate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/esc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="ESC Certificate"
-            app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-            app:endIconMode="custom"
             android:visibility="gone"
-            android:id="@+id/esc"
-            android:layout_marginTop="8dp">
+            app:endIconDrawable="@drawable/baseline_cloud_upload_24"
+            app:endIconMode="custom">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputEsc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:layout_height="56dp"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>

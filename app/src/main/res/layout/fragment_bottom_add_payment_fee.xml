@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="24dp"
-    android:background="@color/white"
-    tools:context=".users.cashier.payment_management.BottomAddAssestmentFeeFragment">
+    android:paddingBottom="20dp"
+    android:background="@drawable/background_bottom_sheet"
+    tools:context=".users.cashier.payment_management.BottomAddPaymentFeeFragment">
 
 
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
@@ -129,6 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Done"
+        android:textColor="@color/light_text_color"
         android:fontFamily="@font/roboto_medium"
         app:layout_constraintTop_toBottomOf="@+id/descriptionTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"

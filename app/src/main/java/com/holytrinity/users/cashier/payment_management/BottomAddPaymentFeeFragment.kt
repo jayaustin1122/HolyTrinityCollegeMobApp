@@ -1,4 +1,4 @@
-package com.holytrinity.users.registrar.fee_management
+package com.holytrinity.users.cashier.payment_management
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,20 +11,20 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.canorecoapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.holytrinity.api.ApiResponse
-import com.holytrinity.api.DiscountFeeService
+import com.holytrinity.api.PaymentFeeService
 import com.holytrinity.api.RetrofitInstance
-import com.holytrinity.databinding.FragmentBottomSheetAddDiscountBinding
-import com.holytrinity.model.DiscountFee
+import com.holytrinity.databinding.FragmentBottomAddPaymentFeeBinding
+import com.holytrinity.model.PaymentFee
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
+class BottomSheetAddPaymentFeeFragment : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentBottomSheetAddDiscountBinding? = null
+    private var _binding: FragmentBottomAddPaymentFeeBinding? = null
     private val binding get() = _binding!!
-    private val apiService: DiscountFeeService by lazy {
-        RetrofitInstance.create(DiscountFeeService::class.java)
+    private val apiService: PaymentFeeService by lazy {
+        RetrofitInstance.create(PaymentFeeService::class.java)
     }
 
     // Callback to refresh data on dismissal
@@ -34,7 +34,7 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBottomSheetAddDiscountBinding.inflate(inflater, container, false)
+        _binding = FragmentBottomAddPaymentFeeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -48,11 +48,10 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
 
     private fun validateAndConfirmData() {
         val title = binding.titleEditText.text.toString().trim()
-        val code = binding.codeEditText.text.toString().trim()
         val amountText = binding.amountEditText.text.toString().trim()
         val description = binding.descriptionEditText.text.toString().trim()
 
-        if (title.isEmpty() || code.isEmpty() || amountText.isEmpty() || description.isEmpty()) {
+        if (title.isEmpty() || amountText.isEmpty() || description.isEmpty()) {
             Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
             return
         }
@@ -64,31 +63,31 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
         }
 
         SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE)
-            .setTitleText("Add Discount Fee")
-            .setContentText("Click \"Done\" to add this new discount fee.")
+            .setTitleText("Add Payment Fee")
+            .setContentText("Click \"Done\" to add this new payment fee.")
             .setConfirmText("Done")
             .setCancelText("Cancel")
             .setConfirmClickListener { dialog ->
                 dialog.dismissWithAnimation()
-                addDiscountFee(title, code, amount, description)
+                addPaymentFee(title, amount, description)
             }
             .setCancelClickListener { dialog ->
                 dialog.dismissWithAnimation()
-                Log.d("addDiscountFragment", "Add Cancelled")
+                Log.d("addPaymentFragment", "Add Cancelled")
             }
             .show()
     }
 
-    private fun addDiscountFee(title: String, code: String, amount: Double, description: String) {
-        val discountFee = DiscountFee(title, code, amount, description)
+    private fun addPaymentFee(title: String, amount: Double, description: String) {
+        val payment = PaymentFee(title, amount, description)
 
-        apiService.addDiscountFee(discountFee).enqueue(object : Callback<ApiResponse> {
+        apiService.addPaymentFee(payment).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body() != null) {
                     DialogUtils.showSuccessMessage(
                         requireActivity(),
                         "Success",
-                        "Discount Fee Added Successfully"
+                        "Payment Fee Added Successfully"
                     ).show()
                     dismiss()
                 } else {
@@ -98,7 +97,7 @@ class BottomSheetAddDiscountFragment : BottomSheetDialogFragment() {
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.e("addDiscountFee", "Error: ${t.message}")
+                Log.e("addPaymentFee", "Error: ${t.message}")
             }
         })
     }

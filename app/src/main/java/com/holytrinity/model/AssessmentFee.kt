@@ -1,8 +1,8 @@
 package com.holytrinity.model
 
-data class DiscountFee(
+data class AssessmentFee (
     val title: String,
-    val code: String,
     val amount: Double,
-    val description: String
+    val description: String,
+    val subFee: Int
 )
