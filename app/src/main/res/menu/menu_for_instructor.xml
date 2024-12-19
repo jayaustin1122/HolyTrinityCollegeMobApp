@@ -1,0 +1,46 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Holy Trinity College Seminary Foundation Inc." />
+
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/icon_dashboard_24"
+        android:title="Dashboard" />
+
+    <item android:title="Transaction">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_transaction">
+                <item
+                    android:id="@+id/nav_class_list"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Class List" />
+                <item
+                    android:id="@+id/nav_schedule"
+                    android:icon="@drawable/icon_calendar_24"
+                    android:title="Schedule" />
+                <item
+                    android:id="@+id/nav_grading_sheet"
+                    android:icon="@drawable/icon_assessment_24"
+                    android:title="Grading Sheet" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Options">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_settings">
+                <item
+                    android:id="@+id/nav_setup"
+                    android:icon="@drawable/icon_setup_24"
+                    android:title="Setup" />
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/icon_logout_24"
+                    android:title="Logout" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

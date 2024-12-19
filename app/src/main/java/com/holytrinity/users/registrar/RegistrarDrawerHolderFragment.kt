@@ -17,6 +17,7 @@ import com.holytrinity.R
 import com.holytrinity.databinding.FragmentRegistrarDrawerHolderBinding
 import com.holytrinity.users.cashier.payment_management.CashierPaymentManagementFragment
 import com.holytrinity.users.cashier.payment_transaction.CashierPaymentHolderFragment
+import com.holytrinity.users.registrar.admisson.RegistrarAdmissionFragment
 import com.holytrinity.users.registrar.assestment.AssesmentFragment
 import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
 import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
@@ -69,6 +70,7 @@ class RegistrarDrawerHolderFragment : Fragment() {
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_dashboard -> openFragment(RegistrarDashBoardFragment())
+                R.id.nav_admission -> openFragment(RegistrarAdmissionFragment())
                 R.id.nav_enrollment -> openFragment(RegistrarEnrollmentFragment())
                 R.id.nav_ledger -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_payment_management -> openFragment(CashierPaymentManagementFragment())

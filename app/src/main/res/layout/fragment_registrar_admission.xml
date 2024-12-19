@@ -73,16 +73,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
-
-
+K
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEnrolledSubjects"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingHorizontal="20dp"
         android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:listitem="@layout/item_admission"
         app:layout_constraintTop_toBottomOf="@+id/useridTextView"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
