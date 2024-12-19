@@ -104,10 +104,9 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
-
-    private fun getAllStudents() {
+    private fun getAllStudents(studentId: String? = null, registrationVerified: String? = "1") {
         val studentService = RetrofitInstance.create(StudentService::class.java)
-        studentService.getStudents().enqueue(object : Callback<List<Student>> {
+        studentService.getStudents(studentId, registrationVerified).enqueue(object : Callback<List<Student>> {
             override fun onResponse(
                 call: Call<List<Student>>,
                 response: retrofit2.Response<List<Student>>
@@ -117,10 +116,10 @@ class RegistrarEnrollmentFragment : Fragment() {
                     students.forEach { student ->
                         Log.d(
                             "StudentData",
-                            "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}"
+                            "ID: ${student.student_id}, Name: ${student.full_name} Dept: ${student.dept_id} "
                         )
                     }
-                    studentNamesMap = students.associate { it.name.toString() to it.studentID.toString() }.toMutableMap()
+                    studentNamesMap = students.associate { it.full_name.toString() to it.student_id.toString() }.toMutableMap()
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
@@ -148,26 +147,16 @@ class RegistrarEnrollmentFragment : Fragment() {
         binding.useridTextView.setOnItemClickListener { parent, _, position, _ ->
             val selectedName = parent.getItemAtPosition(position) as String
             val selectedStudentID = studentNamesMap[selectedName]
-            val selectedStudent = students.find { it.studentID == selectedStudentID }
+            val selectedStudent = students.find { it.student_id == selectedStudentID }
 
             if (selectedStudent != null) {
-                viewModel.apply {
-                    studentID = selectedStudent.studentID ?: ""
-                    name = selectedStudent.name ?: ""
-                    email = selectedStudent.email ?: ""
-                    phone = selectedStudent.phone ?: ""
-                    curr_id = selectedStudent.curr_id ?: ""
-                    department_id = selectedStudent.department_id ?: ""
-                    course = selectedStudent.course ?: ""
-                    level = selectedStudent.level ?: ""
-                    status = selectedStudent.status ?: ""
-                    section = selectedStudent.section ?: ""
-                    classification_of_student = selectedStudent.classification_of_student ?: ""
-                    birthdate = selectedStudent.birthdate ?: ""
-                    sex = selectedStudent.sex ?: ""
-                    address = selectedStudent.address ?: ""
+                viewModel.setStudentID(selectedStudent.student_id ?: "")
+                viewModel.setName(selectedStudent.full_name ?: "")
+                viewModel.setDeptId(selectedStudent.dept_id ?: "")
 
-                }
+                Log.d("ViewModelAssignment", "studentID: ${selectedStudent.student_id}")
+                Log.d("ViewModelAssignment", "name: ${selectedStudent.full_name}")
+                Log.d("ViewModelAssignment", "dept_id: ${selectedStudent.dept_id}")
 
                 binding.viewPager.visibility = View.VISIBLE
             } else {

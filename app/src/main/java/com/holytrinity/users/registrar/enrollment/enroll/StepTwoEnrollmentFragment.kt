@@ -41,8 +41,8 @@ class StepTwoEnrollmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Get the level and add the correct suffix
-        val level = viewModel.level
-        val studentID = viewModel.studentID
+        val level = viewModel.level.toString()
+        val studentID = viewModel.studentID.toString()
         val yearLevel = when (level) {
             1.toString() -> "${level}st Year"
             2.toString() -> "${level}nd Year"
@@ -58,7 +58,7 @@ class StepTwoEnrollmentFragment : Fragment() {
         val curriculum = viewModel.curr_id
 
         // Call the function to get all subjects
-        getAllSubjects(yearLevel, curriculum,studentID)
+        getAllSubjects(yearLevel, curriculum.toString(), studentID.toString())
     }
 
 

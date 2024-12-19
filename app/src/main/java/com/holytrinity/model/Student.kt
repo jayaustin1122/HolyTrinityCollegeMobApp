@@ -1,11 +1,11 @@
 package com.holytrinity.model
 data class Student(
-    val studentID: String? = null,
-    val name: String? = null,
+    val student_id: String? = null,
+    val full_name: String? = null,
     val email: String? = null,
     val phone: String? = null,
     val curr_id: String? = null,
-    val department_id: String? = null,
+    val dept_id: String? = null,
     val course: String? = null,
     val level: String? = null,
     val status: String? = null,

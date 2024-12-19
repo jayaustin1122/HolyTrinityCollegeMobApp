@@ -53,9 +53,9 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        Log.d("StudentData", "ID: ${student.studentID}, Name: ${student.name}, Email: ${student.email}, Phone: ${student.phone}")
+                        Log.d("StudentData", "ID: ${student.student_id}, Name: ${student.full_name}")
                     }
-                    studentNamesMap = students.associate { it.name.toString() to it.studentID.toString() }.toMutableMap()
+                    studentNamesMap = students.associate { it.full_name.toString() to it.student_id.toString() }.toMutableMap()
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
@@ -77,17 +77,17 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
         binding.searchStudentTextView.setOnItemClickListener { parent, _, position, _ ->
             val selectedName = parent.getItemAtPosition(position) as String
             val selectedStudentID = studentNamesMap[selectedName]
-            val selectedStudent = students.find { it.studentID == selectedStudentID }
+            val selectedStudent = students.find { it.student_id == selectedStudentID }
 
             if (selectedStudent != null) {
                 binding.studentInfoLayout.visibility = View.VISIBLE
                 binding.pdfLayout.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.VISIBLE
-                binding.studentNumber.text = selectedStudent.studentID
-                binding.studentName.text = selectedStudent.name
+                binding.studentNumber.text = selectedStudent.student_id
+                binding.studentName.text = selectedStudent.full_name
 
                 // Fetch the SOA for the selected student and update the RecyclerView
-                fetchAllSoa(selectedStudent.studentID)
+                fetchAllSoa(selectedStudent.student_id)
             }
         }
     }
@@ -129,7 +129,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        studentNames[student.studentID.toString()] = student.name.toString()
+                        studentNames[student.student_id.toString()] = student.full_name.toString()
                     }
                     if (::soaAdapter.isInitialized) {
                         soaAdapter.updateSoaList(soaList)
