@@ -73,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
-K
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEnrolledSubjects"
         android:layout_width="0dp"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/registrarDrawerHolderFragment">
+    app:startDestination="@id/calendarFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -48,4 +48,17 @@
         android:id="@+id/registrarAdmissionFragment"
         android:name="com.holytrinity.users.registrar.admisson.RegistrarAdmissionFragment"
         android:label="RegistrarAdmissionFragment" />
+    <fragment
+        android:id="@+id/registrarAdmissionDetailsFragment"
+        android:name="com.holytrinity.users.registrar.admisson.RegistrarAdmissionDetailsFragment"
+        android:label="fragment_registrar_admission_details"
+        tools:layout="@layout/fragment_registrar_admission_details" />
+    <fragment
+        android:id="@+id/documentViewerFragment"
+        android:name="com.holytrinity.users.registrar.admisson.DocumentViewerFragment"
+        android:label="DocumentViewerFragment" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.holytrinity.api.sample.CalendarFragment"
+        android:label="CalendarFragment" />
 </navigation>

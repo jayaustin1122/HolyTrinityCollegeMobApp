@@ -648,7 +648,35 @@
                     android:layout_height="56dp"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
+            <LinearLayout
+                android:id="@+id/navigationButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="end"
+                android:orientation="horizontal">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDeny"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Deny"
+                    android:textColor="@color/violet_primary"
+                    app:cornerRadius="8dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAdmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/violet_primary"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Admit"
+                    app:cornerRadius="8dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

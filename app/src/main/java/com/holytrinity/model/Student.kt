@@ -1,4 +1,14 @@
 package com.holytrinity.model
+
+data class Document(
+    val document_id: Int,
+    val doc_type: String,
+    val file_name: String,
+    val file_path: String,
+    val upload_date: String,
+    val verified: Int
+)
+
 data class Student(
     val student_id: String? = null,
     val full_name: String? = null,
@@ -12,9 +22,9 @@ data class Student(
     val section: String? = null,
     val classification_of_student: String? = null,
     val birthdate: String? = null,
-    val sex: String? = null,
+    val gender: String? = null,
     val address: String? = null,
-    val lrn: String? = null,
+    val learner_ref_no: String? = null,
     val attended: String? = null,
     val form137: String? = null,
     val diploma: String? = null,
@@ -23,8 +33,8 @@ data class Student(
     val esc: String? = null,
     val userName: String? = null,
     val password: String? = null,
-    val baptismal: String? = null,
-    val confirmCert: String? = null,
+    val baptismal: List<Document>? = null, // Change to List<Document>
+    val confirmCert: List<Document>? = null, // Change to List<Document>
     val nso: String? = null,
     val marriageCert: String? = null,
     val brgyCert: String? = null,
@@ -35,13 +45,19 @@ data class Student(
     val medCert: String? = null,
     val userType: String? = null,
     val fullName: String? = null,
-    val lastName: String? = null,
-    val firstName: String? = null,
-    val middleName: String? = null,
+    val last_name: String? = null,
+    val first_name: String? = null,
+    val line1: String? = null,
+    val line2: String? = null,
+    val middle_name: String? = null,
     val municipality: String? = null,
     val barangay: String? = null,
     val curriculum: String? = null,
     val entryPeriod: String? = null,
     val createdAt: String? = null,
-    val dateOfBirth: String? = null
+    val dateOfBirth: String? = null,
+    val registration_verified: String? = null,
+    val entry_date: String? = null,
+    val user_id: String? = null,
+    val documents: List<Document>? = null
 )
