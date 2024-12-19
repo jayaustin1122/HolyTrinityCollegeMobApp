@@ -53,9 +53,9 @@ open class CashierPaymentManagementFragment : Fragment() {
 
         binding.toolbarBackButton.setOnClickListener {
             val bundle = Bundle().apply {
-                putInt("selectedFragmentId", null ?: R.id.nav_dashboard)
+                putInt("selectedFragmentId", null ?: R.id.nav_dashboard_cashier)
             }
-            findNavController().navigate(R.id.registrarDrawerHolderFragment, bundle)
+            findNavController().navigate(R.id.cashierDrawerFragment, bundle)
         }
 
         binding.addPaymentButton.setOnClickListener {

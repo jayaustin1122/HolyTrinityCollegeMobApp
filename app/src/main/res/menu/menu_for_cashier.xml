@@ -1,71 +1,59 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Holy Trinity College Seminary Foundation Inc." />
 
-    <!-- Files Section -->
-
-    <group
-        android:id="@+id/menu_section_files_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_cashier_dashboard"
-            android:title="Dashboard"
-            android:icon="@drawable/icon_add_24"
-            app:actionViewClass="android.widget.TextView" />
-    </group>
-
-    <!-- Transaction Section -->
     <item
-        android:id="@+id/menu_section_transaction"
-        android:title="Transaction"
-        android:enabled="false" />
+        android:id="@+id/nav_dashboard_cashier"
+        android:icon="@drawable/icon_dashboard_24"
+        android:title="Dashboard" />
 
-    <group
-        android:id="@+id/menu_section_transaction_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_payment_transaction"
-            android:title="Payment Transaction"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_payment_management"
-            android:title="Payment Management"
-            android:icon="@drawable/icon_add_24" />
-    </group>
+    <item android:title="Transaction">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_transaction">
+                <item
+                    android:id="@+id/nav_payment_cashier"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Payment" />
+                <item
+                    android:id="@+id/nav_payment_management_cashier"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Payment Management" />
 
-    <!-- Reports Section -->
-    <item
-        android:id="@+id/menu_section_reports"
-        android:title="Reports"
-        android:enabled="false"
-  />
+            </group>
+        </menu>
+    </item>
 
-    <group
-        android:id="@+id/menu_section_reportSection"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_ledger"
-            android:title="Student Ledger"
-            android:icon="@drawable/icon_add_24" />
-    </group>
+    <item android:title="Reports">
+        <menu>
+            <group
+                android:id="@+id/menu_google_apps">
+                <item
+                    android:id="@+id/nav_ledger_cashier"
+                    android:icon="@drawable/icon_topic_24"
+                    android:title="Student Ledger" />
+                <item
+                    android:id="@+id/nav_registrar_cashier"
+                    android:icon="@drawable/icon_topic_24"
+                    android:title="Registrar" />
+            </group>
+        </menu>
+    </item>
 
-    <!-- Settings and Other Section -->
-    <item
-        android:id="@+id/menu_section_settings"
-        android:title="Options"
-        android:enabled="false"
-      />
-
-    <group
-        android:id="@+id/menu_section_settings_section"
-        android:checkableBehavior="none">
-        <item
-            android:id="@+id/nav_cashier_setup"
-            android:title="Setup"
-            android:icon="@drawable/icon_add_24" />
-        <item
-            android:id="@+id/nav_cashier_logout"
-            android:title="Logout"
-            android:icon="@drawable/icon_add_24" />
-    </group>
+    <item android:title="Options">
+        <menu>
+            <group
+                android:id="@+id/menu_nav_settings">
+                <item
+                    android:id="@+id/nav_setup_cashier"
+                    android:icon="@drawable/icon_setup_24"
+                    android:title="Setup" />
+                <item
+                    android:id="@+id/nav_logout_cashier"
+                    android:icon="@drawable/icon_logout_24"
+                    android:title="Logout" />
+            </group>
+        </menu>
+    </item>
 
 </menu>

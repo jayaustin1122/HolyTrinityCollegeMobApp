@@ -4,39 +4,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:id="@+id/myDrawerLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
+            android:layout_height="@dimen/top_bar_dimen"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/Theme.AppCompat"
-            app:titleTextColor="@color/white"
-            app:title="Holy Trinity" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/dimen_30dp"
+                android:background="@color/dark_primary"
+                app:popupTheme="@style/Theme.AppCompat" >
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/light_text_color"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/roboto_bold"/>
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemTextColor="@color/black"
-        android:id="@+id/nav_view"
-        android:background="@color/white"
+        android:background="@color/dark_primary"
+        app:itemIconTint="@color/light_icon_color"
+        app:itemTextColor="@color/light_text_color"
+        app:subheaderColor="@color/light_icon_color"
         app:menu="@menu/menu_for_cashier" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

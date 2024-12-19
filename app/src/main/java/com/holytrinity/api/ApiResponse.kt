@@ -6,7 +6,33 @@ data class ApiResponse(
     val data: List<SubFee>,
     val assessment: List<AssessmentFee>,
     val discount: List<DiscountFee>,
-    val payment: List<PaymentFee>
+    val payment: List<PaymentFee>,
+
+    val courses: List<Courses>,
+    val curriculum: List<Curriculum>,
+    val subject: List<Subject>
+)
+
+data class Courses (
+    val course_id: Int,
+    val name: String,
+    val code: String,
+    val dept_id: Int,
+    val description: String
+)
+
+data class Curriculum (
+    val curriculum_id: Int,
+    val name: String,
+    val code: String,
+    val description: String
+)
+
+data class Subject (
+    val subject_id: Int,
+    val name: String,
+    val code: String,
+    val units: Int
 )
 
 data class SubFee(

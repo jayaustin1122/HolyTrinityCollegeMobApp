@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation ("com.applandeo:material-calendar-view:1.7.0-rc01")
 
     //  implementation ("com.github.mreram:showcaseview:1.4.1")
     val nav_version = "2.7.2"

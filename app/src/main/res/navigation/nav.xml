@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/registrarDrawerHolderFragment">
+    app:startDestination="@id/adminDrawerFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -48,4 +48,34 @@
         android:id="@+id/registrarAdmissionFragment"
         android:name="com.holytrinity.users.registrar.admisson.RegistrarAdmissionFragment"
         android:label="RegistrarAdmissionFragment" />
+
+    <fragment
+        android:id="@+id/cashierDrawerFragment"
+        android:name="com.holytrinity.users.cashier.CashierDrawerFragment"
+        android:label="CashierDrawerFragment" />
+
+    <fragment
+        android:id="@+id/adminDrawerFragment"
+        android:name="com.holytrinity.users.admin.AdminDrawerHolderFragment"
+        android:label="AdminDrawerHolderFragment" />
+    <fragment
+        android:id="@+id/adminCoursesFragment"
+        android:name="com.holytrinity.users.admin.courses.AdminCoursesFragment"
+        android:label="fragment_admin_courses"
+        tools:layout="@layout/fragment_admin_courses" />
+    <fragment
+        android:id="@+id/adminCurriculumsFragment"
+        android:name="com.holytrinity.users.admin.curriculums.AdminCurriculumsFragment"
+        android:label="fragment_admin_curriculums"
+        tools:layout="@layout/fragment_admin_curriculums" />
+    <fragment
+        android:id="@+id/adminSubjectsFragment"
+        android:name="com.holytrinity.users.admin.subjects.AdminSubjectsFragment"
+        android:label="fragment_admin_subjects"
+        tools:layout="@layout/fragment_admin_subjects" />
+    <fragment
+        android:id="@+id/adminOfferingsFragment"
+        android:name="com.holytrinity.users.admin.offerings.AdminOfferingsFragment"
+        android:label="fragment_admin_offerings"
+        tools:layout="@layout/fragment_admin_offerings" />
 </navigation>
