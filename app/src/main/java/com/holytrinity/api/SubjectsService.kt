@@ -10,7 +10,8 @@ interface SubjectsService {
     @GET("crud-android/trinity/getAllSubjectsCurriculum.php")
     fun getAllSubjectsCurriculum(
         @Query("recommended_year_level") yearLevel: String,
-        @Query("curriculum_id") curriculumId: String
+        @Query("curriculum_id") curriculumId: String,
+        @Query("student_id") studentID: String
     ): Call<List<SubjectsModel>>
 }
 

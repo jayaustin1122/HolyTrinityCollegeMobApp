@@ -16,7 +16,6 @@ import com.holytrinity.users.registrar.adapter.SubjectsAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.security.auth.Subject
 
 
 class StepTwoEnrollmentFragment : Fragment() {
@@ -43,6 +42,7 @@ class StepTwoEnrollmentFragment : Fragment() {
 
         // Get the level and add the correct suffix
         val level = viewModel.level
+        val studentID = viewModel.studentID
         val yearLevel = when (level) {
             1.toString() -> "${level}st Year"
             2.toString() -> "${level}nd Year"
@@ -58,16 +58,16 @@ class StepTwoEnrollmentFragment : Fragment() {
         val curriculum = viewModel.curr_id
 
         // Call the function to get all subjects
-        getAllSubjects(yearLevel, curriculum)
+        getAllSubjects(yearLevel, curriculum,studentID)
     }
 
 
-    private fun getAllSubjects(yearLevel: String,curriculum:String) {
+    private fun getAllSubjects(yearLevel: String, curriculum: String, studentID: String) {
         // Create the Retrofit instance
         val service = RetrofitInstance.create(SubjectsService::class.java)
 
 
-        service.getAllSubjectsCurriculum(yearLevel,curriculum).enqueue(object : Callback<List<SubjectsModel>> {
+        service.getAllSubjectsCurriculum(yearLevel,curriculum,studentID).enqueue(object : Callback<List<SubjectsModel>> {
             override fun onResponse(call: Call<List<SubjectsModel>>, response: Response<List<SubjectsModel>>) {
                 if (response.isSuccessful) {
                     // Access the subjects list directly from the response body
