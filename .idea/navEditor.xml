@@ -8,37 +8,73 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="calendarFragment">
+                  <entry key="adminCoursesFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-699" />
-                            <option name="y" value="-1171" />
+                            <option name="x" value="-412" />
+                            <option name="y" value="-521" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="documentViewerFragment">
+                  <entry key="adminCurriculumsFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-673" />
-                            <option name="y" value="-598" />
+                            <option name="x" value="-382" />
+                            <option name="y" value="-491" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="registrarAdmissionDetailsFragment">
+                  <entry key="adminDrawerFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-703" />
-                            <option name="y" value="-628" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="adminOfferingsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-322" />
+                            <option name="y" value="-431" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="adminSubjectsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-352" />
+                            <option name="y" value="-461" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="cashierDrawerFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>

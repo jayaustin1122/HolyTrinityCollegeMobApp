@@ -74,7 +74,7 @@ class RegistrarDrawerHolderFragment : Fragment() {
                 R.id.nav_enrollment -> openFragment(RegistrarEnrollmentFragment())
                 R.id.nav_ledger -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_payment_management -> openFragment(CashierPaymentManagementFragment())
-                R.id.nav_payment_transaction -> openFragment(CashierPaymentHolderFragment())
+                R.id.nav_payment -> openFragment(CashierPaymentHolderFragment())
                 R.id.nav_fee_management -> openFragment(CashierFeeManagementHolderFragment())
                 R.id.nav_registrar -> openFragment(RegistrarHolderFragment())
                 R.id.nav_assessment -> openFragment(AssesmentFragment())
