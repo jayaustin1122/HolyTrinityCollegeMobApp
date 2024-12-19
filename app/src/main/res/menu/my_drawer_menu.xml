@@ -12,6 +12,10 @@
             <group
                 android:id="@+id/menu_nav_transaction">
                 <item
+                    android:id="@+id/nav_admission"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Admission" />
+                <item
                     android:id="@+id/nav_enrollment"
                     android:icon="@drawable/icon_enroll_24"
                     android:title="Enrollment" />
@@ -19,6 +23,8 @@
                     android:id="@+id/nav_assessment"
                     android:icon="@drawable/icon_assessment_24"
                     android:title="Assessment" />
+
+                <!-- Cashier  -->
                 <item
                     android:id="@+id/nav_payment"
                     android:icon="@drawable/icon_enroll_24"

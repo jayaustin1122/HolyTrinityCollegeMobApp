@@ -43,4 +43,9 @@
         android:id="@+id/sampleFragment"
         android:name="com.holytrinity.api.sample.SampleFragment"
         android:label="SampleFragment" />
+
+    <fragment
+        android:id="@+id/registrarAdmissionFragment"
+        android:name="com.holytrinity.users.registrar.admisson.RegistrarAdmissionFragment"
+        android:label="RegistrarAdmissionFragment" />
 </navigation>
