@@ -101,93 +101,102 @@ class RegistrarAdmissionDetailsFragment : Fragment() {
                 response: retrofit2.Response<List<Student>>
             ) {
                 if (response.isSuccessful) {
-                    val student = response.body()?.get(0) // Assuming the first element is the student data
-                    student?.let {
-                        // Set the data to the UI components
-                        binding.firstName.setText(it.first_name ?: "Unknown")
-                        binding.middleName.setText(it.middle_name ?: "Unknown")
-                        binding.lastName.setText(it.last_name ?: "Unknown")
-                        binding.sexDropdown.setText(it.gender ?: "Unknown", false)
-                        binding.dateOfBirth.setText(it.birthdate ?: "Unknown")
-                        binding.email.setText(it.email ?: "Unknown")
-                        binding.phone.setText(it.phone ?: "Unknown")
-                        binding.municipalityDropdown.setText(it.line1 ?: "Unknown")
-                        binding.barangayDropdown.setText(it.line2 ?: "Unknown")
-                        binding.editParish.setText(it.parish ?: "Unknown")
-                        binding.inputLRN.setText(it.learner_ref_no ?: "Unknown")
+                    val students = response.body()
+                    if (!students.isNullOrEmpty()) {
+                        val student = students[0]
+                        student?.let {
+                            student?.let {
+                                // Set the data to the UI components
+                                binding.firstName.setText(it.first_name ?: "Unknown")
+                                binding.middleName.setText(it.middle_name ?: "Unknown")
+                                binding.lastName.setText(it.last_name ?: "Unknown")
+                                binding.sexDropdown.setText(it.gender ?: "Unknown", false)
+                                binding.dateOfBirth.setText(it.birthdate ?: "Unknown")
+                                binding.email.setText(it.email ?: "Unknown")
+                                binding.phone.setText(it.phone ?: "Unknown")
+                                binding.municipalityDropdown.setText(it.line1 ?: "Unknown")
+                                binding.barangayDropdown.setText(it.line2 ?: "Unknown")
+                                binding.editParish.setText(it.parish ?: "Unknown")
+                                binding.inputLRN.setText(it.learner_ref_no ?: "Unknown")
 
-                        // Set document filenames by filtering through the documents list
-                        val confirmCertDoc = it.documents?.find { doc -> doc.doc_type == "confirmCert" }
-                        binding.editConfirmationCertificate.setText(confirmCertDoc?.file_name ?: "Not Provided")
+                                // Set document filenames by filtering through the documents list
+                                val confirmCertDoc = it.documents?.find { doc -> doc.doc_type == "confirmCert" }
+                                binding.editConfirmationCertificate.setText(confirmCertDoc?.file_name ?: "Not Provided")
 
-                        val baptismalCertDoc = it.documents?.find { doc -> doc.doc_type == "baptismal" }
-                        binding.editBaptismalCertificate.setText(baptismalCertDoc?.file_name ?: "Not Provided")
+                                val baptismalCertDoc = it.documents?.find { doc -> doc.doc_type == "baptismal" }
+                                binding.editBaptismalCertificate.setText(baptismalCertDoc?.file_name ?: "Not Provided")
 
-                        val birForm = it.documents?.find { doc -> doc.doc_type == "birForm" }
-                        binding.editBirForm.setText(birForm?.file_name ?: "Not Provided")
+                                val birForm = it.documents?.find { doc -> doc.doc_type == "birForm" }
+                                binding.editBirForm.setText(birForm?.file_name ?: "Not Provided")
 
-                        val diploma = it.documents?.find { doc -> doc.doc_type == "diploma" }
-                        binding.inputDiploma.setText(diploma?.file_name ?: "Not Provided")
-
-
-
-                        val esc = it.documents?.find { doc -> doc.doc_type == "esc" }
-                        binding.inputEsc.setText(esc?.file_name ?: "Not Provided")
-
-                        val nso = it.documents?.find { doc -> doc.doc_type == "nso" }
-                        binding.editNsoCertificate.setText(nso?.file_name ?: "Not Provided")
-
-                        val marriageCert = it.documents?.find { doc -> doc.doc_type == "marriageCert" }
-                        binding.editMarriageCertificate.setText(marriageCert?.file_name ?: "Not Provided")
-
-                        val brgyCert = it.documents?.find { doc -> doc.doc_type == "brgyCert" }
-                        binding.editBrgyResidenceCertificate.setText(brgyCert?.file_name ?: "Not Provided")
-                        val indigency = it.documents?.find { doc -> doc.doc_type == "indigency" }
-                        binding.editCertificateOfIndigency.setText(indigency?.file_name ?: "Not Provided")
-
-                        val form137 = it.documents?.find { doc -> doc.doc_type == "form137" }
-                        binding.inputForm137.setText(form137?.file_name ?: "Not Provided")
+                                val diploma = it.documents?.find { doc -> doc.doc_type == "diploma" }
+                                binding.inputDiploma.setText(diploma?.file_name ?: "Not Provided")
 
 
-                        val recommLetter = it.documents?.find { doc -> doc.doc_type == "recommLetter" }
-                        binding.editRecommendationLetter.setText(recommLetter?.file_name ?: "Not Provided")
 
-                        val medCert = it.documents?.find { doc -> doc.doc_type == "medCert" }
-                        binding.editMedicalCertificate.setText(medCert?.file_name ?: "Not Provided")
+                                val esc = it.documents?.find { doc -> doc.doc_type == "esc" }
+                                binding.inputEsc.setText(esc?.file_name ?: "Not Provided")
 
-                        val tor = it.documents?.find { doc -> doc.doc_type == "tor" }
-                        binding.inputTranscript.setText(tor?.file_name ?: "Not Provided")
+                                val nso = it.documents?.find { doc -> doc.doc_type == "nso" }
+                                binding.editNsoCertificate.setText(nso?.file_name ?: "Not Provided")
 
-                        val coh = it.documents?.find { doc -> doc.doc_type == "coh" }
-                        binding.inputDismissalCertificate.setText(coh?.file_name ?: "Not Provided")
+                                val marriageCert = it.documents?.find { doc -> doc.doc_type == "marriageCert" }
+                                binding.editMarriageCertificate.setText(marriageCert?.file_name ?: "Not Provided")
 
-                        val attended = it.documents?.find { doc -> doc.doc_type == "attended" }
-                        binding.inputSHS.setText(attended?.file_name ?: "Not Provided")
+                                val brgyCert = it.documents?.find { doc -> doc.doc_type == "brgyCert" }
+                                binding.editBrgyResidenceCertificate.setText(brgyCert?.file_name ?: "Not Provided")
+                                val indigency = it.documents?.find { doc -> doc.doc_type == "indigency" }
+                                binding.editCertificateOfIndigency.setText(indigency?.file_name ?: "Not Provided")
 
-                        // Add click listeners to open the documents
-                        binding.editConfirmationCertificate.setOnClickListener {
-                            confirmCertDoc?.let { doc ->
-                                // Navigate to the DocumentViewerFragment with the file path as an argument
-                                val bundle = Bundle().apply {
-                                    putString("filePath", doc.file_path)
+                                val form137 = it.documents?.find { doc -> doc.doc_type == "form137" }
+                                binding.inputForm137.setText(form137?.file_name ?: "Not Provided")
+
+
+                                val recommLetter = it.documents?.find { doc -> doc.doc_type == "recommLetter" }
+                                binding.editRecommendationLetter.setText(recommLetter?.file_name ?: "Not Provided")
+
+                                val medCert = it.documents?.find { doc -> doc.doc_type == "medCert" }
+                                binding.editMedicalCertificate.setText(medCert?.file_name ?: "Not Provided")
+
+                                val tor = it.documents?.find { doc -> doc.doc_type == "tor" }
+                                binding.inputTranscript.setText(tor?.file_name ?: "Not Provided")
+
+                                val coh = it.documents?.find { doc -> doc.doc_type == "coh" }
+                                binding.inputDismissalCertificate.setText(coh?.file_name ?: "Not Provided")
+
+                                val attended = it.documents?.find { doc -> doc.doc_type == "attended" }
+                                binding.inputSHS.setText(attended?.file_name ?: "Not Provided")
+
+                                // Add click listeners to open the documents
+                                binding.editConfirmationCertificate.setOnClickListener {
+                                    confirmCertDoc?.let { doc ->
+                                        // Navigate to the DocumentViewerFragment with the file path as an argument
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
                                 }
-                                findNavController().navigate(R.id.documentViewerFragment, bundle)
+
+                                binding.editBaptismalCertificate.setOnClickListener {
+                                    baptismalCertDoc?.let { doc ->
+                                        // Navigate to the DocumentViewerFragment with the file path as an argument
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
                             }
                         }
-
-                        binding.editBaptismalCertificate.setOnClickListener {
-                            baptismalCertDoc?.let { doc ->
-                                // Navigate to the DocumentViewerFragment with the file path as an argument
-                                val bundle = Bundle().apply {
-                                    putString("filePath", doc.file_path)
-                                }
-                                findNavController().navigate(R.id.documentViewerFragment, bundle)
-                            }
-                        }
+                    } else {
+                        Log.e("Error", "No student data found")
+                        // Handle the empty state here, e.g., show a message to the user
                     }
                 } else {
                     Log.e("Error", "Failed to fetch student details: ${response.code()}")
                 }
+
             }
 
             override fun onFailure(call: Call<List<Student>>, t: Throwable) {
