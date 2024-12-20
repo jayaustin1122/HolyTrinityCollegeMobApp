@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="21-1238"
+            android:text=""
             android:textSize="16sp"
             android:textColor="@color/dark_text_color"
             android:fontFamily="@font/roboto_medium" />
@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="Wells D. Fargo"
+            android:text=""
             android:textSize="16sp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/dark_text_color"

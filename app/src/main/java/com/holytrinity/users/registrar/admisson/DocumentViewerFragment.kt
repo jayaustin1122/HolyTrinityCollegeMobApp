@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ class DocumentViewerFragment : Fragment() {
 
     private lateinit var binding: FragmentDocumentViewerBinding
     private var filePath: String? = null
+    private val baseUrl = "http://lesterintheclouds.com/crud-android/uploads/"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,26 +32,24 @@ class DocumentViewerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Get the file path passed in the arguments
         filePath = arguments?.getString("filePath")
+        Log.d("Path", "$filePath")
 
-        // If file path exists, open the document
         filePath?.let {
             openDocument(it)
         }
     }
 
     private fun openDocument(filePath: String) {
-        val fileUri = Uri.parse(filePath)
+        val fileUri = Uri.parse(getPublicUrl(filePath))
         val mimeType = getMimeType(fileUri)
 
-        // If it's a PDF, load it in WebView
-        if (mimeType == "application/pdf") {
+        if (mimeType == "application/pdf" || mimeType == "application/msword" || mimeType == "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
             binding.pdfWebView.visibility = View.VISIBLE
             binding.progressBar.visibility = View.VISIBLE
             binding.errorMessage.visibility = View.GONE
 
-            // Using Google Docs viewer to display the PDF file from URL
+
             binding.pdfWebView.loadUrl("https://docs.google.com/gview?embedded=true&url=$fileUri")
             binding.pdfWebView.setWebViewClient(object : android.webkit.WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
@@ -57,13 +57,13 @@ class DocumentViewerFragment : Fragment() {
                 }
             })
         } else {
-            // For other file types (like Word, Excel), try to open them with an external app
+
             binding.pdfWebView.visibility = View.GONE
             binding.progressBar.visibility = View.GONE
             binding.errorMessage.visibility = View.VISIBLE
 
             try {
-                // Create an intent to open the document with a compatible app
+
                 val intent = Intent(Intent.ACTION_VIEW).apply {
                     setDataAndType(fileUri, mimeType)
                     flags = Intent.FLAG_ACTIVITY_NO_HISTORY
@@ -76,8 +76,13 @@ class DocumentViewerFragment : Fragment() {
     }
 
     private fun getMimeType(uri: Uri): String {
-        // This function determines the MIME type of the file (e.g., application/pdf for PDFs)
         val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "*/*"
+    }
+
+    private fun getPublicUrl(filePath: String): String {
+
+        val fileName = filePath.substringAfterLast("/crud-android/uploads/")
+        return "$baseUrl$fileName".replace(" ", "%20")
     }
 }

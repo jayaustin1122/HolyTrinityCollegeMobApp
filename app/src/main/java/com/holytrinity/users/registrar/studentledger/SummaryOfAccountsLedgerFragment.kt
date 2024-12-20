@@ -19,10 +19,11 @@ import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.SoaAdapter
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
 class SummaryOfAccountsLedgerFragment : Fragment() {
-    private lateinit var binding : FragmentSummaryOfAccountsLedgerBinding
-    private lateinit var soaList: List<Soa>
+    private lateinit var binding: FragmentSummaryOfAccountsLedgerBinding
+    private var soaList: List<Soa> = emptyList()
     private lateinit var studentNames: MutableMap<String, String>
     private lateinit var loadingDialog: SweetAlertDialog
     private lateinit var soaAdapter: SoaAdapter
@@ -30,13 +31,12 @@ class SummaryOfAccountsLedgerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSummaryOfAccountsLedgerBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
+        binding = FragmentSummaryOfAccountsLedgerBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         studentNames = mutableMapOf()
         loadingDialog = DialogUtils.showLoading(requireActivity())
         loadingDialog.show()
@@ -44,51 +44,29 @@ class SummaryOfAccountsLedgerFragment : Fragment() {
         binding.searchStudentTextView.addTextChangedListener { text ->
             soaAdapter.filter(text.toString())
         }
-        fetchAllSoa()
-    }
-    private fun fetchAllSoa(studentId: String? = null) {
-        val service = RetrofitInstance.create(SoaService::class.java)
-        service.getAllSoa(studentId).enqueue(object : Callback<List<Soa>> {
-            override fun onResponse(call: Call<List<Soa>>, response: retrofit2.Response<List<Soa>>) {
-                if (response.isSuccessful) {
-                    soaList = response.body()!!
-                    fetchAllStudents()
-                } else {
-                    Log.e("Error", "Failed to fetch SOA: ${response.code()}")
-                    //    binding.text.text = "Error fetching SOA."
-                    loadingDialog.dismiss()
-                    showErrorDialog("Failed to fetch SOA data.")
-                }
-            }
 
-            override fun onFailure(call: Call<List<Soa>>, t: Throwable) {
-                Log.e("Error", "Failed to fetch SOA: ${t.message}")
-                //  binding.text.text = "Error fetching SOA.
-                   loadingDialog.dismiss()
+        binding.btnFilter.setOnClickListener {
+            val filterFragment = BottomSheetFilterSoaFragment { department ->
+                applyFilters(department)
             }
-        })
+            filterFragment.show(parentFragmentManager, "BottomSheetFilterSoaFragment")
+        }
+
+
+
+        fetchAllStudents()
     }
-    private fun showErrorDialog(message: String) {
-        SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
-            .setTitleText("Error")
-            .setContentText(message)
-            .show()
-    }
+
     private fun fetchAllStudents() {
-        val studentService = RetrofitInstance.create(StudentService::class.java)
-        studentService.getStudents().enqueue(object : Callback<List<Student>> {
-            override fun onResponse(
-                call: Call<List<Student>>,
-                response: retrofit2.Response<List<Student>>
-            ) {
+        val studentService = RetrofitInstance.create(SoaService::class.java)
+        studentService.getAllSoa().enqueue(object : Callback<List<Soa>> {
+            override fun onResponse(call: Call<List<Soa>>, response: Response<List<Soa>>) {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
-
-                    // Populate the studentNames map with studentId to studentName
                     students.forEach { student ->
-                        // Access student properties directly without casting
-                        studentNames[student.student_id.toString()] = student.full_name.toString()
+                        studentNames[student.student_id] = student.student_name
                     }
+                    soaList = students
                     setupRecyclerView()
                 } else {
                     loadingDialog.dismiss()
@@ -96,20 +74,28 @@ class SummaryOfAccountsLedgerFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<List<Student>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Soa>>, t: Throwable) {
                 loadingDialog.dismiss()
                 Log.e("Error", "Failed to fetch students: ${t.message}")
             }
         })
     }
 
-
     private fun setupRecyclerView() {
         binding.recyclerSummary.layoutManager = LinearLayoutManager(requireContext())
-        if (!::soaAdapter.isInitialized) {
-            soaAdapter = SoaAdapter(soaList, studentNames)
-        }
+        soaAdapter = SoaAdapter(soaList, studentNames)
         binding.recyclerSummary.adapter = soaAdapter
         loadingDialog.dismiss()
+    }
+
+    private fun applyFilters(department: String) {
+        val filteredList = if (department == "All") {
+            soaList // If "All" is selected, show all records
+        } else {
+            soaList.filter { soa ->
+                soa.department == department // Filter by selected department
+            }
+        }
+        soaAdapter.updateSoaList(filteredList)
     }
 }

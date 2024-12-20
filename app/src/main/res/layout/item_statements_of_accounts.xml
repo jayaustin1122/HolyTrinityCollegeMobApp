@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="21-1238"
-        android:layout_marginHorizontal="@dimen/dimen_30dp"
+        android:layout_marginHorizontal="10dp"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="#000000" />
@@ -30,10 +30,18 @@
     <!-- Column for 'Name' -->
     <TextView
         android:id="@+id/tvName"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
         android:text="Well D. Fargo"
+        android:textSize="16sp"
+        android:textColor="#000000" />
+    <!-- Column for 'Name' -->
+    <TextView
+        android:id="@+id/tvPaid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Well D. Fargo"
+        android:layout_marginHorizontal="10dp"
         android:textSize="16sp"
         android:textColor="#000000" />
 

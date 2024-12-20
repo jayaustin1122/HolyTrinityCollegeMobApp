@@ -116,10 +116,12 @@ class RegistrarEnrollmentFragment : Fragment() {
                     students.forEach { student ->
                         Log.d(
                             "StudentData",
-                            "ID: ${student.student_id}, Name: ${student.full_name} Dept: ${student.dept_id} "
+                            "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}"
                         )
                     }
-                    studentNamesMap = students.associate { it.full_name.toString() to it.student_id.toString() }.toMutableMap()
+                    // Correctly associate student name with student_id
+                    studentNamesMap = students.associate { it.student_name!! to it.student_id.toString() }.toMutableMap()
+
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
@@ -147,15 +149,17 @@ class RegistrarEnrollmentFragment : Fragment() {
         binding.useridTextView.setOnItemClickListener { parent, _, position, _ ->
             val selectedName = parent.getItemAtPosition(position) as String
             val selectedStudentID = studentNamesMap[selectedName]
-            val selectedStudent = students.find { it.student_id == selectedStudentID }
+
+            // Find the student using the selected ID
+            val selectedStudent = students.find { it.student_id.toString() == selectedStudentID }
 
             if (selectedStudent != null) {
                 viewModel.setStudentID(selectedStudent.student_id ?: "")
-                viewModel.setName(selectedStudent.full_name ?: "")
+                viewModel.setName(selectedStudent.student_name ?: "")
                 viewModel.setDeptId(selectedStudent.dept_id ?: "")
 
                 Log.d("ViewModelAssignment", "studentID: ${selectedStudent.student_id}")
-                Log.d("ViewModelAssignment", "name: ${selectedStudent.full_name}")
+                Log.d("ViewModelAssignment", "name: ${selectedStudent.student_name}")
                 Log.d("ViewModelAssignment", "dept_id: ${selectedStudent.dept_id}")
 
                 binding.viewPager.visibility = View.VISIBLE
@@ -164,6 +168,7 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
+
 
 
 }

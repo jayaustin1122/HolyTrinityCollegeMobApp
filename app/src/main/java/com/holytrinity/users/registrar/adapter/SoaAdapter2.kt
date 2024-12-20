@@ -3,20 +3,21 @@ package com.holytrinity.users.registrar.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.holytrinity.databinding.ItemStatementsOfAccountsBinding
 import com.holytrinity.databinding.ItemSummaryOfAccountsBinding
 import com.holytrinity.model.Soa
 import java.text.NumberFormat
 import java.util.*
 
-class SoaAdapter(
+class SoaAdapter2(
     private var soaList: List<Soa>,
     private val studentNames: Map<String, String>
-) : RecyclerView.Adapter<SoaAdapter.SoaViewHolder>() {
+) : RecyclerView.Adapter<SoaAdapter2.SoaViewHolder>() {
 
     private var filteredList: List<Soa> = soaList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoaViewHolder {
-        val binding = ItemSummaryOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemStatementsOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SoaViewHolder(binding)
     }
 
@@ -49,7 +50,7 @@ class SoaAdapter(
         return filteredList.size
     }
 
-    class SoaViewHolder(private val binding: ItemSummaryOfAccountsBinding) : RecyclerView.ViewHolder(binding.root) {
+    class SoaViewHolder(private val binding: ItemStatementsOfAccountsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(soa: Soa, studentName: String, position: Int) {
             binding.tvNo.text = (position + 1).toString()
             binding.tvIdNo.text = soa.student_id
@@ -58,6 +59,8 @@ class SoaAdapter(
             // Format the balance to Peso format
             val formattedBalance = formatCurrency(soa.balance)
             binding.tvAmount.text = formattedBalance
+            val formattedBalance2 = formatCurrency(soa.total_paid)
+            binding.tvPaid.text = formattedBalance2
         }
 
         private fun formatCurrency(amount: Double): String {
