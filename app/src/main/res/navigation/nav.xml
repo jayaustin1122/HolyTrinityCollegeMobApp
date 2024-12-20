@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/adminDrawerFragment">
+    app:startDestination="@id/registrarDrawerHolderFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -78,4 +78,14 @@
         android:name="com.holytrinity.users.admin.offerings.AdminOfferingsFragment"
         android:label="fragment_admin_offerings"
         tools:layout="@layout/fragment_admin_offerings" />
+    <fragment
+        android:id="@+id/registrarAdmissionDetailsFragment"
+        android:name="com.holytrinity.users.registrar.admisson.RegistrarAdmissionDetailsFragment"
+        android:label="fragment_registrar_admission_details"
+        tools:layout="@layout/fragment_registrar_admission_details" />
+    <fragment
+        android:id="@+id/documentViewerFragment"
+        android:name="com.holytrinity.users.registrar.admisson.DocumentViewerFragment"
+        android:label="fragment_document_viewer"
+        tools:layout="@layout/fragment_document_viewer" />
 </navigation>
