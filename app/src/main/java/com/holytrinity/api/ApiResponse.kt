@@ -17,7 +17,6 @@ data class Courses (
     val course_id: Int,
     val name: String,
     val code: String,
-    val dept_id: Int,
     val description: String
 )
 

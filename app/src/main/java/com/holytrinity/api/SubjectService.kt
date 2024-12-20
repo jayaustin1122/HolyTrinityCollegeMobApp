@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface SubjectService {
 
     @POST("crud-android/trinity/Subject.php")
-    fun addSubject(@Body subject: Subject): Call<ApiResponse>
+    fun addSubject(@Body sub: Subject): Call<ApiResponse>
 
     @GET("crud-android/trinity/Subject.php")
     fun getSubjects(@Query("action") action: String): Call<ApiResponse>

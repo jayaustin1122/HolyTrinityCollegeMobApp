@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface CoursesService {
 
     @POST("crud-android/trinity/Courses.php")
-    fun addCourses(@Body course: Courses): Call<ApiResponse>
+    fun addCourses(@Body cour: Courses): Call<ApiResponse>
 
     @GET("crud-android/trinity/Courses.php")
     fun getCourses(@Query("action") action: String): Call<ApiResponse>

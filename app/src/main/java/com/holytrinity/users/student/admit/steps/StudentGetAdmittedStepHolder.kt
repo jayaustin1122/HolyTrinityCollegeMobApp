@@ -71,6 +71,16 @@ class StudentGetAdmittedStepHolder : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarBackButton.setOnClickListener {
+            DialogUtils.showWarningMessage(requireActivity(), "Confirm Exit", "Click \"Yes\" to cancel discard any changes made."
+            ) { sweetAlertDialog ->
+                sweetAlertDialog.dismissWithAnimation()
+
+                findNavController().navigate(R.id.signInFragment)
+            }
+        }
+
         adapter = StudentAdmitAdapter(requireActivity())
         viewPager.adapter = adapter
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -90,8 +100,21 @@ class StudentGetAdmittedStepHolder : Fragment() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 stepView.go(position, true)
+
+                // Hide Back Button on the first page
+                if (position == 0) {
+                    binding.backButton.visibility = View.INVISIBLE
+                } else {
+                    binding.backButton.visibility = View.VISIBLE
+                }
             }
         })
+
+        binding.backButton.setOnClickListener {
+            if (viewPager.currentItem > 0) {
+                viewPager.currentItem = viewPager.currentItem - 1
+            }
+        }
         binding.btnContinue.setOnClickListener {
             when (viewPager.currentItem) {
                 0 -> validateFragmentOne()

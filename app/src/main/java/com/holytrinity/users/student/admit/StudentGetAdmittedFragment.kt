@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.canorecoapp.utils.DialogUtils
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentStudentGetAdmittedBinding
 import com.holytrinity.users.registrar.enrollment.enroll.ViewModelEnrollment
@@ -32,6 +33,16 @@ class StudentGetAdmittedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbarBackButton.setOnClickListener {
+            DialogUtils.showWarningMessage(requireActivity(), "Confirm Exit", "Click \"Yes\" to cancel discard any changes made."
+            ) { sweetAlertDialog ->
+                sweetAlertDialog.dismissWithAnimation()
+
+                findNavController().navigate(R.id.signInFragment)
+            }
+        }
+
         binding.btnContinue.setOnClickListener {
             val selectedOption = when {
                 binding.radioCollege.isChecked -> "College"
