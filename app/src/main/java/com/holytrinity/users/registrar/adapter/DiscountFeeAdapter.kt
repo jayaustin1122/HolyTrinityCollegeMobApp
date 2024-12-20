@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.holytrinity.R
-import com.holytrinity.api.AssessmentFee
 import com.holytrinity.api.DiscountFee
 
 class DiscountFeeAdapter(
