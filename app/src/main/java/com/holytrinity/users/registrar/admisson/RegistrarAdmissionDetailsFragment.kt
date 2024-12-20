@@ -118,6 +118,7 @@ class RegistrarAdmissionDetailsFragment : Fragment() {
                                 binding.barangayDropdown.setText(it.line2 ?: "Unknown")
                                 binding.editParish.setText(it.parish ?: "Unknown")
                                 binding.inputLRN.setText(it.learner_ref_no ?: "Unknown")
+                                binding.inputSHS.setText(it.attended ?: "Unknown")
 
                                 // Set document filenames by filtering through the documents list
                                 val confirmCertDoc = it.documents?.find { doc -> doc.doc_type == "confirmCert" }
@@ -164,13 +165,10 @@ class RegistrarAdmissionDetailsFragment : Fragment() {
                                 val coh = it.documents?.find { doc -> doc.doc_type == "coh" }
                                 binding.inputDismissalCertificate.setText(coh?.file_name ?: "Not Provided")
 
-                                val attended = it.documents?.find { doc -> doc.doc_type == "attended" }
-                                binding.inputSHS.setText(attended?.file_name ?: "Not Provided")
 
                                 // Add click listeners to open the documents
                                 binding.editConfirmationCertificate.setOnClickListener {
                                     confirmCertDoc?.let { doc ->
-                                        // Navigate to the DocumentViewerFragment with the file path as an argument
                                         val bundle = Bundle().apply {
                                             putString("filePath", doc.file_path)
                                         }
@@ -180,13 +178,133 @@ class RegistrarAdmissionDetailsFragment : Fragment() {
 
                                 binding.editBaptismalCertificate.setOnClickListener {
                                     baptismalCertDoc?.let { doc ->
-                                        // Navigate to the DocumentViewerFragment with the file path as an argument
+                                      val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editConfirmationCertificate.setOnClickListener {
+                                    confirmCertDoc?.let { doc ->
                                         val bundle = Bundle().apply {
                                             putString("filePath", doc.file_path)
                                         }
                                         findNavController().navigate(R.id.documentViewerFragment, bundle)
                                     }
                                 }
+                                binding.editBirForm.setOnClickListener {
+                                    birForm?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputDiploma.setOnClickListener {
+                                    diploma?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputEsc.setOnClickListener {
+                                    esc?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editNsoCertificate.setOnClickListener {
+                                    nso?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editMarriageCertificate.setOnClickListener {
+                                    marriageCert?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editBrgyResidenceCertificate.setOnClickListener {
+                                    brgyCert?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputDiploma.setOnClickListener {
+                                    diploma?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editCertificateOfIndigency.setOnClickListener {
+                                    indigency?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputForm137.setOnClickListener {
+                                    form137?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editRecommendationLetter.setOnClickListener {
+                                    recommLetter?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputForm137.setOnClickListener {
+                                    form137?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.editMedicalCertificate.setOnClickListener {
+                                    medCert?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputTranscript.setOnClickListener {
+                                    tor?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+                                binding.inputDismissalCertificate.setOnClickListener {
+                                    coh?.let { doc ->
+                                        val bundle = Bundle().apply {
+                                            putString("filePath", doc.file_path)
+                                        }
+                                        findNavController().navigate(R.id.documentViewerFragment, bundle)
+                                    }
+                                }
+
                             }
                         }
                     } else {

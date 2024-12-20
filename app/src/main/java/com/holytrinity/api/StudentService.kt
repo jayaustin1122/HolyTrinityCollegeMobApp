@@ -8,9 +8,10 @@ import retrofit2.http.*
 
 interface StudentService {
 
+
     @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(
-        @Query("studentID") studentId: String? = null,
+        @Query("student_id") studentId: String? = null,
         @Query("registrationVerified") registrationVerified: String? = null
     ): Call<List<Student>>
         //   getStudents() // No parameters, fetches all students

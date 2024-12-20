@@ -9,9 +9,8 @@
     <!-- Column for 'No' -->
     <TextView
         android:id="@+id/tvNo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="1"
         android:gravity="center"
         android:textSize="16sp"
@@ -20,10 +19,10 @@
     <!-- Column for 'ID No' -->
     <TextView
         android:id="@+id/tvIdNo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="3"
         android:text="21-1238"
+        android:layout_marginHorizontal="@dimen/dimen_30dp"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="#000000" />

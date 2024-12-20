@@ -12,6 +12,7 @@ data class Document(
 data class Student(
     val student_id: String? = null,
     val full_name: String? = null,
+    val student_name: String? = null,
     val email: String? = null,
     val phone: String? = null,
     val curr_id: String? = null,
@@ -48,6 +49,7 @@ data class Student(
     val last_name: String? = null,
     val first_name: String? = null,
     val line1: String? = null,
+    val balance: String? = null,
     val line2: String? = null,
     val middle_name: String? = null,
     val municipality: String? = null,

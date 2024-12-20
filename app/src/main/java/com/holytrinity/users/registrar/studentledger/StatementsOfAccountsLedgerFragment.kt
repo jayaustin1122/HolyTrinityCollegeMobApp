@@ -18,6 +18,7 @@ import com.holytrinity.databinding.FragmentStatementsOfAccountsLedgerBinding
 import com.holytrinity.model.Soa
 import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.SoaAdapter
+import com.holytrinity.users.registrar.adapter.SoaAdapter2
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -26,7 +27,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
     private lateinit var binding: FragmentStatementsOfAccountsLedgerBinding
     private lateinit var soaList: List<Soa>
     private lateinit var loadingDialog: SweetAlertDialog
-    private lateinit var soaAdapter: SoaAdapter
+    private lateinit var soaAdapter: SoaAdapter2
     private lateinit var students: List<Student>
     private lateinit var studentNamesMap: MutableMap<String, String>
     private lateinit var studentNames: MutableMap<String, String>
@@ -53,9 +54,9 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        Log.d("StudentData", "ID: ${student.student_id}, Name: ${student.full_name}")
+                        Log.d("StudentData", "ID: ${student.student_id}, Name: ${student.student_name}")
                     }
-                    studentNamesMap = students.associate { it.full_name.toString() to it.student_id.toString() }.toMutableMap()
+                    studentNamesMap = students.associate { it.student_name.toString() to it.student_id.toString() }.toMutableMap()
                     loadingDialog.dismiss()
                     setupAutoCompleteTextView()
                 } else {
@@ -70,6 +71,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
             }
         })
     }
+
     private fun setupAutoCompleteTextView() {
         val studentNamesList = studentNamesMap.keys.toList()
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, studentNamesList)
@@ -84,7 +86,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 binding.pdfLayout.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.studentNumber.text = selectedStudent.student_id
-                binding.studentName.text = selectedStudent.full_name
+                binding.studentName.text = selectedStudent.student_name
 
                 // Fetch the SOA for the selected student and update the RecyclerView
                 fetchAllSoa(selectedStudent.student_id)
@@ -151,7 +153,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
 
     private fun setupRecyclerView(soaList: List<Soa>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        soaAdapter = SoaAdapter(soaList, studentNames)
+        soaAdapter = SoaAdapter2(soaList, studentNames)
         binding.recyclerView.adapter = soaAdapter
     }
 }

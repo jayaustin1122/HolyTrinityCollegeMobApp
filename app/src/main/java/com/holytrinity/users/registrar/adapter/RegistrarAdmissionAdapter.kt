@@ -35,9 +35,9 @@ class RegistrarAdmissionAdapter(
         @SuppressLint("ResourceType")
         fun bind(student: Student) {
             // Set basic details
-            binding.admissionTextView.text = "Admission No: ${student.user_id}"
+            binding.admissionTextView.text = "Admission No: ${student.student_id}"
             binding.dateTextView.text = "Date: ${student.entry_date}"
-            binding.nameTextView.text = student.full_name
+            binding.nameTextView.text = student.student_name
             binding.departmentTextView.text = getDepartmentName(student.dept_id.toString())
 
             // Set status text and background

@@ -5,13 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.databinding.ItemSummaryOfAccountsBinding
 import com.holytrinity.model.Soa
+import java.text.NumberFormat
+import java.util.*
 
 class SoaAdapter(
     private var soaList: List<Soa>,
-    private val studentNames: Map<String, String> // Add a map for studentId to studentName
+    private val studentNames: Map<String, String>
 ) : RecyclerView.Adapter<SoaAdapter.SoaViewHolder>() {
 
     private var filteredList: List<Soa> = soaList
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SoaViewHolder {
         val binding = ItemSummaryOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SoaViewHolder(binding)
@@ -25,21 +28,21 @@ class SoaAdapter(
 
     fun filter(query: String) {
         filteredList = if (query.isEmpty()) {
-            soaList // If the query is empty, show all items
+            soaList
         } else {
             val lowerCaseQuery = query.lowercase()
             soaList.filter {
-                // Check if student name or student ID contains the query string
-                studentNames[it.studentID]?.lowercase()?.contains(lowerCaseQuery) == true ||
-                        it.studentID.lowercase().contains(lowerCaseQuery)
+
+                studentNames[it.student_id]?.lowercase()?.contains(lowerCaseQuery) == true ||
+                        it.student_id.lowercase().contains(lowerCaseQuery)
             }
         }
-        notifyDataSetChanged() // Update the RecyclerView with filtered data
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: SoaViewHolder, position: Int) {
-        val soa = soaList[position]
-        holder.bind(soa, studentNames[soa.studentID] ?: "Unknown", position)
+        val soa = filteredList[position]
+        holder.bind(soa, studentNames[soa.student_id] ?: "Unknown", position)
     }
 
     override fun getItemCount(): Int {
@@ -49,9 +52,17 @@ class SoaAdapter(
     class SoaViewHolder(private val binding: ItemSummaryOfAccountsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(soa: Soa, studentName: String, position: Int) {
             binding.tvNo.text = (position + 1).toString()
-            binding.tvIdNo.text = soa.studentID
-            binding.tvName.text = studentName
-            binding.tvAmount.text = soa.due_amount
+            binding.tvIdNo.text = soa.student_id
+            binding.tvName.text = soa.student_name
+
+            // Format the balance to Peso format
+            val formattedBalance = formatCurrency(soa.balance)
+            binding.tvAmount.text = formattedBalance
+        }
+
+        private fun formatCurrency(amount: Double): String {
+            val format = NumberFormat.getCurrencyInstance(Locale("en", "PH"))
+            return format.format(amount)
         }
     }
 }
