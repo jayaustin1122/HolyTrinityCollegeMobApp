@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/testPrinterFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -88,4 +88,8 @@
         android:name="com.holytrinity.users.registrar.admisson.DocumentViewerFragment"
         android:label="fragment_document_viewer"
         tools:layout="@layout/fragment_document_viewer" />
+    <fragment
+        android:id="@+id/testPrinterFragment"
+        android:name="com.holytrinity.util.TestPrinterFragment"
+        android:label="TestPrinterFragment" />
 </navigation>
