@@ -39,13 +39,11 @@
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
             bluetoothFn = BluetoothHelper(requireActivity(), this.requireContext())
+            bluetoothFn.checkAndRequestBluetoothPermission() // check permission
 
-            binding.btnReqPerm.setOnClickListener {
-                bluetoothFn.checkAndRequestBluetoothPermission()
-            }
 
             binding.btnOnBt.setOnClickListener {
-                bluetoothFn.turnOnBluetooth()
+                bluetoothFn.toggleBluetooth()
             }
 
             binding.btnConnPrinter.setOnClickListener {

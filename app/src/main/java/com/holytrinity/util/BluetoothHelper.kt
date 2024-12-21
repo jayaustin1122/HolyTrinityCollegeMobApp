@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +36,15 @@ class BluetoothHelper(private val activity: Activity, private val context: Conte
         }
     }
 
-    fun turnOnBluetooth() {
+    fun toggleBluetooth() {
+        if (bluetoothAdapter?.isEnabled == true) {
+            turnOffBluetooth()  // Turn off Bluetooth if it is enabled
+        } else {
+            turnOnBluetooth()  // Turn on Bluetooth if it is disabled
+        }
+    }
+
+    private fun turnOnBluetooth() {
         if (bluetoothAdapter?.isEnabled == false) {
             val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             if (ActivityCompat.checkSelfPermission(
@@ -48,6 +55,32 @@ class BluetoothHelper(private val activity: Activity, private val context: Conte
                 return
             }
             activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
+            Toast.makeText(context, "Turning Bluetooth ON", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Bluetooth is already ON", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun turnOffBluetooth() {
+        if (bluetoothAdapter?.isEnabled == true) {
+            if (ActivityCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
+            bluetoothAdapter?.disable()
+            Toast.makeText(context, "Turning Bluetooth OFF", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Bluetooth is already OFF", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -89,13 +122,13 @@ class BluetoothHelper(private val activity: Activity, private val context: Conte
         }
         return null
     }
+
     private val cmdPrintStart = byteArrayOf(0x10.toByte(), 0xFF.toByte(), 0xFE.toByte(), 0x01.toByte())
     private val cmdPrintEnd = byteArrayOf(0x1B.toByte(), 0x4A.toByte(), 0x40.toByte(), 0x10.toByte(), 0xFF.toByte(), 0xFE.toByte(), 0x45.toByte())
     private val cmdSetPrintInfo = byteArrayOf(0x1D.toByte(), 0x76.toByte(), 0x30.toByte(), 0x00.toByte(), 0x30.toByte(), 0x00.toByte())
+
     suspend fun printTextFeed(message: String): Boolean {
-
         try {
-
             val messageBytes = message.toByteArray(Charsets.UTF_8)
 
             withContext(Dispatchers.IO) {
@@ -111,6 +144,7 @@ class BluetoothHelper(private val activity: Activity, private val context: Conte
             return false
         }
     }
+
     fun disconnectPrinter() {
         try {
             outputStream?.close()
