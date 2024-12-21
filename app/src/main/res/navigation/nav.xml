@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/calendarFragment">
+    app:startDestination="@id/studentDrawerHolderFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -96,4 +96,18 @@
         android:id="@+id/calendarFragment"
         android:name="com.holytrinity.api.sample.calendar.CalendarFragment"
         android:label="CalendarFragment" />
+    <fragment
+        android:id="@+id/instructorDrawerHolderFragment"
+        android:name="com.holytrinity.users.instructor.InstructorDrawerHolderFragment"
+        android:label="fragment_instructor_drawer_holder"
+        tools:layout="@layout/fragment_instructor_drawer_holder" />
+    <fragment
+        android:id="@+id/parentDrawerHolderFragment"
+        android:name="com.holytrinity.users.parent.ParentDrawerHolderFragment"
+        android:label="fragment_parent_drawer_holder"
+        tools:layout="@layout/fragment_parent_drawer_holder" />
+    <fragment
+        android:id="@+id/studentDrawerHolderFragment"
+        android:name="com.holytrinity.users.student.StudentDrawerHolderFragment"
+        android:label="StudentDrawerHolderFragment" />
 </navigation>

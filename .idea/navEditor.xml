@@ -104,6 +104,30 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="instructorDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-511" />
+                            <option name="y" value="-627" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="parentDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-481" />
+                            <option name="y" value="-597" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="registrarAdmissionDetailsFragment">
                     <value>
                       <LayoutPositions>
@@ -183,6 +207,18 @@
                           <Point>
                             <option name="x" value="74" />
                             <option name="y" value="-406" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="studentDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-451" />
+                            <option name="y" value="-567" />
                           </Point>
                         </option>
                       </LayoutPositions>

@@ -10,11 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.holytrinity.api.RetrofitInstance
-import com.holytrinity.main.Event
+import com.holytrinity.model.Event
 import com.holytrinity.databinding.FragmentCalendarBinding
 import com.holytrinity.api.CalendarService
 import com.holytrinity.api.sample.calendar.BottomSheetAddEventFragment.Companion.TAG
-import com.holytrinity.main.AddEventResponse
+import com.holytrinity.model.AddEventResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
