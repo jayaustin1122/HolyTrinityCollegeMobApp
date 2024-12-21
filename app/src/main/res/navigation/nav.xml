@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/testPrinterFragment">
+    app:startDestination="@id/calendarFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -92,4 +92,8 @@
         android:id="@+id/testPrinterFragment"
         android:name="com.holytrinity.util.TestPrinterFragment"
         android:label="TestPrinterFragment" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.holytrinity.api.sample.calendar.CalendarFragment"
+        android:label="CalendarFragment" />
 </navigation>
