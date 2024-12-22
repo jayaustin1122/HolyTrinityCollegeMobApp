@@ -15,7 +15,6 @@ import com.holytrinity.api.SoaService
 import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentSummaryOfAccountsLedgerBinding
 import com.holytrinity.model.Soa
-import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.SoaAdapter
 import retrofit2.Call
 import retrofit2.Callback

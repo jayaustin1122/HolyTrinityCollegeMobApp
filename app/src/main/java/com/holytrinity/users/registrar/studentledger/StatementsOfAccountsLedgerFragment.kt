@@ -79,17 +79,17 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
         binding.searchStudentTextView.setOnItemClickListener { parent, _, position, _ ->
             val selectedName = parent.getItemAtPosition(position) as String
             val selectedStudentID = studentNamesMap[selectedName]
-            val selectedStudent = students.find { it.student_id == selectedStudentID }
+            val selectedStudent = students.find { it.student_id.toString() == selectedStudentID }
 
             if (selectedStudent != null) {
                 binding.studentInfoLayout.visibility = View.VISIBLE
                 binding.pdfLayout.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.VISIBLE
-                binding.studentNumber.text = selectedStudent.student_id
+                binding.studentNumber.text = selectedStudent.student_id.toString()
                 binding.studentName.text = selectedStudent.student_name
 
                 // Fetch the SOA for the selected student and update the RecyclerView
-                fetchAllSoa(selectedStudent.student_id)
+                fetchAllSoa(selectedStudent.student_id.toString())
             }
         }
     }
@@ -131,7 +131,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
                     students.forEach { student ->
-                        studentNames[student.student_id.toString()] = student.full_name.toString()
+                        studentNames[student.student_id.toString()] = student.student_name.toString()
                     }
                     if (::soaAdapter.isInitialized) {
                         soaAdapter.updateSoaList(soaList)

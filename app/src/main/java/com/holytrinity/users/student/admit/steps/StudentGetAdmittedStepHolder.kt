@@ -27,7 +27,6 @@ import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.StudentService
 import com.holytrinity.api.sample.getFileFromUri
 import com.holytrinity.databinding.FragmentStudentGetAdmittedStepHolderBinding
-import com.holytrinity.model.Student
 import com.holytrinity.users.student.adapter.StudentAdmitAdapter
 import com.shuhart.stepview.StepView
 import okhttp3.MediaType

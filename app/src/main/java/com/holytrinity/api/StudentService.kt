@@ -1,6 +1,8 @@
 package com.holytrinity.api
 
+
 import com.holytrinity.model.Student
+import com.holytrinity.model.StudentSolo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -17,6 +19,13 @@ interface StudentService {
         //   getStudents() // No parameters, fetches all students
         //   getStudents(studentId = "12345")  Get a Student by ID:
         //   getStudents(registrationVerified = "1")  Get Students with Registration Verified:
+
+    @GET("crud-android/trinity/getStudent.php")
+    fun getStudent(
+        @Query("student_id") studentId: String
+    ): Call<StudentSolo>
+
+
 
 
 
@@ -67,7 +76,5 @@ interface StudentService {
 
     ): Call<Void>
 
-    // Update a student by ID
-    @POST("crud-android/trinity/updateStudent.php")
-    fun updateStudent(@Query("id") studentId: String, @Body student: Student): Call<Void>
+
 }

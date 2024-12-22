@@ -2,6 +2,7 @@ package com.holytrinity.users.admin.manage_account
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,18 +44,14 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Populate spinner with roles
         val roles = mapOf(
             1 to "Administrator",
-//            3 to "Accounting",
-//            8 to "Assistant",
             10 to "Benefactor",
             4 to "Cashier",
-//            9 to "Counselor",
             5 to "Instructor",
             6 to "Parent",
-            2 to "Registrar",
-//            7 to "Student"
+            2 to "Registrar"
+
         )
         val adapter = ArrayAdapter(
             requireContext(),
@@ -73,10 +70,19 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
         val roleId = roles.keys.elementAt(binding.roleSpinner.selectedItemPosition)
         val username = binding.usernameEditText.text.toString().trim()
         val password = binding.passwordEditText.text.toString().trim()
+        val confirmPassword = binding.confirmPasswordEditText.text.toString().trim()
         val name = binding.nameEditText.text.toString().trim()
-
         if (username.isEmpty() || password.isEmpty() || name.isEmpty()) {
             Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (password != confirmPassword) {
+            Toast.makeText(context, "Passwords do not match.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (password.length < 6) {
+            Toast.makeText(context, "Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -95,15 +101,9 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
             .show()
     }
 
-    private fun addAccount(roleId: Int, username: String, password: String, name: String) {
-        val accountRequest = AccountRequest(
-            role_id = roleId,
-            username = username,
-            password_hash = password,
-            name = name
-        )
 
-        apiService.addAccount(accountRequest).enqueue(object : Callback<ApiResponse> {
+    private fun addAccount(roleId: Int, username: String, password: String, name: String) {
+        apiService.addAccount(username, roleId, password, name).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
                     Toast.makeText(context, "Account added successfully!", Toast.LENGTH_SHORT).show()
@@ -112,17 +112,18 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
                     Toast.makeText(context, "Failed to add account.", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Log.e("AddAccountError", "Error: ${t.message}")
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
 
+
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissListener?.invoke() // Trigger the callback when dialog is dismissed
+        onDismissListener?.invoke()
     }
 
     override fun onDestroyView() {
