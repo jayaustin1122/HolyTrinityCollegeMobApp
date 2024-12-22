@@ -87,6 +87,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="First Name"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="textPersonName"
                     android:maxLength="50"
                     android:singleLine="true" />
@@ -109,6 +113,10 @@
                     android:hint="Last Name"
                     android:inputType="textPersonName"
                     android:maxLength="50"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,6 +134,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Middle Name"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="textPersonName"
                     android:maxLength="50"
                     android:singleLine="true" />
@@ -148,6 +160,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Sex"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="text"
                     android:padding="16dp" />
 
@@ -199,6 +215,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Email*"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="textEmailAddress"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -219,6 +239,10 @@
                     android:hint="Phone*"
                     android:inputType="phone"
                     android:maxLength="11"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -237,6 +261,10 @@
                     android:layout_height="56dp"
                     android:hint="Municipality*"
                     android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -255,6 +283,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Barangay*"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="none"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -284,6 +316,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Level"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="text"
                     android:maxLength="50"
                     android:singleLine="true" />
@@ -303,6 +339,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="Curriculum"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="text"
                     android:maxLength="50"
                     android:singleLine="true" />
@@ -324,6 +364,10 @@
                     android:hint="Entry Period"
                     android:inputType="text"
                     android:maxLength="50"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -345,6 +389,7 @@
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:inputType="date"
+
                     android:singleLine="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -362,6 +407,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:hint="LRN"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:longClickable="false"
+                    android:cursorVisible="false"
                     android:inputType="number"
                     android:maxLength="12"
                     android:singleLine="true" />

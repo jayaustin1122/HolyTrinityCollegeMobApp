@@ -26,6 +26,12 @@ interface StudentService {
     ): Call<StudentSolo>
 
 
+        @GET("crud-android/trinity/saveState.php")
+        fun getStudentState(
+            @Query("user_id") userId: String
+        ): Call<StudentSolo>
+
+
 
 
 
@@ -58,8 +64,8 @@ interface StudentService {
         @Part("lastName") lastName: RequestBody,
         @Part("firstName") firstName: RequestBody,
         @Part("middleName") middleName: RequestBody,
-        @Part("sex") sex: RequestBody,
-        @Part("dateOfBirth") dateOfBirth: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("birthdate") birthdate: RequestBody,
         @Part("phone") phone: RequestBody,
         @Part("municipality") municipality: RequestBody,
         @Part("barangay") barangay: RequestBody,
