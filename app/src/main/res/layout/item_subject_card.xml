@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/subjectNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subject Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/subjectInstructorTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Instructor: John Doe"
+            android:textSize="14sp"
+            android:textColor="@color/gray_btn_bg_color" />
+
+        <TextView
+            android:id="@+id/subjectCodeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Code: CS101"
+            android:textSize="14sp"
+            android:textColor="@color/gray_btn_bg_color" />
+
+        <TextView
+            android:id="@+id/subjectScheduleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Schedule: MWF 9-10AM"
+            android:textSize="14sp"
+            android:textColor="@color/gray_btn_bg_color" />
+
+        <TextView
+            android:id="@+id/subjectUnitsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Units: 3"
+            android:textSize="14sp"
+            android:textColor="@color/gray_btn_bg_color" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

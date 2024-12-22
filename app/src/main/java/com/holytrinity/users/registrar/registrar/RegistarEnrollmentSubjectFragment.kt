@@ -97,33 +97,72 @@ class RegistarEnrollmentSubjectFragment : Fragment() {
 
             if (selectedStudent != null) {
 
-
-                // Fetch the SOA for the selected student and update the RecyclerView
-               // getStudent(selectedStudent.student_id.toString())
+                getStudent(selectedStudent.student_id.toString())
             }
         }
     }
-//    private fun getStudent(studentId: String) {
-//        val studentService = RetrofitInstance.create(StudentService::class.java)
-//        studentService.getStudent(studentId).enqueue(object : Callback<Student> {
-//            override fun onResponse(
-//                call: Call<Student>,
-//                response: Response<Student>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val student = response.body()
-//                    if (student != null) {
-//
-//                    }
-//                } else {
-//                    Log.e("Error", "Failed to fetch student details: ${response.code()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Student>, t: Throwable) {
-//                Log.e("Error", "Failed to fetch student details: ${t.message}")
-//            }
-//        })
-//    }
+    private fun getStudent(studentId: String) {
+        val studentService = RetrofitInstance.create(StudentService::class.java)
+        studentService.getStudent(studentId).enqueue(object : Callback<StudentSolo> {
+            @SuppressLint("MissingInflatedId")
+            override fun onResponse(
+                call: Call<StudentSolo>,
+                response: Response<StudentSolo>
+            ) {
+                if (response.isSuccessful) {
+                    val student = response.body()
+                    if (student != null) {
+                        // Show student information in the CardView
+                        binding.studentCardView.visibility = View.VISIBLE
+                        binding.studentNameTextView.text = student.student_name
+                        binding.studentEmailTextView.text = "Email: ${student.student_email}"
+                        binding.studentCourseTextView.text = "Course: ${student.course?.course_name}"
+
+                        // Clear previous subject cards (if any)
+                        binding.subjectsContainer.removeAllViews()
+
+                        // Display each enrolled subject in a separate CardView
+                        student.enrolled_subjects.forEach { subject ->
+                            val subjectCardView = LayoutInflater.from(requireContext()).inflate(R.layout.item_subject_card, null)
+
+                            // Set subject details in the card view
+                            val subjectNameTextView = subjectCardView.findViewById<TextView>(R.id.subjectNameTextView)
+                            val subjectInstructorTextView = subjectCardView.findViewById<TextView>(R.id.subjectInstructorTextView)
+                            val subjectCodeTextView = subjectCardView.findViewById<TextView>(R.id.subjectCodeTextView)
+                            val subjectScheduleTextView = subjectCardView.findViewById<TextView>(R.id.subjectScheduleTextView)
+                            val subjectUnitsTextView = subjectCardView.findViewById<TextView>(R.id.subjectUnitsTextView)
+
+                            subjectNameTextView.text = subject.subject_name
+                            // Null check before accessing class_info
+                            if (subject.class_info != null) {
+                                val instructor = subject.class_info.instructor?.instructor_name ?: "Unknown Instructor"
+                                val schedule = subject.class_info.schedule ?: "TBA"
+                                subjectInstructorTextView.text = "Instructor: $instructor"
+                                subjectScheduleTextView.text = "Schedule: $schedule"
+                            } else {
+                                subjectInstructorTextView.text = "Instructor: N/A"
+                                subjectScheduleTextView.text = "Schedule: N/A"
+                            }
+
+                            subjectCodeTextView.text = "Code: ${subject.subject_id}"
+                            subjectUnitsTextView.text = "Units: ${subject.subject_units}"
+
+                            // Add the subject card to the container
+                            binding.subjectsContainer.addView(subjectCardView)
+                        }
+                    }
+                } else {
+                    Log.e("Error", "Failed to fetch student details: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<StudentSolo>, t: Throwable) {
+                Log.e("Error", "Failed to fetch student details: ${t.message}")
+            }
+        })
+    }
+
+
+
 
 }

@@ -1,5 +1,7 @@
 package com.holytrinity.model
 
+import com.google.gson.annotations.SerializedName
+
 data class StudentSolo(
     val student_id: Int,
     val user_id: Int,
@@ -32,6 +34,8 @@ data class EnrolledSubject(
     val subject_id: Int,
     val subject_name: String,
     val subject_units: Int,
+
+    @SerializedName("class")
     val class_info: ClassInfo
 )
 
