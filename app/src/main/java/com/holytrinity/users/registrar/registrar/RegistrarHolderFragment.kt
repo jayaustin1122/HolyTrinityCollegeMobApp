@@ -10,12 +10,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentRegistrarHolderBinding
+import com.holytrinity.model.StudentSolo
 import com.holytrinity.users.registrar.adapter.MyFragmentStateAdapter
-import com.holytrinity.users.registrar.registrar.RegistrarEnrollmentListFragment
-import com.holytrinity.users.registrar.registrar.RegistarEnrollmentSubjectFragment
 
 class RegistrarHolderFragment : Fragment() {
     private lateinit var binding: FragmentRegistrarHolderBinding
+    private lateinit var myAdapter: MyFragmentStateAdapter
+    lateinit var studentSolo: StudentSolo
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +32,17 @@ class RegistrarHolderFragment : Fragment() {
         val tabLayout = binding.tabLayout
         val viewPager2 = binding.pager
 
-        // Pass the fragments dynamically
-        val myAdapter = MyFragmentStateAdapter(
+        // Initialize the adapter
+        myAdapter = MyFragmentStateAdapter(
             this@RegistrarHolderFragment.requireActivity(),
             listOf(
-                RegistrarEnrollmentListFragment(), // First fragment
-                RegistarEnrollmentSubjectFragment() // Second fragment
+                RegistrarEnrollmentListFragment(),
+                RegistarEnrollmentSubjectFragment()
             )
         )
         viewPager2.adapter = myAdapter
 
+        // Set up the TabLayoutMediator
         TabLayoutMediator(tabLayout, viewPager2) { tab: TabLayout.Tab, position: Int ->
             when (position) {
                 0 -> tab.text = "Enrollment List"
@@ -50,9 +52,11 @@ class RegistrarHolderFragment : Fragment() {
 
         binding.toolbarBackButton.setOnClickListener {
             val bundle = Bundle().apply {
-                putInt("selectedFragmentId", null ?: R.id.nav_dashboard)
+                putInt("selectedFragmentId", R.id.nav_dashboard)
             }
             findNavController().navigate(R.id.registrarDrawerHolderFragment, bundle)
         }
     }
+
+
 }

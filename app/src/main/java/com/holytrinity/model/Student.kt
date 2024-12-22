@@ -27,6 +27,7 @@ data class Student(
     val address: String? = null,
     val learner_ref_no: String? = null,
     val attended: String? = null,
+    val course_name: String? = null,
     val form137: String? = null,
     val diploma: String? = null,
     val tor: String? = null,

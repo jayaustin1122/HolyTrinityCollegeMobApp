@@ -7,14 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentRegistratEnrollmentListBinding
 import com.holytrinity.model.Student
-import com.holytrinity.users.admin.adapter.EnrolledAdapter
+import com.holytrinity.users.registrar.adapter.EnrolledAdapter
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -23,14 +22,15 @@ class RegistrarEnrollmentListFragment : Fragment() {
     private var filteredStudents: List<Student> = emptyList()
     private lateinit var studentsAdapter: EnrolledAdapter
     private var students: List<Student> = emptyList()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentRegistratEnrollmentListBinding.inflate(layoutInflater)
-        studentsAdapter = EnrolledAdapter(filteredStudents) { studentId ->
-            // Handle item click
+        studentsAdapter = EnrolledAdapter(
+            filteredStudents,
+            context = requireContext(),
+        ) { studentId ->
         }
         return binding.root
     }
@@ -56,9 +56,10 @@ class RegistrarEnrollmentListFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
-                    binding.countTitleTextView.text = "Results: ${filteredStudents.size+1}"
+                    // Set filteredStudents after successful data fetch
                     filteredStudents = students.filter { it.official_status == "Official" }
                     studentsAdapter.updateData(filteredStudents)
+                    binding.countTitleTextView.text = "Results: ${filteredStudents.size}"
                 } else {
                     Log.e("Error", "Failed to fetch students: ${response.code()}")
                 }
@@ -69,6 +70,7 @@ class RegistrarEnrollmentListFragment : Fragment() {
             }
         })
     }
+
 
     private fun filterStudents(query: String) {
         filteredStudents = if (query.isEmpty()) {

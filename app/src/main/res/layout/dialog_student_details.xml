@@ -82,7 +82,6 @@
             android:textSize="14sp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp" />
-
         <!-- Subject Details List -->
         <LinearLayout
             android:id="@+id/llSubjectDetails"
@@ -90,14 +89,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" />
 
-        <!-- Address Details -->
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address: "
-            android:textSize="14sp"
-            android:paddingBottom="8dp" />
+
 
         <!-- Address List -->
         <LinearLayout
