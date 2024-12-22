@@ -11,6 +11,6 @@ interface UserLoginService {
     fun getUser(
         @Query("username") username: String,
         @Query("password") password: String
-    ): Call<List<User>>
+    ): Call<UserResponse>
 
 }
