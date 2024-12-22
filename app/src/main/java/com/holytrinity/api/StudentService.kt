@@ -31,6 +31,10 @@ interface StudentService {
             @Query("user_id") userId: String
         ): Call<StudentSolo>
 
+    @GET("crud-android/trinity/getParentChild.php")
+    fun getParentChild(
+        @Query("user_id") userId: String
+    ): Call<ParentChildWrapper>
 
 
 

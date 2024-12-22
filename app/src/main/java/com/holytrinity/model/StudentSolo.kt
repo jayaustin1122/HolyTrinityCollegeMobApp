@@ -13,7 +13,7 @@ data class StudentSolo(
     val entry_period_id: Int?,
     val level: String?,
     val official_status: String?,
-    val registration_verified: Boolean?,
+    val registration_verified: String?,
     val student_name: String,
     val student_email: String,
     val birthdate: String,
