@@ -154,9 +154,9 @@ class RegistrarEnrollmentFragment : Fragment() {
             val selectedStudent = students.find { it.student_id.toString() == selectedStudentID }
 
             if (selectedStudent != null) {
-                viewModel.setStudentID(selectedStudent.student_id ?: "")
+                viewModel.setStudentID((selectedStudent.student_id ?: "").toString())
                 viewModel.setName(selectedStudent.student_name ?: "")
-                viewModel.setDeptId(selectedStudent.dept_id ?: "")
+                viewModel.setDeptId((selectedStudent.dept_id ?: "").toString())
 
                 Log.d("ViewModelAssignment", "studentID: ${selectedStudent.student_id}")
                 Log.d("ViewModelAssignment", "name: ${selectedStudent.student_name}")

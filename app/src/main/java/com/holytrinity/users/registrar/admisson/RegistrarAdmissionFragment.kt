@@ -1,5 +1,6 @@
 package com.holytrinity.users.registrar.admisson
 
+
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -86,7 +87,7 @@ class RegistrarAdmissionFragment : Fragment() {
                     // Ensure that we are returning a Pair<String, String> for the map
                     studentNamesMap = students.associate {
                         // Safely convert to String and provide default value if null
-                        val fullName = it.full_name?.toString() ?: "Unknown"
+                        val fullName = it.student_name?.toString() ?: "Unknown"
                         val studentId = it.student_id?.toString() ?: "Unknown"
                         fullName to studentId  // Returning the pair
                     }.toMutableMap()
@@ -119,7 +120,7 @@ class RegistrarAdmissionFragment : Fragment() {
         filteredStudents = if (query.isEmpty()) {
             students
         } else {
-            students.filter { it.full_name?.contains(query, ignoreCase = true) == true }
+            students.filter { it.student_name?.contains(query, ignoreCase = true) == true }
         }
         studentsAdapter.updateData(filteredStudents)  // Update the adapter with filtered data
     }

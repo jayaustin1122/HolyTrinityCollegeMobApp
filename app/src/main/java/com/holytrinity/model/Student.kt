@@ -19,7 +19,7 @@ data class Student(
     val dept_id: String? = null,
     val course: String? = null,
     val level: String? = null,
-    val status: String? = null,
+    val official_status: String? = null,
     val section: String? = null,
     val classification_of_student: String? = null,
     val birthdate: String? = null,

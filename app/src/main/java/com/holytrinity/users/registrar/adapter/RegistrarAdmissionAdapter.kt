@@ -1,5 +1,6 @@
 package com.holytrinity.users.registrar.adapter
 
+
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.R
 import com.holytrinity.databinding.ItemAdmissionBinding
 import com.holytrinity.model.Student
+
 class RegistrarAdmissionAdapter(
     private var students: List<Student>,
     private val onClick: (String) -> Unit

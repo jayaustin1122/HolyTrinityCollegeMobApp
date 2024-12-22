@@ -94,7 +94,7 @@
     <!--  ================================================== -->
 
     <TextView
-        android:id="@+id/codeTitleTextView"
+        android:id="@+id/countTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -113,10 +113,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
+        tools:listitem="@layout/item_enrollement_lists"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/codeTitleTextView"
+        app:layout_constraintTop_toBottomOf="@+id/countTitleTextView"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

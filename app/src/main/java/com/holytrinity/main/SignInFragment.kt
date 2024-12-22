@@ -70,10 +70,7 @@ class SignInFragment : Fragment() {
 
                             findNavController().navigate(R.id.registrarDrawerHolderFragment)
                         }
-                        3 -> {
-                            //accounting
-                           // findNavController().navigate(R.id.accountingHomeFragment)
-                        }
+
                         4 -> {
 
                             findNavController().navigate(R.id.cashierDrawerFragment)

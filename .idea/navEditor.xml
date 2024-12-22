@@ -68,18 +68,6 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="calendarFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-600" />
-                            <option name="y" value="-627" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
                   <entry key="cashierDrawerFragment">
                     <value>
                       <LayoutPositions>
@@ -109,8 +97,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-511" />
-                            <option name="y" value="-627" />
+                            <option name="x" value="24" />
+                            <option name="y" value="-790" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -121,8 +109,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-481" />
-                            <option name="y" value="-597" />
+                            <option name="x" value="62" />
+                            <option name="y" value="-752" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -217,8 +205,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-451" />
-                            <option name="y" value="-567" />
+                            <option name="x" value="100" />
+                            <option name="y" value="-714" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -255,18 +243,6 @@
                           <Point>
                             <option name="x" value="-18" />
                             <option name="y" value="-644" />
-                          </Point>
-                        </option>
-                      </LayoutPositions>
-                    </value>
-                  </entry>
-                  <entry key="testPrinterFragment">
-                    <value>
-                      <LayoutPositions>
-                        <option name="myPosition">
-                          <Point>
-                            <option name="x" value="-551" />
-                            <option name="y" value="-456" />
                           </Point>
                         </option>
                       </LayoutPositions>

@@ -1,0 +1,110 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Name -->
+        <TextView
+            android:id="@+id/tvStudentName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Student ID -->
+        <TextView
+            android:id="@+id/tvStudentId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student ID: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Gender -->
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gender: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Contact No -->
+        <TextView
+            android:id="@+id/tvContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact No: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Birthdate -->
+        <TextView
+            android:id="@+id/tvBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Birthdate: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Course -->
+        <TextView
+            android:id="@+id/tvCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Course: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Level -->
+        <TextView
+            android:id="@+id/tvLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Level: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Enrolled Subjects -->
+        <TextView
+            android:id="@+id/tvSubjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Subjects Enrolled:"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+        <!-- Subject Details List -->
+        <LinearLayout
+            android:id="@+id/llSubjectDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <!-- Address Details -->
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address: "
+            android:textSize="14sp"
+            android:paddingBottom="8dp" />
+
+        <!-- Address List -->
+        <LinearLayout
+            android:id="@+id/llAddressDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>

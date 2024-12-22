@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/adminDrawerFragment">
+    app:startDestination="@id/registrarDrawerHolderFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -88,4 +88,18 @@
         android:name="com.holytrinity.users.registrar.admisson.DocumentViewerFragment"
         android:label="fragment_document_viewer"
         tools:layout="@layout/fragment_document_viewer" />
+    <fragment
+        android:id="@+id/instructorDrawerHolderFragment"
+        android:name="com.holytrinity.users.instructor.InstructorDrawerHolderFragment"
+        android:label="fragment_instructor_drawer_holder"
+        tools:layout="@layout/fragment_instructor_drawer_holder" />
+    <fragment
+        android:id="@+id/parentDrawerHolderFragment"
+        android:name="com.holytrinity.users.parent.ParentDrawerHolderFragment"
+        android:label="fragment_parent_drawer_holder"
+        tools:layout="@layout/fragment_parent_drawer_holder" />
+    <fragment
+        android:id="@+id/studentDrawerHolderFragment"
+        android:name="com.holytrinity.users.student.StudentDrawerHolderFragment"
+        android:label="StudentDrawerHolderFragment" />
 </navigation>
