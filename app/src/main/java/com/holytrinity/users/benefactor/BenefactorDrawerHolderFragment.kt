@@ -83,7 +83,7 @@ class BenefactorDrawerHolderFragment : Fragment() {
 
     private fun openFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container_bene, fragment)
             .commit()
 
         val constraintLayout = binding.constraint
@@ -102,13 +102,13 @@ class BenefactorDrawerHolderFragment : Fragment() {
         } else {
             binding.toolbar.visibility = View.GONE
             constraintSet.connect(
-                R.id.fragment_container,
+                R.id.fragment_container_bene,
                 ConstraintSet.TOP,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.TOP
             )
             constraintSet.connect(
-                R.id.fragment_container,
+                R.id.fragment_container_bene,
                 ConstraintSet.BOTTOM,
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.BOTTOM

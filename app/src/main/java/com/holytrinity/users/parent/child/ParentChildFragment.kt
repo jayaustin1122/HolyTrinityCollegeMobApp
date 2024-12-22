@@ -13,6 +13,7 @@ import com.holytrinity.api.ParentChildWrapper
 import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentParentChildBinding
 import com.holytrinity.model.StudentSolo
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +32,7 @@ class ParentChildFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userId = 6
+        val userId = UserPreferences.getRoleId(requireContext())
 
         // Initialize the adapter once
         studentAdapter = StudentAdapter(mutableListOf())

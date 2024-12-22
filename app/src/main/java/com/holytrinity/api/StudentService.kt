@@ -37,6 +37,12 @@ interface StudentService {
     ): Call<ParentChildWrapper>
 
 
+    @GET("crud-android/trinity/getBeneChild.php")
+    fun getBeneChild(
+        @Query("user_id") userId: String
+    ): Call<ParentChildWrapper>
+
+
 
 
     // Add a new student
