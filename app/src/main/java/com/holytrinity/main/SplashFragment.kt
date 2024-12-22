@@ -21,15 +21,9 @@ import kotlinx.coroutines.launch
 class SplashFragment : Fragment() {
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
-
-    // Duration for the splash screen delay (in milliseconds)
-    private val SPLASH_DELAY: Long = 2000 // 2 seconds
-
-    // Connectivity Manager and Network Callback
+    private val SPLASH_DELAY: Long = 2000
     private lateinit var connectivityManager: ConnectivityManager
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
-
-    // SweetAlertDialog instance
     private var noInternetDialog: SweetAlertDialog? = null
 
     override fun onCreateView(
@@ -42,16 +36,10 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Initialize ConnectivityManager
         connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
         checkInternetAndNavigate()
     }
 
-    /**
-     * Checks internet connectivity and navigates accordingly after a delay.
-     */
     private fun checkInternetAndNavigate() {
         // Launch a coroutine tied to the view lifecycle
         viewLifecycleOwner.lifecycleScope.launch {
@@ -67,13 +55,7 @@ class SplashFragment : Fragment() {
         }
     }
 
-    /**
-     * Determines if the device is connected to the internet.
-     *
-     * @return True if connected, False otherwise.
-     */
     private fun isInternetAvailable(): Boolean {
-        // For API level >= 23
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectivityManager.activeNetwork ?: return false
             val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
@@ -85,7 +67,7 @@ class SplashFragment : Fragment() {
                 else -> false
             }
         } else {
-            // For older API levels
+
             @Suppress("DEPRECATION")
             val networkInfo = connectivityManager.activeNetworkInfo ?: return false
             @Suppress("DEPRECATION")
@@ -93,17 +75,10 @@ class SplashFragment : Fragment() {
         }
     }
 
-    /**
-     * Navigates to the SignInFragment using the Navigation Component.
-     */
     private fun navigateToSignIn() {
         findNavController().navigate(R.id.signInFragment)
     }
 
-    /**
-     * Displays a SweetAlertDialog informing the user about the lack of internet connectivity.
-     * Provides a button to close the app.
-     */
     private fun showNoInternetDialog() {
         SweetAlertDialog(requireContext(), SweetAlertDialog.ERROR_TYPE)
             .setTitleText("No Internet Connection")
@@ -111,23 +86,20 @@ class SplashFragment : Fragment() {
             .setConfirmText("Exit")
             .setConfirmClickListener { dialog ->
                 dialog.dismissWithAnimation()
-                requireActivity().finishAffinity() // Closes the app
+                requireActivity().finishAffinity()
             }
             .show()
     }
 
-    /**
-     * Registers a network callback to listen for connectivity changes.
-     */
     private fun registerNetworkCallback() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             networkCallback = object : ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
                     super.onAvailable(network)
-                    // Internet is now available, dismiss dialog and navigate
+
                     viewLifecycleOwner.lifecycleScope.launch {
                         noInternetDialog?.dismissWithAnimation()
-                        delay(500) // Optional short delay for better UX
+                        delay(500)
                         navigateToSignIn()
                     }
                 }
@@ -147,11 +119,8 @@ class SplashFragment : Fragment() {
         }
     }
 
-    /**
-     * Unregisters the network callback to prevent memory leaks.
-     */
     private fun unregisterNetworkCallback() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && ::connectivityManager.isInitialized) {
+        if (::connectivityManager.isInitialized) {
             networkCallback?.let {
                 connectivityManager.unregisterNetworkCallback(it)
             }

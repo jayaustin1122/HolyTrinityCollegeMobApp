@@ -68,6 +68,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="calendarFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-600" />
+                            <option name="y" value="-627" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="cashierDrawerFragment">
                     <value>
                       <LayoutPositions>
@@ -87,6 +99,30 @@
                           <Point>
                             <option name="x" value="-415" />
                             <option name="y" value="-426" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="instructorDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-511" />
+                            <option name="y" value="-627" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="parentDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-481" />
+                            <option name="y" value="-597" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -176,6 +212,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="studentDrawerHolderFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-451" />
+                            <option name="y" value="-567" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="studentGetAdmittedFragment">
                     <value>
                       <LayoutPositions>
@@ -207,6 +255,18 @@
                           <Point>
                             <option name="x" value="-18" />
                             <option name="y" value="-644" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="testPrinterFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-551" />
+                            <option name="y" value="-456" />
                           </Point>
                         </option>
                       </LayoutPositions>

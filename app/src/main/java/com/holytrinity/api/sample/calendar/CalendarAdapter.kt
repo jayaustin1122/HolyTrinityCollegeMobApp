@@ -1,14 +1,12 @@
 package com.holytrinity.api.sample.calendar
 
-import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.R
-import com.holytrinity.main.Event
+import com.holytrinity.model.Event
 
 class CalendarAdapter(
     private val days: List<String>,  // List of days in the current month (e.g., "2024-12-01")

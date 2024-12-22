@@ -1,8 +1,7 @@
 package com.holytrinity.api
 
-import com.holytrinity.main.AddEventResponse
-import com.holytrinity.main.Event
-import com.holytrinity.model.DiscountFee
+import com.holytrinity.model.AddEventResponse
+import com.holytrinity.model.Event
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

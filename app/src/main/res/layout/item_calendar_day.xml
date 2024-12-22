@@ -1,44 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:elevation="4dp"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardBackgroundColor="@android:color/white"> <!-- Default color -->
+    android:layout_margin="2dp"
+    app:cardCornerRadius="12dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardElevation="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <!-- Date Text -->
         <TextView
             android:id="@+id/dayText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="12"
-            android:textSize="16sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="8dp" />
 
         <!-- Marker for Event -->
         <View
             android:id="@+id/eventMarker"
             android:layout_width="8dp"
             android:layout_height="8dp"
-            android:backgroundTint="@color/black"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/icon_add_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dayText" />
+            android:background="@drawable/ic_circle"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/dayText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

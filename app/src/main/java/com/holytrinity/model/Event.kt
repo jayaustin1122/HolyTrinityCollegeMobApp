@@ -1,4 +1,4 @@
-package com.holytrinity.main
+package com.holytrinity.model
 data class Event(
     val event_id: Int,
     val event_name: String,
