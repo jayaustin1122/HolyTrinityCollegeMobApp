@@ -9,5 +9,4 @@ data class Account(
     val email: String,
     val created_at: String,
     val updated_at: String
-
 )

@@ -17,6 +17,7 @@ import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentAdminManageAccountBinding
 import com.holytrinity.model.Account
 import com.holytrinity.users.admin.adapter.AccountsAdapter
+import com.holytrinity.users.admin.subjects.BottomSheetAddSubjectFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,6 +53,15 @@ class AdminManageAccountFragment : Fragment() {
         }
 
         getAccounts()
+
+        binding.addFabButton.setOnClickListener {
+            val detailsDialog = BottomSheetAddAccountFragment().apply {
+                onDismissListener = {
+                    getAccounts()
+                }
+            }
+            detailsDialog.show(childFragmentManager, "BottomSheetAddAccountFragment")
+        }
     }
 
     private fun setupRecyclerView() {

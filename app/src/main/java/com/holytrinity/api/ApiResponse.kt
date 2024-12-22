@@ -13,6 +13,15 @@ data class ApiResponse(
     val subject: List<Subject>
 )
 
+data class AccountRequest(
+    val role_id: Int,
+    val username: String,
+    val password_hash: String,
+    val name: String,
+    val email: String? = null
+)
+
+
 data class Courses (
     val course_id: Int,
     val name: String,

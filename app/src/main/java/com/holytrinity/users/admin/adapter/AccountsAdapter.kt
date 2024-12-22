@@ -32,13 +32,10 @@ class AccountsAdapter(private var accounts: List<Account>) : RecyclerView.Adapte
         fun bind(account: Account) {
             // Set the row number
             binding.tvNo.text = (adapterPosition + 1).toString()
-
             // Set the role name based on role_id
             binding.tvIdNo.text = getRoleName(account.role_id)
-
             // Set the user's name
             binding.tvName.text = account.name
-
             // Hide the 'Amount' TextView (as per your layout example)
             binding.tvAmount.visibility = View.GONE
         }

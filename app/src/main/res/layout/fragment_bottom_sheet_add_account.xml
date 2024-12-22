@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -9,6 +10,7 @@
     android:background="@drawable/background_bottom_sheet"
     tools:context=".users.admin.manage_account.BottomSheetAddAccountFragment">
 
+    <!-- Drag Handle -->
     <com.google.android.material.bottomsheet.BottomSheetDragHandleView
         android:id="@+id/handle"
         android:layout_width="match_parent"
@@ -17,6 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Title -->
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -28,128 +31,153 @@
         app:layout_constraintTop_toBottomOf="@id/handle"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!--  ====================================================  -->
-
+    <!-- Role Spinner -->
     <TextView
-        android:id="@+id/titleEditTextView"
+        android:id="@+id/roleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Title *"
+        android:text="Role *"
         android:textColor="@color/dark_icon_color"
         android:textSize="16sp"
         android:fontFamily="@font/roboto_medium"
         app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/titleTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/titleEditTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/titleEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter Title" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--  ====================================================  -->
-
-    <TextView
-        android:id="@+id/amountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Amount *"
-        android:textColor="@color/dark_icon_color"
-        android:textSize="16sp"
-        android:fontFamily="@font/roboto_medium"
-        app:layout_constraintTop_toBottomOf="@id/titleTextInputLayout"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/amountTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/amountTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/amountEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Enter Amount" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--  ====================================================  -->
-
-    <TextView
-        android:id="@+id/descriptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Description *"
-        android:textColor="@color/dark_icon_color"
-        android:textSize="16sp"
-        android:fontFamily="@font/roboto_medium"
-        app:layout_constraintTop_toBottomOf="@id/amountTextInputLayout"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/descriptionTextInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/descriptionEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="Enter Description" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!--  ====================================================  -->
-
-    <TextView
-        android:id="@+id/subFeeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="5dp"
-        android:text="Sub Fee"
-        android:textColor="@color/dark_icon_color"
-        android:textSize="16sp"
-        android:fontFamily="@font/roboto_medium"
-        app:layout_constraintTop_toBottomOf="@id/descriptionTextInputLayout"
-        app:layout_constraintStart_toStartOf="parent"/>
-
     <Spinner
-        android:id="@+id/subFeeSpinner"
+        android:id="@+id/roleSpinner"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:paddingVertical="10dp"
         android:paddingHorizontal="10dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/background_spinner"
-        app:layout_constraintTop_toBottomOf="@id/subFeeTextView"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@id/roleTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:spinnerMode="dropdown" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!--  ====================================================  -->
+    <!-- Name Field -->
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Name *"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintTop_toBottomOf="@id/roleSpinner"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/nameTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/nameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Username Field (formerly Amount) -->
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Username *"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintTop_toBottomOf="@id/nameTextInputLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/usernameTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="Username" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password Field (formerly Description) -->
+    <TextView
+        android:id="@+id/passwordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Password *"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintTop_toBottomOf="@id/usernameTextInputLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/passwordTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Password" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Confirm Password Field -->
+    <TextView
+        android:id="@+id/confirmPasswordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Confirm Password *"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp"
+        android:fontFamily="@font/roboto_medium"
+        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confirmPasswordTextInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Confirm Password" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Done Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/doneButton"
         android:layout_width="0dp"
@@ -158,10 +186,9 @@
         android:text="Done"
         android:textColor="@color/light_text_color"
         android:fontFamily="@font/roboto_medium"
-        app:layout_constraintTop_toBottomOf="@+id/subFeeSpinner"
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:backgroundTint="@color/violet_primary" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
