@@ -9,35 +9,27 @@ import com.holytrinity.R
 import com.holytrinity.model.Event
 
 class CalendarAdapter(
-    private val days: List<String>,  // List of days in the current month (e.g., "2024-12-01")
-    private val events: Map<String, Event>,  // Map of event dates
-    private val onDayClick: (String) -> Unit  // Click listener to show event details
+    private val days: List<String>,
+    private val events: MutableMap<String, MutableList<Event>>, // Events mapped by their date
+    private val onDayClick: (String) -> Unit
 ) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
 
     inner class CalendarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val dayText: TextView = view.findViewById(R.id.dayText)
         val eventMarker: View = view.findViewById(R.id.eventMarker)
-        val cardView: android.widget.FrameLayout = view.findViewById(R.id.cardView)  // Get the CardView to change background color
 
         fun bind(day: String) {
-            dayText.text = day.takeLast(2)  // Get the day part (e.g., "01" from "2024-12-01")
+            dayText.text = day.takeLast(2) // Show only the day number
 
-            // If there's an event for this day, show the event marker
-            if (events.containsKey(day)) {
-                eventMarker.visibility = View.VISIBLE
-
-                // Change the background color to light blue if there's an event
-                cardView.setBackgroundColor(itemView.context.getColor(R.color.light_blue))  // Use light blue color
+            if (day.isNotEmpty() && events.containsKey(day)) {
+                eventMarker.visibility = View.VISIBLE // Show marker if there's an event
             } else {
-                eventMarker.visibility = View.GONE
-
-                // Set the default background if there's no event
-                cardView.setBackgroundColor(itemView.context.getColor(R.color.white))  // Default white background
+                eventMarker.visibility = View.GONE // Hide marker otherwise
             }
 
-            // Set the day click listener
+            // Handle day click
             itemView.setOnClickListener {
-                onDayClick(day)
+                if (day.isNotEmpty()) onDayClick(day)
             }
         }
     }
@@ -49,8 +41,7 @@ class CalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
-        val day = days[position]
-        holder.bind(day)
+        holder.bind(days[position])
     }
 
     override fun getItemCount(): Int = days.size

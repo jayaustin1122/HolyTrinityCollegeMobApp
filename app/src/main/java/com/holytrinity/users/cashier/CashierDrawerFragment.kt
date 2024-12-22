@@ -106,9 +106,9 @@ class CashierDrawerFragment : Fragment() {
             binding.toolbar.visibility = View.VISIBLE
             constraintSet.connect(
                 R.id.fragment_container,
-                ConstraintSet.TOP,
+                ConstraintSet.BOTTOM,
                 R.id.toolbar,
-                ConstraintSet.BOTTOM
+                ConstraintSet.TOP
             )
         } else {
             binding.toolbar.visibility = View.GONE

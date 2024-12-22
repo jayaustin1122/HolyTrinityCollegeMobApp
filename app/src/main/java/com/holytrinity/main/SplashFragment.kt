@@ -28,7 +28,7 @@ class SplashFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSplashBinding.inflate(inflater, container, false)
         return binding.root
@@ -36,7 +36,8 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         checkInternetAndNavigate()
     }
 
@@ -46,7 +47,7 @@ class SplashFragment : Fragment() {
             if (isInternetAvailable()) {
                 // Internet is available, proceed with splash delay
                 delay(SPLASH_DELAY)
-                navigateToSignIn()
+                navigateToNextScreen()
             } else {
                 // No internet, show dialog and start listening for connectivity changes
                 showNoInternetDialog()
@@ -67,7 +68,6 @@ class SplashFragment : Fragment() {
                 else -> false
             }
         } else {
-
             @Suppress("DEPRECATION")
             val networkInfo = connectivityManager.activeNetworkInfo ?: return false
             @Suppress("DEPRECATION")
@@ -75,8 +75,26 @@ class SplashFragment : Fragment() {
         }
     }
 
-    private fun navigateToSignIn() {
-        findNavController().navigate(R.id.signInFragment)
+    private fun navigateToNextScreen() {
+        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
+
+        if (isLoggedIn) {
+            val roleId = sharedPreferences.getInt("role_id", -1)
+            when (roleId) {
+                1 -> findNavController().navigate(R.id.adminDrawerFragment)
+                2 -> findNavController().navigate(R.id.registrarDrawerHolderFragment)
+//                3 -> findNavController().navigate(R.id.accountingHomeFragment)
+                4 -> findNavController().navigate(R.id.cashierDrawerFragment)
+                5 -> findNavController().navigate(R.id.instructorDrawerHolderFragment)
+                6 -> findNavController().navigate(R.id.parentDrawerHolderFragment)
+                7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
+                10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
+                else -> findNavController().navigate(R.id.signInFragment)
+            }
+        } else {
+            findNavController().navigate(R.id.signInFragment)
+        }
     }
 
     private fun showNoInternetDialog() {
@@ -100,22 +118,16 @@ class SplashFragment : Fragment() {
                     viewLifecycleOwner.lifecycleScope.launch {
                         noInternetDialog?.dismissWithAnimation()
                         delay(500)
-                        navigateToSignIn()
+                        navigateToNextScreen()
                     }
                 }
 
                 override fun onLost(network: Network) {
                     super.onLost(network)
-                    // Internet connection lost while the dialog is showing
-                    // Optionally, you can show the dialog again or handle it as needed
                 }
             }
 
             connectivityManager.registerDefaultNetworkCallback(networkCallback!!)
-        } else {
-            // For API levels below N, use deprecated methods or consider alternative approaches
-            // One approach is to use a BroadcastReceiver, but it's deprecated in newer APIs
-            // Here, we'll skip implementing it for brevity
         }
     }
 

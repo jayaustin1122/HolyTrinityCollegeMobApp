@@ -13,6 +13,17 @@ data class ApiResponse(
     val subject: List<Subject>
 )
 
+data class ChangePasswordRequest(
+    val user_id: Int,
+    val old_password: String,
+    val new_password: String
+)
+
+data class ChangePasswordResponse(
+    val status: String,
+    val message: String
+)
+
 data class AccountRequest(
     val role_id: Int,
     val username: String,
@@ -20,7 +31,6 @@ data class AccountRequest(
     val name: String,
     val email: String? = null
 )
-
 
 data class Courses (
     val course_id: Int,

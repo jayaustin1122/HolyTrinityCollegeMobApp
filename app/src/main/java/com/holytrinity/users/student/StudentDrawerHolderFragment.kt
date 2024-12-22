@@ -9,16 +9,18 @@ import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.findNavController
 import com.holytrinity.R
+import com.holytrinity.databinding.FragmentRegistrarDrawerHolderBinding
 import com.holytrinity.databinding.FragmentStudentDrawerHolderBinding
 import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
-import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
-import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
 import com.holytrinity.users.student.calendar.StudentCalendarFragment
+import com.holytrinity.users.student.changepass.StudentChangePassFragment
 import com.holytrinity.users.student.curr_eval.StudentCurrEvalFragment
+import com.holytrinity.users.student.dashboard.StudentDashboardFragment
 import com.holytrinity.users.student.due_amount.StudentDueAmountFragment
 import com.holytrinity.users.student.enrolled_subs.StudentEnrolledSubsFragment
 import com.holytrinity.users.student.profile.StudentProfileFragment
@@ -36,11 +38,10 @@ class StudentDrawerHolderFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentStudentDrawerHolderBinding.inflate(layoutInflater)
+        binding = FragmentStudentDrawerHolderBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,21 +65,22 @@ class StudentDrawerHolderFragment : Fragment() {
 
         // Open Dashboard fragment on first load
         if (savedInstanceState == null) {
-            openFragment(RegistrarDashBoardFragment())
+            openFragment(StudentDashboardFragment())
         }
 
         // Set Navigation Item click listener
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_student_change_password -> openFragment(RegistrarDashBoardFragment())
-                R.id.nav_student_profile -> openFragment(StudentProfileFragment())
-                R.id.nav_student_due_amount -> openFragment(StudentDueAmountFragment())
-                R.id.nav_student_enrolled_subs -> openFragment(StudentEnrolledSubsFragment())
-                R.id.nav_student_curr_eval -> openFragment(StudentCurrEvalFragment())
-                R.id.nav_student_soa -> openFragment(StudentSoaFragment())
-                R.id.nav_student_calender -> openFragment(StudentCalendarFragment())
+                R.id.nav_dashboard_student -> openFragment(StudentDashboardFragment())
+                R.id.nav_student_profile_student -> openFragment(StudentProfileFragment())
+                R.id.nav_due_amount_student -> openFragment(StudentDueAmountFragment())
+                R.id.nav_enrolled_subjects_student -> openFragment(StudentEnrolledSubsFragment())
+                R.id.nav_curriculum_evaluation_student -> openFragment(StudentCurrEvalFragment())
+                R.id.nav_statement_of_account_student -> openFragment(StudentSoaFragment())
+                R.id.nav_school_calendar_student -> openFragment(StudentCalendarFragment())
+                R.id.nav_change_password_student -> openFragment(StudentChangePassFragment())
            //     R.id.nav_student_help -> openFragment()
-                R.id.nav_student_logout -> {
+                R.id.nav_logout_student -> {
                     LogoutHelper.logout(requireContext()) {
                         findNavController().navigate(R.id.signInFragment)
                     }
@@ -94,6 +96,36 @@ class StudentDrawerHolderFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+
+        val constraintLayout = binding.constraint
+        val constraintSet = ConstraintSet()
+
+        constraintSet.clone(constraintLayout)
+
+        if (fragment is StudentDashboardFragment) {
+            binding.toolbar.visibility = View.VISIBLE
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.BOTTOM,
+                R.id.toolbar,
+                ConstraintSet.TOP
+            )
+        } else {
+            binding.toolbar.visibility = View.GONE
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.TOP,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.TOP
+            )
+            constraintSet.connect(
+                R.id.fragment_container,
+                ConstraintSet.BOTTOM,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.BOTTOM
+            )
+        }
+        constraintSet.applyTo(constraintLayout)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
