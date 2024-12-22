@@ -15,8 +15,15 @@ object LogoutHelper {
             loadingDialog.show()
 
             Handler().postDelayed({
+                // Clear SharedPreferences
+                val sharedPreferences = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.clear()
+                editor.apply()
+
                 loadingDialog.dismiss()
 
+                // Invoke the success callback
                 onLogoutSuccess()
             }, 2000)
         }

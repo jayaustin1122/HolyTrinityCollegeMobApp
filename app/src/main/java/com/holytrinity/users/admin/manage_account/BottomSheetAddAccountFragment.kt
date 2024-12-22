@@ -46,15 +46,15 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
         // Populate spinner with roles
         val roles = mapOf(
             1 to "Administrator",
-            3 to "Accounting",
-            8 to "Assistant",
+//            3 to "Accounting",
+//            8 to "Assistant",
             10 to "Benefactor",
-            4 to "Cashiering",
-            9 to "Counselor",
+            4 to "Cashier",
+//            9 to "Counselor",
             5 to "Instructor",
             6 to "Parent",
             2 to "Registrar",
-            7 to "Student"
+//            7 to "Student"
         )
         val adapter = ArrayAdapter(
             requireContext(),

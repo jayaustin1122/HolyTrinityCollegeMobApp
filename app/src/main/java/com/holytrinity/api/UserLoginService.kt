@@ -16,5 +16,4 @@ interface UserLoginService {
         @Query("password") password: String
     ): Call<List<User>>
 
-
 }

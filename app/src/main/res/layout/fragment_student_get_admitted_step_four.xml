@@ -34,7 +34,7 @@
                 android:id="@+id/inputUsername"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:inputType="number" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- SHS Attended -->
@@ -43,26 +43,28 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:hint="password*"
+            app:endIconMode="password_toggle"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputPass"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirm password*"
+            app:endIconMode="password_toggle"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirmPass"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:inputType="text" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
