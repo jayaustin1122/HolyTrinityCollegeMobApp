@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -11,8 +11,8 @@
         android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/roboto_medium"
         android:text="List of Enrollees"
         android:textColor="@color/dark_text_color"
@@ -26,10 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/roboto_regular"
         android:text="PDF"
         android:textColor="@color/dark_icon_color"
-        android:backgroundTint="@color/white"
         app:chipCornerRadius="20dp"
         app:chipStrokeColor="@color/dark_icon_color"
         app:layout_constraintEnd_toStartOf="@+id/xlsChip"
@@ -41,10 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/roboto_regular"
         android:text="XLS"
         android:textColor="@color/dark_icon_color"
-        android:backgroundTint="@color/white"
         app:chipCornerRadius="20dp"
         app:chipStrokeColor="@color/dark_icon_color"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,10 +56,10 @@
         android:id="@+id/searchFilterContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         android:gravity="fill_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeTextView">
@@ -80,8 +80,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            style="?attr/materialIconButtonOutlinedStyle"
             android:id="@+id/btnFilter"
+            style="?attr/materialIconButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:icon="@drawable/icon_filter_list_24"
@@ -97,27 +97,77 @@
         android:id="@+id/countTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto_medium"
         android:text="Results: "
-        android:textSize="16sp"
         android:textColor="@color/dark_icon_color"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchFilterContainer"/>
+        app:layout_constraintTop_toBottomOf="@+id/searchFilterContainer" />
 
     <!--  ================================================== -->
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/gray_btn_bg_pressed_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countTitleTextView">
+
+        <!-- Column for 'No' -->
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="#"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- Column for 'ID No' -->
+        <TextView
+            android:id="@+id/tvIdNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="2"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="Student Number"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <!-- Column for 'Name' -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Name"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+        <!-- Column for 'Name' -->
+
+        <!-- Column for 'Amount' -->
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEnrolledSubjects"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
-        tools:listitem="@layout/item_enrollement_lists"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/countTitleTextView"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        tools:listitem="@layout/item_enrollement_lists" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

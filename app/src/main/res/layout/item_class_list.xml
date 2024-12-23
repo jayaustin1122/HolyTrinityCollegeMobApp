@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pillOneBtn"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="2.5dp"
+        android:backgroundTint="#FFFFFF"
+        android:elevation="@dimen/cardview_compat_inset_shadow"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="22dp"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/codeTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Code"
+                android:textSize="12sp"
+                android:textColor="@color/dark_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/codeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="PHL 123"
+                android:textSize="16sp"
+                android:textColor="@color/dark_text_color"
+                app:layout_constraintStart_toStartOf="@+id/codeTitleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/codeTitleTextView"/>
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/nameTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Name"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/codeTitleTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="History of Chinese Philo"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/nameTitleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/nameTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/sectionTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Section"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/sectionTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/sectionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="PHL 1A"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/sectionTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/unitTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Unit"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/unitTextView"
+                app:layout_constraintStart_toEndOf="@+id/sectionTitleTextView" />
+
+            <TextView
+                android:id="@+id/unitTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="3"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/unitTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/scheduleTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Schedule"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/unitTextView"
+                app:layout_constraintStart_toEndOf="@+id/unitTitleTextView" />
+
+            <TextView
+                android:id="@+id/scheduleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="MWF 8:00-9:00"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/scheduleTitleTextView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

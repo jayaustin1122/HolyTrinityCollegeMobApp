@@ -82,11 +82,11 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                     val body = response.body()
                     if (body?.success != null) {
                         val eventData = body.events
-//                        Toast.makeText(
-//                            requireContext(),
-//                            "Event added successfully: ID = ${eventData?.event_id}, Name = ${eventData?.event_name}",
-//                            Toast.LENGTH_LONG
-//                        ).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Event added successfully!",
+                            Toast.LENGTH_LONG
+                        ).show()
                         dismiss()
                     } else {
                         Toast.makeText(requireContext(), "Failed to add event.", Toast.LENGTH_SHORT).show()

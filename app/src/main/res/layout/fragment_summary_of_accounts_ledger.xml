@@ -59,15 +59,72 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/gray_btn_bg_pressed_color"
+        app:layout_constraintTop_toBottomOf="@+id/searchFilterContainer">
+
+        <!-- Column for 'No' -->
+        <TextView
+            android:id="@+id/tvNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <!-- Column for 'ID No' -->
+        <TextView
+            android:id="@+id/tvIdNo"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Student ID"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <!-- Column for 'Name' -->
+        <TextView
+            android:id="@+id/tvName"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Name"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+
+        <!-- Column for 'Amount' -->
+        <TextView
+            android:id="@+id/tvAmount"
+            android:fontFamily="@font/roboto_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Amount Due"
+            android:textSize="16sp"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_summary"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchFilterContainer"
+        app:layout_constraintTop_toBottomOf="@+id/linear"
         tools:listitem="@layout/item_summary_of_accounts" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

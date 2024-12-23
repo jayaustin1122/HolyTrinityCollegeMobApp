@@ -1,47 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background_bottom_sheet"
     android:orientation="vertical"
-    android:padding="16dp"
-    tools:ignore="MissingConstraints">
+    android:paddingHorizontal="24dp"
+    android:paddingBottom="40dp">
+
+    <!-- Drag Handle -->
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/handle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Add New Event"
+        android:textColor="@color/dark_text_color"
+        android:textSize="22sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/add_event_details"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:paddingBottom="8dp" />
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Title"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp" />
 
     <!-- Name Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name">
+        android:layout_marginTop="3dp"
+        android:hint="@string/name"
+        app:hintEnabled="false">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Date"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp" />
+
     <!-- Date Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/date">
+        android:hint="@string/date"
+        android:layout_marginTop="3dp"
+        app:hintEnabled="false">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="date" />
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:inputType="date"
+            android:longClickable="false" />
+
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Description"
+        android:textColor="@color/dark_icon_color"
+        android:textSize="16sp" />
 
     <!-- Description Input -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/description">
+        android:hint="@string/description"
+        android:layout_marginTop="3dp"
+        app:hintEnabled="false">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
@@ -53,8 +105,13 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/save"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/red_btn_bg_color"
-        android:textColor="@android:color/white" />
+        android:fontFamily="@font/roboto_medium"
+        android:text="Done"
+        android:textColor="@color/light_text_color"
+        app:backgroundTint="@color/violet_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/confirmPasswordTextInputLayout" />
+
 </LinearLayout>

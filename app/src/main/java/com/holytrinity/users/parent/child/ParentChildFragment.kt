@@ -34,6 +34,8 @@ class ParentChildFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val userId = UserPreferences.getRoleId(requireContext())
 
+        binding.textViewUser.text = UserPreferences.getName(requireContext())
+
         // Initialize the adapter once
         studentAdapter = StudentAdapter(mutableListOf())
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())

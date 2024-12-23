@@ -40,7 +40,6 @@ class SetUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
-
         if (savedPeriod != null) {
             Log.d(
                 "SavedPeriod", "Year: ${savedPeriod.enrollment_period_id}, Semester: ${savedPeriod.semester}, " +
@@ -49,9 +48,7 @@ class SetUpFragment : Fragment() {
         } else {
             Log.d("SavedPeriod", "No saved period found.")
         }
-
         val roleId = UserPreferences.getRoleId(requireContext())
-
         binding.toolbarBackButton.setOnClickListener {
             navigateBasedOnRole(roleId)
         }

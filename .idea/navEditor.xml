@@ -56,6 +56,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="adminPreRequisitesFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-294" />
+                            <option name="y" value="-401" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="adminSubjectsFragment">
                     <value>
                       <LayoutPositions>
@@ -135,6 +147,18 @@
                           <Point>
                             <option name="x" value="-415" />
                             <option name="y" value="-426" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="instructorClassDetailsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="190" />
+                            <option name="y" value="-430" />
                           </Point>
                         </option>
                       </LayoutPositions>

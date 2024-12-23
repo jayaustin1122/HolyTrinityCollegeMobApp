@@ -43,6 +43,11 @@ class AdminOfferingsFragment : Fragment() {
                 navigate(R.id.adminSubjectsFragment)
             }
         }
+        binding.preRequisitesComplaints.setOnClickListener {
+            findNavController().apply {
+                navigate(R.id.adminPreRequisitesFragment)
+            }
+        }
     }
 
 }

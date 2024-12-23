@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentAdminDashboardBinding
+import com.holytrinity.util.UserPreferences
 
 class AdminDashboardFragment : Fragment() {
    private lateinit var binding: FragmentAdminDashboardBinding
@@ -16,6 +17,12 @@ class AdminDashboardFragment : Fragment() {
     ): View? {
         binding = FragmentAdminDashboardBinding.inflate(layoutInflater)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.textViewUser.text = UserPreferences.getName(requireContext())
     }
 
 }

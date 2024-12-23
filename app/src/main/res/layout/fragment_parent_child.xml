@@ -7,19 +7,18 @@
     android:background="@color/white"
     tools:context=".users.parent.child.ParentChildFragment">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
         android:layout_margin="20dp"
+        android:layout_marginVertical="5dp"
         android:backgroundTint="#E4E21C"
         android:elevation="@dimen/cardview_compat_inset_shadow"
         app:cardCornerRadius="12dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,38 +32,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:src="@drawable/icon"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.0"/>
+                app:layout_constraintVertical_bias="0.0" />
 
             <!-- Text Views Stacked on the Right Side -->
             <TextView
                 android:id="@+id/textViewWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="Welcome"
                 android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/textViewUser"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textViewUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:text="User"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-                app:layout_constraintTop_toBottomOf="@+id/textViewWelcome"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/textViewWelcome" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
 
     <TextView
         android:id="@+id/subjectsDataTextView"
