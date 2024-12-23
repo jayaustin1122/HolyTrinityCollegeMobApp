@@ -90,7 +90,7 @@ class StudentGetAdmittedStepOneFragment : Fragment() {
             val calendar = Calendar.getInstance().apply {
                 timeInMillis = selection
             }
-            val formattedDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(calendar.time)
+            val formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
             viewModel.dateOfBirth = formattedDate
             binding.dateOfBirth.setText(formattedDate)
         }

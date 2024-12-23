@@ -13,8 +13,8 @@ interface StudentService {
 
     @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(
-        @Query("student_id") studentId: String? = null,
-        @Query("registrationVerified") registrationVerified: String? = null
+        @Query("student_id") studentId: Int? = null,
+        @Query("registrationVerified") registrationVerified: Int? = null
     ): Call<List<Student>>
         //   getStudents() // No parameters, fetches all students
         //   getStudents(studentId = "12345")  Get a Student by ID:
@@ -25,6 +25,22 @@ interface StudentService {
         @Query("student_id") studentId: String
     ): Call<StudentSolo>
 
+
+        @GET("crud-android/trinity/saveState.php")
+        fun getStudentState(
+            @Query("user_id") userId: String
+        ): Call<StudentSolo>
+
+    @GET("crud-android/trinity/getParentChild.php")
+    fun getParentChild(
+        @Query("user_id") userId: String
+    ): Call<ParentChildWrapper>
+
+
+    @GET("crud-android/trinity/getBeneChild.php")
+    fun getBeneChild(
+        @Query("user_id") userId: String
+    ): Call<ParentChildWrapper>
 
 
 
@@ -58,8 +74,8 @@ interface StudentService {
         @Part("lastName") lastName: RequestBody,
         @Part("firstName") firstName: RequestBody,
         @Part("middleName") middleName: RequestBody,
-        @Part("sex") sex: RequestBody,
-        @Part("dateOfBirth") dateOfBirth: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("birthdate") birthdate: RequestBody,
         @Part("phone") phone: RequestBody,
         @Part("municipality") municipality: RequestBody,
         @Part("barangay") barangay: RequestBody,

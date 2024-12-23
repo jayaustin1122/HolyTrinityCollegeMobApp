@@ -45,9 +45,10 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
-            android:id="@+id/fragment_container"
+            android:id="@+id/fragment_container_bene"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -12,7 +12,9 @@ data class ApiResponse(
     val curriculum: List<Curriculum>,
     val subject: List<Subject>
 )
-
+data class ParentChildResponse(
+    val students: List<String>
+)
 data class ChangePasswordRequest(
     val user_id: Int,
     val old_password: String,
@@ -23,7 +25,9 @@ data class ChangePasswordResponse(
     val status: String,
     val message: String
 )
-
+data class ParentChildWrapper(
+    val students: List<Int>
+)
 data class AccountRequest(
     val role_id: Int,
     val username: String,

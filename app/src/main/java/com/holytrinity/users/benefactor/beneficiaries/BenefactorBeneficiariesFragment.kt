@@ -2,18 +2,29 @@ package com.holytrinity.users.benefactor.beneficiaries
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.holytrinity.R
+import com.holytrinity.api.ParentChildWrapper
+import com.holytrinity.api.RetrofitInstance
+import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentBenefactorBeneficiariesBinding
+import com.holytrinity.model.StudentSolo
+import com.holytrinity.users.parent.child.StudentAdapter
+import com.holytrinity.util.UserPreferences
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BenefactorBeneficiariesFragment : Fragment() {
 
     private var _binding: FragmentBenefactorBeneficiariesBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var studentAdapter: StudentAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,17 +35,72 @@ class BenefactorBeneficiariesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val userId = UserPreferences.getRoleId(requireContext())
 
-        // Retrieve the logged-in user's name from SharedPreferences
-        val sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE)
-        val userName = sharedPreferences.getString("name", "User")
+        // Initialize the adapter once
+        studentAdapter = StudentAdapter(mutableListOf())
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = studentAdapter
 
-        // Set the retrieved name to textViewUser
-        binding.textViewUser.text = userName
+        // Fetch students for the parent
+        getParentStudents(userId.toString())
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun getParentStudents(userId: String) {
+        val parentService = RetrofitInstance.create(StudentService::class.java)
+        parentService.getBeneChild(userId).enqueue(object : Callback<ParentChildWrapper> {
+            override fun onResponse(
+                call: Call<ParentChildWrapper>,
+                response: Response<ParentChildWrapper>
+            ) {
+                if (response.isSuccessful) {
+                    val students = response.body()?.students ?: emptyList()
+                    if (students.isNotEmpty()) {
+                        // Fetch individual student data and populate list
+                        for (studentId in students) {
+                            getStudent(studentId.toString())
+                        }
+                    } else {
+                        Log.e("Error", "No students found for this parent.")
+                    }
+                } else {
+                    Log.e("Error", "Failed to fetch parent-child details: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ParentChildWrapper>, t: Throwable) {
+                Log.e("Error", "Failed to fetch parent-child details: ${t.message}")
+            }
+        })
+    }
+
+    private fun getStudent(studentId: String) {
+        val studentService = RetrofitInstance.create(StudentService::class.java)
+        studentService.getStudent(studentId).enqueue(object : Callback<StudentSolo> {
+            override fun onResponse(
+                call: Call<StudentSolo>,
+                response: Response<StudentSolo>
+            ) {
+                if (response.isSuccessful) {
+                    val student = response.body()
+                    student?.let {
+                        // Add student to the adapter and notify change
+                        studentAdapter.students.add(it)
+                        studentAdapter.notifyItemInserted(studentAdapter.students.size - 1)
+                    }
+                } else {
+                    Log.e("Error", "Failed to fetch student details: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<StudentSolo>, t: Throwable) {
+                Log.e("Error", "Failed to fetch student details: ${t.message}")
+            }
+        })
     }
 }
