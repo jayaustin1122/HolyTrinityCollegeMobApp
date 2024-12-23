@@ -104,7 +104,7 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
-    private fun getAllStudents(studentId: String? = null, registrationVerified: String? = "1") {
+    private fun getAllStudents(studentId: Int? = null, registrationVerified: Int? = 1) {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents(studentId, registrationVerified).enqueue(object : Callback<List<Student>> {
             override fun onResponse(
