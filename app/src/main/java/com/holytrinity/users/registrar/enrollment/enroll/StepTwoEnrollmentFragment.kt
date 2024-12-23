@@ -39,26 +39,26 @@ class StepTwoEnrollmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val studentId = viewModel.studentID.value
+        val name = viewModel.name.value
+        val deptId = viewModel.dept_id.value
+        val currId = viewModel.curr_id.value
+        val course = viewModel.course.value
+        val status = viewModel.status.value
+        val section = viewModel.section.value
+        val classification = viewModel.classification_of_student.value
+        val level = viewModel.level.value
+        val studentID = viewModel.studentID.value
 
-        // Get the level and add the correct suffix
-        val level = viewModel.level.toString()
-        val studentID = viewModel.studentID.toString()
-        val yearLevel = when (level) {
-            1.toString() -> "${level}st Year"
-            2.toString() -> "${level}nd Year"
-            3.toString() -> "${level}rd Year"
-            4.toString() -> "${level}th Year"
-            else -> "${level}th Year"
-        }
 
         // Log the level
-        Log.d("API_RESPONSE", "$yearLevel")
+        Log.d("API_RESPONSE", "$level $currId")
 
         // Get the curriculum ID
         val curriculum = viewModel.curr_id
 
         // Call the function to get all subjects
-        getAllSubjects(yearLevel, curriculum.toString(), studentID.toString())
+       // getAllSubjects(level, curriculum.toString(), studentID.toString())
     }
 
 

@@ -109,6 +109,37 @@ class StepOneEnrollmentFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+        binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedSemesterYear = semesterYearList[position]
+
+                // Now, set the ID to pass based on the semester and year
+                val semesterId = when (selectedSemesterYear) {
+                    "1st Semester 2024" -> "1"
+                    "2nd Semester 2024" -> "2"
+                    "1st Semester 2025" -> "3"
+                    "2nd Semester 2025" -> "4"
+                    "1st Semester 2026" -> "5"
+                    "2nd Semester 2026" -> "6"
+                    "1st Semester 2027" -> "7"
+                    "2nd Semester 2027" -> "8"
+                    "1st Semester 2028" -> "9"
+                    "2nd Semester 2028" -> "10"
+                    else -> ""  // Default case
+                }
+
+                // Assuming there's a method to pass the semester ID to your view model
+                viewModel.setCurrId(semesterId)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+
 
         // Level spinner listener
         binding.levelSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
