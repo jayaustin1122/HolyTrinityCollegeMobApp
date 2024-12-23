@@ -40,8 +40,21 @@ class StepOneEnrollmentFragment : Fragment() {
             "Pre College" to emptyList()
         )
         val courseList = listOf("") + listOf("Computer Science", "Business Administration", "Engineering")
-        val curriculumList = listOf("") + listOf("Curriculum A", "Curriculum B")
-        val sectionList = listOf("") + listOf("A", "B", "C")
+
+
+        val semesterYearList = listOf(
+            "1st Semester 2024",
+            "2nd Semester 2024",
+            "1st Semester 2025",
+            "2nd Semester 2025",
+            "1st Semester 2026",
+            "2nd Semester 2026",
+            "1st Semester 2027",
+            "2nd Semester 2027",
+            "1st Semester 2028",
+            "2nd Semester 2028"
+        )
+        val sectionList = listOf("") + listOf("A", "B")
 
         // Observers
         viewModel.studentID.observe(viewLifecycleOwner) { studentID ->
@@ -68,11 +81,10 @@ class StepOneEnrollmentFragment : Fragment() {
         viewModel.classification_of_student.observe(viewLifecycleOwner) { classification ->
             setRadioButtonSelection(classification)
         }
-
-        // Initial spinner states based on ViewModel values (may be null, so we use ?: "")
+        val selectedCurriculumId = viewModel.curr_id.value
+        setSpinnerSelection(binding.curriculumSpinner, semesterYearList, selectedCurriculumId)
         setSpinnerSelection(binding.departmentSpinner, departmentList, viewModel.dept_id.value)
         setSpinnerSelection(binding.courseSpinner, courseList, viewModel.course.value)
-        setSpinnerSelection(binding.curriculumSpinner, curriculumList, viewModel.curr_id.value)
         setSpinnerSelection(binding.sectionSpinner, sectionList, viewModel.section.value)
 
         // Department spinner listener

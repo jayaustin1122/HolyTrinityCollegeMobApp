@@ -20,7 +20,7 @@ data class StudentSolo(
     val gender: String,
     val course: Course,
     val curriculum: Curriculums?, // New field for curriculum information
-    val enrollment_period: EnrollmentPeriod?, // New field for enrollment period information
+    val enrollment_period: Enrollment_Period?, // New field for enrollment period information
     val personal_info: PersonalInfo?, // New field for personal info
     val enrolled_subjects: List<EnrolledSubject>,
     val contacts: List<Contact>, // New field for contacts

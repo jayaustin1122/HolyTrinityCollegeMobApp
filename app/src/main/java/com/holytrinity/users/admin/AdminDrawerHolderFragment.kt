@@ -78,7 +78,7 @@ class AdminDrawerHolderFragment : Fragment() {
                 R.id.nav_dashboard_admin -> openFragment(AdminDashboardFragment())
                 R.id.nav_manage_account_admin -> openFragment(AdminManageAccountFragment())
                 R.id.nav_offerings_admin -> openFragment(AdminOfferingsFragment())
-                R.id.nav_logout -> {
+                R.id.nav_logout_admin -> {
                     LogoutHelper.logout(requireContext()) {
                         findNavController().navigate(R.id.signInFragment)
                     }

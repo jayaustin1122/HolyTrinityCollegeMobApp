@@ -13,8 +13,8 @@ interface StudentService {
 
     @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(
-        @Query("student_id") studentId: String? = null,
-        @Query("registrationVerified") registrationVerified: String? = null
+        @Query("student_id") studentId: Int? = null,
+        @Query("registrationVerified") registrationVerified: Int? = null
     ): Call<List<Student>>
         //   getStudents() // No parameters, fetches all students
         //   getStudents(studentId = "12345")  Get a Student by ID:
