@@ -38,11 +38,11 @@
                 android:id="@+id/edit_baptismal_certificate"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,12 +59,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_confirmation_certificate"
                 android:layout_width="match_parent"
-                android:focusable="false"
-                android:clickable="true"
-                android:longClickable="false"
-                android:cursorVisible="false"
                 android:layout_height="56dp"
-                android:importantForAccessibility="yes" />
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Civil Section -->
@@ -91,12 +91,12 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_nso_certificate"
                 android:layout_width="match_parent"
-                android:focusable="false"
-                android:clickable="true"
-                android:longClickable="false"
-                android:cursorVisible="false"
                 android:layout_height="56dp"
-                android:importantForAccessibility="yes" />
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,11 +114,11 @@
                 android:id="@+id/edit_marriage_certificate"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,11 +135,11 @@
                 android:id="@+id/edit_brgy_residence_certificate"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,11 +157,11 @@
                 android:id="@+id/edit_certificate_of_indigency"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,11 +179,11 @@
                 android:id="@+id/edit_bir_form"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -211,11 +211,11 @@
                 android:id="@+id/edit_recommendation_letter"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -251,11 +251,11 @@
                 android:id="@+id/edit_medical_certificate"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:focusable="false"
                 android:clickable="true"
-                android:longClickable="false"
                 android:cursorVisible="false"
-                android:importantForAccessibility="yes" />
+                android:focusable="false"
+                android:importantForAccessibility="yes"
+                android:longClickable="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

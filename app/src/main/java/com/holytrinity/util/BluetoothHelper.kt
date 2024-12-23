@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.OutputStream
+import java.nio.charset.Charset
 import java.util.UUID
 
 private const val REQUEST_ENABLE_BT = 1
@@ -129,12 +130,10 @@ class BluetoothHelper(private val activity: Activity, private val context: Conte
 
     suspend fun printTextFeed(message: String): Boolean {
         try {
-            val messageBytes = message.toByteArray(Charsets.UTF_8)
+            val messageBytes = message.toByteArray(Charset.forName("US-ASCII"))
 
             withContext(Dispatchers.IO) {
-                outputStream?.write(cmdPrintStart)
                 outputStream?.write(messageBytes)
-                outputStream?.write(cmdPrintEnd)
                 outputStream?.flush()
             }
 

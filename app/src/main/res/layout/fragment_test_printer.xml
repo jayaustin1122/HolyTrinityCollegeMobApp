@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
- >
+    android:orientation="vertical">
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
-        android:layout_marginTop="100dp"
         android:id="@+id/btnReqPerm"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="100dp"
         android:text="Request Bluetooth Permissions"
-/>
+        app:cornerRadius="12dp" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
         android:id="@+id/btnOnBt"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
         android:text="Turn On Bluetooth"
-/>
+        app:cornerRadius="12dp" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
         android:id="@+id/btnConnPrinter"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
         android:text="Connect to the Printer"
-  />
-    <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
-        android:id="@+id/btnPrintTest"
-        android:layout_width="match_parent"
-        android:layout_marginHorizontal="50dp"
-        android:layout_height="wrap_content"
-        android:text="Print Test"
- />
+        app:cornerRadius="12dp" />
 
     <com.google.android.material.button.MaterialButton
-        app:cornerRadius="12dp"
+        android:id="@+id/btnPrintTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:text="Print Test"
+        app:cornerRadius="12dp" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDisconnect"
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="50dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
         android:text="Disconnect from the Printer"
-   />
+        app:cornerRadius="12dp" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPrint"
         android:layout_width="match_parent"

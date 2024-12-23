@@ -28,8 +28,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstName"
@@ -48,8 +47,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/lastName"
@@ -67,8 +65,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/middleName"
@@ -87,7 +84,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/firstNameTextView">
@@ -108,8 +104,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/dateOfBirth"
@@ -130,8 +125,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
@@ -148,8 +142,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="15dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/phone"
@@ -177,8 +170,7 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:hintEnabled="false">
+            android:layout_marginBottom="8dp">
 
             <AutoCompleteTextView
                 android:id="@+id/municipalityDropdown"
@@ -195,8 +187,7 @@
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            app:hintEnabled="false">
+            android:layout_marginTop="3dp">
 
             <AutoCompleteTextView
                 android:id="@+id/barangayDropdown"
