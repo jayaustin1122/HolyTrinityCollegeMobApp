@@ -8,20 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.holytrinity.api.EnrollmentService
 import com.holytrinity.api.RetrofitInstance
-import com.holytrinity.api.SubjectsService
 import com.holytrinity.databinding.FragmentStepTwoEnrollmentBinding
-import com.holytrinity.model.SubjectsModel
-import com.holytrinity.users.registrar.adapter.SubjectsAdapter
+import com.holytrinity.model.EnrollmentResponse
+import com.holytrinity.model.Subjects
+import com.holytrinity.users.registrar.adapter.SubjectEnrollmentAdapter
+import com.holytrinity.util.SharedPrefsUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
 class StepTwoEnrollmentFragment : Fragment() {
-    private lateinit var binding : FragmentStepTwoEnrollmentBinding
+    private lateinit var binding: FragmentStepTwoEnrollmentBinding
     private lateinit var viewModel: ViewModelEnrollment
-    private lateinit var subjectsAdapter: SubjectsAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,7 +32,6 @@ class StepTwoEnrollmentFragment : Fragment() {
         // Inflate the layout for this fragment
         return binding.root
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,56 +42,68 @@ class StepTwoEnrollmentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val studentId = viewModel.studentID.value
         val name = viewModel.name.value
-        val deptId = viewModel.dept_id.value
-        val currId = viewModel.curr_id.value
-        val course = viewModel.course.value
+        val deptId = viewModel.dept_id.value // dept id
+        val currId = viewModel.curr_id.value!!.toInt() // curriculum id
+        val course = viewModel.course.value //course id
         val status = viewModel.status.value
         val section = viewModel.section.value
         val classification = viewModel.classification_of_student.value
-        val level = viewModel.level.value
-        val studentID = viewModel.studentID.value
+        val level = viewModel.level.value // year level 1st Year
+        val studentID = viewModel.studentID.value!!.toInt()  // student_id
 
+        val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
+        val enrollment_period = savedPeriod!!.enrollment_period_id
 
-        // Log the level
-        Log.d("API_RESPONSE", "$level $currId")
-
-        // Get the curriculum ID
-        val curriculum = viewModel.curr_id
-
-        // Call the function to get all subjects
-       // getAllSubjects(level, curriculum.toString(), studentID.toString())
+        getAllSubjects(currId, level, enrollment_period.toString(), studentID)
     }
 
 
-    private fun getAllSubjects(yearLevel: String, curriculum: String, studentID: String) {
+    private fun getAllSubjects(
+        currId: Int?,
+        level: String?,
+        savedPeriod: String?,
+        studentID: Int?
+    ) {
+        // Ensure that parameters are not null before proceeding
+        if (currId == null || level == null || savedPeriod == null || studentID == null) {
+            Log.e("API_ERROR", "Invalid parameters: currId=$currId, level=$level, savedPeriod=$savedPeriod, studentID=$studentID")
+            return
+        }
+
         // Create the Retrofit instance
-        val service = RetrofitInstance.create(SubjectsService::class.java)
+        val service = RetrofitInstance.create(EnrollmentService::class.java)
+        service.enrollFlow(currId, level, savedPeriod.toInt(), studentID)
+            .enqueue(object : Callback<EnrollmentResponse> { // Handle the new response type
+                override fun onResponse(
+                    call: Call<EnrollmentResponse>,
+                    response: Response<EnrollmentResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val enrollmentResponse = response.body() // Get the EnrollmentResponse
+                        val subjects = enrollmentResponse?.subjects ?: emptyList() // Access the subjects list
 
+                        // Store subject IDs and log them
+                        val subjectIds = subjects.map { it.subjectId } // Extract subject IDs from response
+                        Log.d("SUBJECT_IDS", "Subject IDs: $subjectIds")
 
-        service.getAllSubjectsCurriculum(yearLevel,curriculum,studentID).enqueue(object : Callback<List<SubjectsModel>> {
-            override fun onResponse(call: Call<List<SubjectsModel>>, response: Response<List<SubjectsModel>>) {
-                if (response.isSuccessful) {
-                    // Access the subjects list directly from the response body
-                    val subjects = response.body() ?: emptyList()
-                    setupRecyclerView(subjects)
-                    Log.d("API_RESPONSE", "Subjects received: ${subjects.size}")
-
-                } else {
-                    Log.e("API_ERROR", "Error fetching subjects: ${response.message()}")
+                        // Store subject IDs in ViewModel or SharedPrefs if needed
+                        viewModel.setSubjects(subjectIds)  // Assuming you add a method in ViewModel to set this
+                        viewModel.setEnrollmentPeriodId(savedPeriod)
+                        setupRecyclerViews(subjects) // Pass the subjects list to your RecyclerView
+                    } else {
+                        Log.e("API_ERROR", "Error fetching subjects: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<SubjectsModel>>, t: Throwable) {
-                Log.e("API_ERROR", "Failed to connect", t)
-            }
-        })
-
+                override fun onFailure(call: Call<EnrollmentResponse>, t: Throwable) {
+                    Log.e("API_ERROR", "Failed to connect", t)
+                }
+            })
     }
 
-
-    private fun setupRecyclerView(subjects: List<SubjectsModel>) {
-        subjectsAdapter = SubjectsAdapter(subjects)
+    private fun setupRecyclerViews(enrollment: List<Subjects>) {
         binding.subjectsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.subjectsRecyclerView.adapter = subjectsAdapter
+        val adapter = SubjectEnrollmentAdapter(enrollment) // Pass the Enrollment object
+        binding.subjectsRecyclerView.adapter = adapter
     }
 }

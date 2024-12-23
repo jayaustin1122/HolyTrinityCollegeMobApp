@@ -39,9 +39,18 @@ class StepOneEnrollmentFragment : Fragment() {
             "Senior High" to listOf("Grade 11", "Grade 12"),
             "Pre College" to emptyList()
         )
-        val courseList = listOf("") + listOf("Computer Science", "Business Administration", "Engineering")
-
-
+        val courseList = listOf("") + listOf(
+            "BSCS - Computer Science",
+            "BSIT - Information Technology",
+            "BSA - Accountancy",
+            "BSBA - Business Administration",
+            "BSEd - Education",
+            "BSCpE - Computer Engineering",
+            "BSME - Mechanical Engineering",
+            "BSBio - Biology",
+            "BSChem - Chemistry",
+            "BFA - Fine Arts"
+        )
         val semesterYearList = listOf(
             "1st Semester 2024",
             "2nd Semester 2024",
@@ -105,6 +114,35 @@ class StepOneEnrollmentFragment : Fragment() {
                     }
                 )
                 handleDepartmentSelection(selectedDepartment, levelOptions)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        binding.courseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val selectedCourse = courseList[position]
+
+                // Set the course ID based on the selection
+                viewModel.setCourseId(
+                    when (selectedCourse) {
+                        "BSCS - Computer Science" -> "1"
+                        "BSIT - Information Technology" -> "2"
+                        "BSA - Accountancy" -> "3"
+                        "BSBA - Business Administration" -> "4"
+                        "BSEd - Education" -> "5"
+                        "BSCpE - Computer Engineering" -> "6"
+                        "BSME - Mechanical Engineering" -> "7"
+                        "BSBio - Biology" -> "8"
+                        "BSChem - Chemistry" -> "9"
+                        "BFA - Fine Arts" -> "10"
+                        else -> ""
+                    }
+                )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

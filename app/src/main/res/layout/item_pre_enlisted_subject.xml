@@ -159,6 +159,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:checked="true"
+                android:visibility="gone"
                 android:drawableTint="@color/violet_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

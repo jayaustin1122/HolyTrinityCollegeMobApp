@@ -21,6 +21,7 @@ import com.holytrinity.model.Soa
 import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.EnrollmentAdapter
 import com.holytrinity.users.registrar.adapter.SoaAdapter
+import com.holytrinity.util.SharedPrefsUtil
 import retrofit2.Call
 import retrofit2.Callback
 
@@ -44,18 +45,17 @@ class RegistrarEnrollmentFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[ViewModelEnrollment::class.java]
     }
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fragmentList = arrayListOf<Fragment>(
             StepOneEnrollmentFragment(),
-            StepTwoEnrollmentFragment(),
-            StepThreeEnrollmentFragment()
+            StepTwoEnrollmentFragment()
         )
 
         val adapter = EnrollmentAdapter(
@@ -72,7 +72,6 @@ class RegistrarEnrollmentFragment : Fragment() {
             if (currentItem < fragmentList.size - 1) {
                 binding.viewPager.currentItem = currentItem - 1
             } else {
-
                 findNavController().navigate(R.id.registrarDrawerHolderFragment)
             }
         }
@@ -82,7 +81,17 @@ class RegistrarEnrollmentFragment : Fragment() {
             if (currentItem < fragmentList.size - 1) {
                 binding.viewPager.currentItem = currentItem + 1
             } else {
+                DialogUtils.showWarningMessage(
+                    requireActivity(),
+                    "Are you sure?",
+                    "You want to Add this Student in the Pre Enlisted Students?",
+                    confirmListener = SweetAlertDialog.OnSweetClickListener {
+                        savedStudentInPreEnlisted()
+                        it.dismissWithAnimation()
+                    }
+                )
 
+//                DialogUtils.showSuccessMessage(requireActivity(),"Success","Student Added in ")
                 findNavController().navigate(R.id.registrarDrawerHolderFragment)
             }
         }
@@ -104,6 +113,36 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
+    private fun savedStudentInPreEnlisted() {
+        // Check if the fragment is attached to its activity
+        if (!isAdded || context == null) {
+            Log.e("PreEnlisted", "Fragment is not attached to the activity.")
+            return
+        }
+
+        val savedPeriod = SharedPrefsUtil.getSelectedPeriod(this@RegistrarEnrollmentFragment.requireContext()) // Use context instead of requireContext()
+        val enrollment_period = savedPeriod?.enrollment_period_id
+        val studentID = viewModel.studentID.value?.toInt()
+
+        if (enrollment_period != null && studentID != null) {
+            viewModel.subject.observe(viewLifecycleOwner) { subjectList ->
+                if (subjectList.isNotEmpty()) {
+                    Log.d("SubjectIDs", "Subject IDs: $subjectList")
+                } else {
+                    Log.d("SubjectIDs", "No subjects added yet.")
+                }
+            }
+        } else {
+            Log.e(
+                "PreEnlisted",
+                "Missing required data: enrollment_period=$enrollment_period, studentID=$studentID"
+            )
+        }
+    }
+
+
+
+
     private fun getAllStudents(studentId: Int? = null, registrationVerified: Int? = 1) {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents(studentId, registrationVerified).enqueue(object : Callback<List<Student>> {
