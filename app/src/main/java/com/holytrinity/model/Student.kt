@@ -10,7 +10,10 @@ data class Document(
 )
 
 data class Student(
+
     val student_id: String? = null,
+    val entry_period_id: String? = null,
+    val curriculum_id: String? = null,
     val full_name: String? = null,
     val student_name: String? = null,
     val email: String? = null,

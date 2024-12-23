@@ -10,6 +10,15 @@ import retrofit2.http.*
 
 interface StudentService {
 
+    @FormUrlEncoded
+    @POST("crud-android/trinity/insertStudentLedger.php")
+    fun addStudentLedger(
+        @Field("student_id") studentId: Int,
+        @Field("enrollment_period_id") enrollmentPeriodId: Int,
+        @Field("total_due") totalDue: Double,
+        @Field("balance") balance: Double
+    ): Call<ApiResponse>
+
 
     @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(
@@ -41,8 +50,6 @@ interface StudentService {
     fun getBeneChild(
         @Query("user_id") userId: String
     ): Call<ParentChildWrapper>
-
-
 
 
     // Add a new student
