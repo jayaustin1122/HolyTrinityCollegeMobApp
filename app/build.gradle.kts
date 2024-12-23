@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.holytrinity"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -41,7 +41,11 @@ android {
 }
 
 dependencies {
+    implementation ("org.apache.poi:poi:5.2.3")
+    implementation ("org.apache.poi:poi-ooxml:5.2.3")
+
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation(libs.androidx.ui.graphics.android)
     //  implementation ("com.github.mreram:showcaseview:1.4.1")
     val nav_version = "2.7.2"
     implementation ("com.itextpdf:itext7-core:7.1.15")

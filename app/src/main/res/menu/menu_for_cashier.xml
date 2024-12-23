@@ -49,6 +49,10 @@
                     android:icon="@drawable/icon_setup_24"
                     android:title="Setup" />
                 <item
+                    android:id="@+id/nav_config_cashier"
+                    android:icon="@drawable/icon_setup_24"
+                    android:title="Printer Configuration" />
+                <item
                     android:id="@+id/nav_logout_cashier"
                     android:icon="@drawable/icon_logout_24"
                     android:title="Logout" />

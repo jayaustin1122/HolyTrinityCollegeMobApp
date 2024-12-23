@@ -21,6 +21,7 @@ import com.holytrinity.databinding.FragmentCashierDrawerBinding
 import com.holytrinity.users.cashier.dashboard.CashierDashboardFragment
 import com.holytrinity.users.cashier.payment_management.CashierPaymentManagementFragment
 import com.holytrinity.users.cashier.payment_transaction.CashierPaymentHolderFragment
+import com.holytrinity.users.cashier.printerconfig.CashierPrinterConfigFragment
 import com.holytrinity.users.registrar.admisson.RegistrarAdmissionFragment
 import com.holytrinity.users.registrar.assestment.AssesmentFragment
 import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
@@ -79,7 +80,7 @@ class CashierDrawerFragment : Fragment() {
                 R.id.nav_ledger_cashier -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_payment_management_cashier -> openFragment(CashierPaymentManagementFragment())
                 R.id.nav_payment_cashier -> openFragment(CashierPaymentHolderFragment())
-
+                R.id.nav_config_cashier-> openFragment(CashierPrinterConfigFragment())
                 R.id.nav_ledger_cashier -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_registrar_cashier -> openFragment(RegistrarHolderFragment())
 
