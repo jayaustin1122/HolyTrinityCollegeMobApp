@@ -29,11 +29,11 @@
             <group
                 android:id="@+id/menu_google_apps">
                 <item
-                    android:id="@+id/nav_ledger"
+                    android:id="@+id/nav_ledger_admin"
                     android:icon="@drawable/icon_topic_24"
                     android:title="Student Ledger" />
                 <item
-                    android:id="@+id/nav_registrar"
+                    android:id="@+id/nav_registrar_admin"
                     android:icon="@drawable/icon_topic_24"
                     android:title="Registrar" />
             </group>

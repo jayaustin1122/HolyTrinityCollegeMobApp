@@ -1,7 +1,6 @@
 // InstructorClassListFragment.kt
 package com.holytrinity.users.instructor.classlist
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.holytrinity.api.ClassService
 import com.holytrinity.model.ClassesResponse
 import com.holytrinity.users.instructor.adapter.ClassesAdapter
+import com.holytrinity.util.UserPreferences
 
 class InstructorClassListFragment : Fragment(R.layout.fragment_instructor_class_list) {
 
@@ -38,14 +38,19 @@ class InstructorClassListFragment : Fragment(R.layout.fragment_instructor_class_
             findNavController().navigate(R.id.instructorDrawerHolderFragment, bundle)
         }
 
-        // Initialize RecyclerView with an empty list
-        adapter = ClassesAdapter(emptyList())
+        adapter = ClassesAdapter(emptyList()) { selectedClassId ->
+            // Handle item click using Bundle
+            val bundle = Bundle().apply {
+                putInt("class_id", selectedClassId)
+            }
+            findNavController().navigate(R.id.instructorClassDetailsFragment, bundle)
+        }
+
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.eventRecyclerView.adapter = adapter
 
         // Retrieve the user_id from SharedPreferences
-        val sharedPref = requireActivity().getSharedPreferences("your_shared_pref_name", Context.MODE_PRIVATE)
-        val userId = sharedPref.getInt("user_id", -1)
+        val userId = UserPreferences.getUserId(requireContext())
 
         if (userId == -1) {
             Toast.makeText(requireContext(), "User ID not found", Toast.LENGTH_SHORT).show()

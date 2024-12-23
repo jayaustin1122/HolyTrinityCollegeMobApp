@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentCashierDashboardBinding
+import com.holytrinity.util.UserPreferences
 
 
 class CashierDashboardFragment : Fragment() {
@@ -24,5 +25,6 @@ class CashierDashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.textViewUser.text = UserPreferences.getName(requireContext())
     }
 }

@@ -6,15 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.holytrinity.R
+import com.holytrinity.databinding.FragmentInstructorDashboardBinding
+import com.holytrinity.util.UserPreferences
 
 class InstructorDashboardFragment : Fragment() {
 
+    private lateinit var binding: FragmentInstructorDashboardBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_instructor_dashboard, container, false)
+        binding =  FragmentInstructorDashboardBinding.inflate(layoutInflater)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        binding.textViewUser.text = UserPreferences.getName(requireContext())
+    }
 }

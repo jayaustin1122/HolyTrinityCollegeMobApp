@@ -1,3 +1,4 @@
+
 package com.holytrinity.users.instructor.adapter
 
 import android.view.LayoutInflater
@@ -6,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.databinding.ItemClassListBinding
 import com.holytrinity.model.Class
 
-class ClassesAdapter(private var classesList: List<Class>) : RecyclerView.Adapter<ClassesAdapter.ClassViewHolder>() {
+class ClassesAdapter(
+    private var classesList: List<Class>,
+    private val onItemClick: (Int) -> Unit // Pass class_id as Int
+) : RecyclerView.Adapter<ClassesAdapter.ClassViewHolder>() {
 
     // ViewHolder class using View Binding
     inner class ClassViewHolder(private val binding: ItemClassListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -16,6 +20,11 @@ class ClassesAdapter(private var classesList: List<Class>) : RecyclerView.Adapte
             binding.sectionTextView.text = classItem.section
             binding.unitTextView.text = classItem.units.toString()
             binding.scheduleTextView.text = classItem.schedule
+
+            // Set click listener on the entire item view
+            binding.root.setOnClickListener {
+                onItemClick(classItem.class_id) // Pass class_id when clicked
+            }
         }
     }
 

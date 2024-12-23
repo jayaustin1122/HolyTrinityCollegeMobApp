@@ -79,6 +79,10 @@ class CashierDrawerFragment : Fragment() {
                 R.id.nav_ledger_cashier -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_payment_management_cashier -> openFragment(CashierPaymentManagementFragment())
                 R.id.nav_payment_cashier -> openFragment(CashierPaymentHolderFragment())
+
+                R.id.nav_ledger_cashier -> openFragment(RegistrarStudentLedgerFragment())
+                R.id.nav_registrar_cashier -> openFragment(RegistrarHolderFragment())
+
                 R.id.nav_setup_cashier -> openFragment(SetUpFragment())
                 R.id.nav_logout_cashier -> {
                     LogoutHelper.logout(requireContext()) {

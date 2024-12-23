@@ -15,3 +15,15 @@ data class ClassesResponse(
     val success: Boolean,
     val classes: List<Class>
 )
+
+data class StudentItem(
+    val student_id: Int,
+    val student_name: String,
+    val grade: String,
+    val remark: String
+)
+
+data class StudentsResponse(
+    val success: Boolean,
+    val students: List<StudentItem>
+)

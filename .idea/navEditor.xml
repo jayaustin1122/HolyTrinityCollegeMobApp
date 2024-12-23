@@ -152,6 +152,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="instructorClassDetailsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="190" />
+                            <option name="y" value="-430" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="instructorDrawerHolderFragment">
                     <value>
                       <LayoutPositions>
