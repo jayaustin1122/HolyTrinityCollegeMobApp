@@ -33,14 +33,24 @@ class StepOneEnrollmentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val departmentList = listOf("") + listOf("College", "Pre College", "Senior High")
+        val departmentOptions = listOf("College", "Senior High")
         val levelOptions = mapOf(
             "College" to listOf("1st Year", "2nd Year", "3rd Year", "4th Year"),
-            "Senior High" to listOf("Grade 11", "Grade 12"),
-            "Pre College" to emptyList()
+            "Senior High" to listOf("Grade 11", "Grade 12")
         )
-        val courseList = listOf("") + listOf("Computer Science", "Business Administration", "Engineering")
 
+        val courseList = listOf("") + listOf(
+            "BSCS - Computer Science",
+            "BSIT - Information Technology",
+            "BSA - Accountancy",
+            "BSBA - Business Administration",
+            "BSEd - Education",
+            "BSCpE - Computer Engineering",
+            "BSME - Mechanical Engineering",
+            "BSBio - Biology",
+            "BSChem - Chemistry",
+            "BFA - Fine Arts"
+        )
 
         val semesterYearList = listOf(
             "1st Semester 2024",
@@ -54,9 +64,21 @@ class StepOneEnrollmentFragment : Fragment() {
             "1st Semester 2028",
             "2nd Semester 2028"
         )
+
         val sectionList = listOf("") + listOf("A", "B")
 
-        // Observers
+        viewModel.dept_id.observe(viewLifecycleOwner) { deptId ->
+            val selectedDepartment = when (deptId) {
+                "1" -> "College"  // Set this based on your dept_id value
+                "3" -> "Senior High"
+                else -> ""
+            }
+            binding.departmentEditText.setText(selectedDepartment)
+
+            // After setting the department, handle level selection accordingly
+            handleDepartmentSelection(selectedDepartment, levelOptions)
+        }
+
         viewModel.studentID.observe(viewLifecycleOwner) { studentID ->
             binding.studentIDTextView.text = studentID
             Log.d("StepOneFragment", "Updated studentID: $studentID")
@@ -67,58 +89,36 @@ class StepOneEnrollmentFragment : Fragment() {
             Log.d("StepOneFragment", "Updated name: $name")
         }
 
-        viewModel.dept_id.observe(viewLifecycleOwner) { deptId ->
-            val selectedDepartment = when (deptId) {
-                "1" -> "College"
-                "2" -> "Pre College"
-                "3" -> "Senior High"
-                else -> ""
-            }
-            setSpinnerSelection(binding.departmentSpinner, departmentList, selectedDepartment)
-
-        }
-
-        viewModel.classification_of_student.observe(viewLifecycleOwner) { classification ->
-            setRadioButtonSelection(classification)
-        }
-        val selectedCurriculumId = viewModel.curr_id.value
-        setSpinnerSelection(binding.curriculumSpinner, semesterYearList, selectedCurriculumId)
-        setSpinnerSelection(binding.departmentSpinner, departmentList, viewModel.dept_id.value)
+        setSpinnerSelection(binding.curriculumSpinner, semesterYearList, viewModel.curr_id.value)
         setSpinnerSelection(binding.courseSpinner, courseList, viewModel.course.value)
         setSpinnerSelection(binding.sectionSpinner, sectionList, viewModel.section.value)
 
-        // Department spinner listener
-        binding.departmentSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedDepartment = departmentList[position]
-                viewModel.setDeptId(
-                    when (selectedDepartment) {
-                        "College" -> "1"
-                        "Pre College" -> "2"
-                        "Senior High" -> "3"
+        binding.courseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedCourse = courseList[position]
+                viewModel.setCourseId(
+                    when (selectedCourse) {
+                        "BSCS - Computer Science" -> "1"
+                        "BSIT - Information Technology" -> "2"
+                        "BSA - Accountancy" -> "3"
+                        "BSBA - Business Administration" -> "4"
+                        "BSEd - Education" -> "5"
+                        "BSCpE - Computer Engineering" -> "6"
+                        "BSME - Mechanical Engineering" -> "7"
+                        "BSBio - Biology" -> "8"
+                        "BSChem - Chemistry" -> "9"
+                        "BFA - Fine Arts" -> "10"
                         else -> ""
                     }
                 )
-                handleDepartmentSelection(selectedDepartment, levelOptions)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
-        binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedSemesterYear = semesterYearList[position]
 
-                // Now, set the ID to pass based on the semester and year
+        binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedSemesterYear = semesterYearList[position]
                 val semesterId = when (selectedSemesterYear) {
                     "1st Semester 2024" -> "1"
                     "2nd Semester 2024" -> "2"
@@ -130,31 +130,9 @@ class StepOneEnrollmentFragment : Fragment() {
                     "2nd Semester 2027" -> "8"
                     "1st Semester 2028" -> "9"
                     "2nd Semester 2028" -> "10"
-                    else -> ""  // Default case
+                    else -> ""
                 }
-
-                // Assuming there's a method to pass the semester ID to your view model
                 viewModel.setCurrId(semesterId)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-
-
-        // Level spinner listener
-        binding.levelSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (binding.levelSpinner.isEnabled) {
-                    val selectedLevel = parent?.getItemAtPosition(position) as? String ?: ""
-                    if (selectedLevel != "No Levels Available" && selectedLevel.isNotEmpty()) {
-                        viewModel.setLevel(selectedLevel)
-                    }
-                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -163,22 +141,49 @@ class StepOneEnrollmentFragment : Fragment() {
         setupRadioButtons()
     }
 
-    private fun handleDepartmentSelection(selectedDepartment: String, levelOptions: Map<String, List<String>>) {
-        val levelList = levelOptions[selectedDepartment] ?: emptyList()
 
-        if (levelList.isNotEmpty()) {
-            // If we have levels, set them and enable the spinner
-            setSpinnerSelection(binding.levelSpinner, levelList, viewModel.level.value)
-            binding.levelSpinner.isEnabled = true
-        } else {
-            // No levels for this department
-            setSpinnerSelection(binding.levelSpinner, listOf("No Levels Available"), null)
-            binding.levelSpinner.isEnabled = false
+    fun handleDepartmentSelection(selectedDepartment: String, levelOptions: Map<String, List<String>>) {
+        val levels = levelOptions[selectedDepartment] ?: listOf("No Levels Available")
+
+        // Create an ArrayAdapter for the level spinner
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            levels
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        // Temporarily clear the listener to avoid triggering it during adapter changes
+        binding.levelSpinner.onItemSelectedListener = null
+        binding.levelSpinner.adapter = adapter
+
+        // Enable or disable the spinner based on available levels
+        binding.levelSpinner.isEnabled = levels.isNotEmpty() && levels.first() != "No Levels Available"
+
+        // Reset the selection and re-apply the listener
+        binding.levelSpinner.setSelection(0)
+
+        binding.levelSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedLevel = levels[position]
+
+                // Log the selected level for debugging
+                Log.d("SpinnerSelection", "Selected Level: $selectedLevel")
+
+                // Update the ViewModel with the selected level
+                viewModel.setLevel(selectedLevel)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Optionally, log if nothing is selected
+                Log.d("SpinnerSelection", "No level selected")
+            }
         }
-    }
 
+
+    }
     private fun setupRadioButtons() {
-        // By default, RadioGroup ensures only one button can be selected at a time.
+
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val classification = when (checkedId) {
                 R.id.radio_new_student -> "New Student"
@@ -211,19 +216,5 @@ class StepOneEnrollmentFragment : Fragment() {
         }
     }
 
-    private fun setRadioButtonSelection(classification: String) {
-        when (classification) {
-            "New Student" -> binding.radioNewStudent.isChecked = true
-            "Freshman" -> binding.radioFreshman.isChecked = true
-            "Transferee" -> binding.radioTransferee.isChecked = true
-            "Regular" -> binding.radioRegular.isChecked = true
-            "Returnee" -> binding.radioReturnee.isChecked = true
-            "Shifter" -> binding.radioShifter.isChecked = true
-            "Cross Enrollee" -> binding.radioCrossEnrollee.isChecked = true
-            "Online" -> binding.radioOnline.isChecked = true
-            "Transnational" -> binding.radioTransnational.isChecked = true
-            "Graduating" -> binding.radioGraduating.isChecked = true
-            else -> binding.radioGroup.clearCheck()
-        }
-    }
+
 }

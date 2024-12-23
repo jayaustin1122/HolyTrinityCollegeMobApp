@@ -32,6 +32,42 @@ class ViewModelEnrollment : ViewModel() {
     private val _level = MutableLiveData<String>()
     val level: LiveData<String> get() = _level
 
+    // New properties
+    private val _student_id = MutableLiveData<String>()
+    val student_id: LiveData<String> get() = _student_id
+
+    private val _subject = MutableLiveData<MutableList<Int>>()  // Mutable list of subjects
+    val subject: LiveData<MutableList<Int>> get() = _subject
+
+    private val _enrollment_period_id = MutableLiveData<String>()
+    val enrollment_period_id: LiveData<String> get() = _enrollment_period_id
+
+    // Setters for the new properties
+    fun setStudentId(value: String) {
+        _student_id.value = value
+    }
+
+    fun setSubjects(subjectList: List<Int>) {
+        _subject.value = subjectList.toMutableList()  // Convert to mutable list before setting
+    }
+
+    fun addSubject(subject: Int) {
+        val currentSubjects = _subject.value ?: mutableListOf()  // Get current list or create an empty list
+        currentSubjects.add(subject)  // Add new subject
+        _subject.value = currentSubjects  // Update the LiveData with the new list
+    }
+
+    fun removeSubject(subject: Int) {
+        val currentSubjects = _subject.value ?: mutableListOf()
+        currentSubjects.remove(subject)  // Remove the subject from the list
+        _subject.value = currentSubjects  // Update the LiveData with the modified list
+    }
+
+    fun setEnrollmentPeriodId(value: String) {
+        _enrollment_period_id.value = value
+    }
+
+    // Setters for existing properties
     fun setLevel(level: String) {
         _level.value = level
     }
@@ -48,12 +84,11 @@ class ViewModelEnrollment : ViewModel() {
         _dept_id.value = value
     }
 
-
     fun setCurrId(value: String) {
         _curr_id.value = value
     }
 
-    fun setCourse(value: String) {
+    fun setCourseId(value: String) {
         _course.value = value
     }
 
@@ -68,6 +103,4 @@ class ViewModelEnrollment : ViewModel() {
     fun setClassificationOfStudent(value: String) {
         _classification_of_student.value = value
     }
-
-
 }

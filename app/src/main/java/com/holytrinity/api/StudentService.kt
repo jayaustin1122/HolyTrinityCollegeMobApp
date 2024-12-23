@@ -67,6 +67,7 @@ interface StudentService {
         @Part birForm: MultipartBody.Part?,
         @Part recommLetter: MultipartBody.Part?,
         @Part("parish") parish: RequestBody,
+        @Part("dept_id") deptId: RequestBody,
         @Part medCert: MultipartBody.Part?,
         @Part("userType") userType: RequestBody,
         @Part("email") email: RequestBody,

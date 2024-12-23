@@ -42,7 +42,7 @@ class SetUpFragment : Fragment() {
         val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
         if (savedPeriod != null) {
             Log.d(
-                "SavedPeriod", "Year: ${savedPeriod.year}, Semester: ${savedPeriod.semester}, " +
+                "SavedPeriod", "Year: ${savedPeriod.enrollment_period_id}, Semester: ${savedPeriod.semester}, " +
                         "Start Date: ${savedPeriod.start_date}, End Date: ${savedPeriod.end_date}"
             )
         } else {
