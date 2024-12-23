@@ -47,19 +47,19 @@ class RegistrarAdmissionAdapter(
                 "0" -> {
                     binding.tvStatus.text = "Pending"
                     binding.tvStatus.setBackgroundResource(R.drawable.background_pending) // Use your drawable for "Pending"
-                    binding.tvStatus.setTextColor(Color.YELLOW)
+                    binding.tvStatus.setTextColor(Color.rgb(146, 22, 45))
                 }
 
                 "1" -> {
                     binding.tvStatus.text = "Admitted"
                     binding.tvStatus.setBackgroundResource(R.drawable.background_admitted) // Use your drawable for "Admitted"
-                    binding.tvStatus.setTextColor(Color.GREEN)
+                    binding.tvStatus.setTextColor(Color.rgb(115, 129, 109))
                 }
 
                 "2" -> {
                     binding.tvStatus.text = "Denied"
                     binding.tvStatus.setBackgroundResource(R.drawable.background_denied) // Use your drawable for "Denied"
-                    binding.tvStatus.setTextColor(Color.RED)
+                    binding.tvStatus.setTextColor(Color.rgb(146, 22, 45))
                 }
 
                 else -> {

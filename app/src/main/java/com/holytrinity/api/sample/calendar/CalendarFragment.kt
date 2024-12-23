@@ -51,6 +51,11 @@ class CalendarFragment : Fragment() {
         // Navigation for months
         binding.buttonPrevMonth.setOnClickListener { changeMonth(-1) }
         binding.buttonNextMonth.setOnClickListener { changeMonth(1) }
+
+        // FAB button click to add an event
+        binding.fabAddEvent.setOnClickListener {
+            BottomSheetAddEventFragment().show(childFragmentManager, BottomSheetAddEventFragment.TAG)
+        }
     }
 
     private fun changeMonth(offset: Int) {

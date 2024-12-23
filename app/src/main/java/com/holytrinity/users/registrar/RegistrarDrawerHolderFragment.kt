@@ -23,6 +23,7 @@ import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
 import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
 import com.holytrinity.users.registrar.fee_management.CashierFeeManagementHolderFragment
 import com.holytrinity.users.registrar.registrar.RegistrarHolderFragment
+import com.holytrinity.users.registrar.schoolcalendar.RegistrarSchoolCalendarFragment
 import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
 import com.holytrinity.users.setup.SetUpFragment
 import com.holytrinity.util.LogoutHelper
@@ -73,8 +74,7 @@ class RegistrarDrawerHolderFragment : Fragment() {
                 R.id.nav_admission -> openFragment(RegistrarAdmissionFragment())
                 R.id.nav_enrollment -> openFragment(RegistrarEnrollmentFragment())
                 R.id.nav_ledger -> openFragment(RegistrarStudentLedgerFragment())
-                R.id.nav_payment_management -> openFragment(CashierPaymentManagementFragment())
-                R.id.nav_payment -> openFragment(CashierPaymentHolderFragment())
+                R.id.nav_school_calendar -> openFragment(RegistrarSchoolCalendarFragment())
                 R.id.nav_fee_management -> openFragment(CashierFeeManagementHolderFragment())
                 R.id.nav_registrar -> openFragment(RegistrarHolderFragment())
                 R.id.nav_assessment -> openFragment(AssesmentFragment())
