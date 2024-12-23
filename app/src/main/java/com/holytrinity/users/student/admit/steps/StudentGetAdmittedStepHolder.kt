@@ -186,7 +186,8 @@ class StudentGetAdmittedStepHolder : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun uploadData() {
-        // Retrieve basic form fields
+        val userType = viewModel.userType
+        val deptId = if (userType == "College") 1 else 3
         val userName = viewModel.userName
         val password = viewModel.password
         val lrn = viewModel.lrn
@@ -209,6 +210,7 @@ class StudentGetAdmittedStepHolder : Fragment() {
 
         // Create RequestBody for text fields
         val lrnRequestBody = lrn.toRequestBody("text/plain".toMediaTypeOrNull())
+        val deptIdRequestBody = deptId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
         val parishRequestBody = parish.toRequestBody("text/plain".toMediaTypeOrNull())
         val userTypeRequestBody = "student".toRequestBody("text/plain".toMediaTypeOrNull())
         val userNameRequestBody = userName.toRequestBody("text/plain".toMediaTypeOrNull())
@@ -269,6 +271,7 @@ class StudentGetAdmittedStepHolder : Fragment() {
             birFormPart,
             recommLetterPart,
             parishRequestBody,
+            deptIdRequestBody,
             medCertPart,
             userTypeRequestBody,
             emailRequestBody,

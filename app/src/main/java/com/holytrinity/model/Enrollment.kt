@@ -9,15 +9,6 @@ data class Subjects(
     val classes: List<Class> // Nested list of classes for each subject
 )
 
-data class Class(
-    val classId: Int,
-    val subjectId: Int,
-    val instructorUserId: Int,
-    val schedule: String,
-    val section: String,
-    val maxEnrollment: Int
-)
-
 data class Enrollment(
     val subjects: List<Subjects> // List of subjects, each with its classes
 )
