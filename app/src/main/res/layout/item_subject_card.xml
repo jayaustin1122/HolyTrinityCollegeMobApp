@@ -1,57 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="10dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/pillOneBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_height="136dp"
+        android:layout_marginHorizontal="2.5dp"
+        android:layout_marginVertical="5dp"
+        android:backgroundTint="#FFFFFF"
+        android:elevation="@dimen/cardview_compat_inset_shadow"
 
-        <TextView
-            android:id="@+id/subjectNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subject Name"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black" />
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/subjectInstructorTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Instructor: John Doe"
-            android:textSize="14sp"
-            android:textColor="@color/gray_btn_bg_color" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="22dp"
+            android:backgroundTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/subjectCodeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Code: CS101"
-            android:textSize="14sp"
-            android:textColor="@color/gray_btn_bg_color" />
+            <TextView
+                android:id="@+id/codeTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Code"
+                android:textSize="12sp"
+                android:textColor="@color/dark_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-            android:id="@+id/subjectScheduleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Schedule: MWF 9-10AM"
-            android:textSize="14sp"
-            android:textColor="@color/gray_btn_bg_color" />
+            <TextView
+                android:id="@+id/subjectCodeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="PHL 123"
+                android:textSize="16sp"
+                android:textColor="@color/dark_text_color"
+                app:layout_constraintStart_toStartOf="@+id/codeTitleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/codeTitleTextView"/>
 
-        <TextView
-            android:id="@+id/subjectUnitsTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Units: 3"
-            android:textSize="14sp"
-            android:textColor="@color/gray_btn_bg_color" />
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/descriptionTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Description"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/codeTitleTextView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/subjectNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="History of Chinese Philo"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/descriptionTitleTextView"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/sectionTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Instructor"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/subjectInstructorTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/subjectInstructorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="PHL 1A"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/sectionTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/unitTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Unit"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/subjectUnitsTextView"
+                app:layout_constraintStart_toEndOf="@+id/sectionTitleTextView" />
+
+            <TextView
+                android:id="@+id/subjectUnitsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="3"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/unitTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <TextView
+                android:id="@+id/scheduleTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Schedule"
+                android:textColor="@color/dark_icon_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/subjectUnitsTextView"
+                app:layout_constraintStart_toEndOf="@+id/unitTitleTextView" />
+
+            <TextView
+                android:id="@+id/subjectScheduleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="MWF 8:00-9:00"
+                android:textColor="@color/dark_text_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/scheduleTitleTextView" />
+
+            <!-- ============================================================================ -->
+
+            <RadioButton
+                android:id="@+id/preenlistRadioButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:checked="true"
+                android:visibility="gone"
+                android:drawableTint="@color/violet_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

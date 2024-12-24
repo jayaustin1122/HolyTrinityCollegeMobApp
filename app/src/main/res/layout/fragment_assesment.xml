@@ -78,21 +78,22 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:padding="20dp"
         android:scrollbars="none"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/navigationButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/useridTextView">
 
         <LinearLayout
+            android:id="@+id/studentInfoLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/studentInfoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -124,7 +125,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="Student Number"
+                    android:text="Student ID"
                     android:textColor="@color/dark_text_color"
                     android:textSize="14sp" />
 
@@ -189,17 +190,17 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/assessmentCardView"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="@color/white"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginVertical="5dp">
+                    android:layout_marginVertical="5dp"
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -229,19 +230,18 @@
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_assessment"/>
-
+                        tools:listitem="@layout/item_assessment" />
 
 
                     <com.google.android.material.divider.MaterialDivider
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -297,7 +297,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/violet_primary"
             android:fontFamily="@font/roboto_medium"
-            android:text="Finish"
+            android:text="Assess"
             android:visibility="gone"
             app:cornerRadius="8dp" />
 

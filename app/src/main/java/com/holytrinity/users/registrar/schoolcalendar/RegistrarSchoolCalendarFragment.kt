@@ -2,6 +2,7 @@ package com.holytrinity.users.registrar.schoolcalendar
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -88,11 +89,33 @@ class RegistrarSchoolCalendarFragment : Fragment() {
                 if (response.isSuccessful) {
                     val events = response.body()?.events
                     if (events != null) {
-                        eventMap.clear()
+                        eventMap.clear() // Clear previous events
+
                         events.forEach { event ->
-                            eventMap.computeIfAbsent(event.event_date) { mutableListOf() }
-                                .add(event)
+                            val eventDateStr = event.event_date
+                            val endDateStr = event.end_date ?: event.event_date // Default to event_date if end_date is null
+
+                            if (!eventDateStr.isNullOrEmpty() && !endDateStr.isNullOrEmpty()) {
+                                try {
+                                    val eventDate = SimpleDateFormat("yyyy-MM-dd").parse(eventDateStr)
+                                    val endDate = SimpleDateFormat("yyyy-MM-dd").parse(endDateStr)
+
+                                    val tempCalendar = Calendar.getInstance()
+                                    tempCalendar.time = eventDate
+
+                                    while (!tempCalendar.time.after(endDate)) {
+                                        val dateString = SimpleDateFormat("yyyy-MM-dd").format(tempCalendar.time)
+                                        eventMap.computeIfAbsent(dateString) { mutableListOf() }.add(event)
+                                        tempCalendar.add(Calendar.DAY_OF_MONTH, 1) // Move to the next day
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e("DateParsing", "Error parsing dates for event: ${event.event_id} - ${e.message}")
+                                }
+                            } else {
+                                Log.e("DateValidation", "Invalid event_date or end_date for event: $event")
+                            }
                         }
+
                         updateCalendar()
                     }
                 } else {

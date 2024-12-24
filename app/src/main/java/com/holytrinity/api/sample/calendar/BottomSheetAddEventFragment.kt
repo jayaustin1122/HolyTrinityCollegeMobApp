@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputEditText
 import com.holytrinity.api.CalendarService
 import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.api.RetrofitInstance
@@ -32,42 +33,65 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         binding = FragmentBottomSheetAddEventBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Set up listeners for date pickers
+        binding.etDate.setOnClickListener { showDatePicker(binding.etDate) }
+        binding.etEndDate.setOnClickListener { showDatePicker(binding.etEndDate) }
+
+        // Save button click
         binding.btnSave.setOnClickListener {
             val name = binding.etName.text.toString()
-            val date = binding.etDate.text.toString()
+            val startDate = binding.etDate.text.toString()
+            val endDate = binding.etEndDate.text.toString()
             val description = binding.etDescription.text.toString()
 
-            if (name.isEmpty() || date.isEmpty() || description.isEmpty()) {
-                Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
-            } else {
-                val event = Event(0, name, date, description)
-                saveEvent(event)
+            if (name.isEmpty() || startDate.isEmpty() || description.isEmpty()) {
+                Toast.makeText(requireContext(), "All required fields must be filled", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-        }
 
-        binding.etDate.setOnClickListener {
-            showDatePicker()
+            try {
+                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val startDateParsed = sdf.parse(startDate)
+                val currentDate = Calendar.getInstance().time
+
+                if (startDateParsed.before(currentDate)) {
+                    Toast.makeText(requireContext(), "Start date cannot be before the current date", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val endDateParsed = if (endDate.isNotEmpty()) sdf.parse(endDate) else startDateParsed
+
+                if (endDateParsed.before(startDateParsed)) {
+                    Toast.makeText(requireContext(), "End date cannot be before start date", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val event = Event(0, name, startDate, endDate, description)
+                saveEvent(event)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Invalid date format", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun showDatePicker() {
+    private fun showDatePicker(targetEditText: TextInputEditText) {
         val datePicker = MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select Event Date")
+            .setTitleText("Select Date")
             .build()
 
         datePicker.addOnPositiveButtonClickListener { selection ->
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = selection
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val formattedDate = dateFormat.format(calendar.time)
-            binding.etDate.setText(formattedDate)
+            targetEditText.setText(dateFormat.format(calendar.time))
         }
 
         datePicker.show(parentFragmentManager, "date_picker")
     }
+
 
     private fun saveEvent(event: Event) {
         val service = RetrofitInstance.create(CalendarService::class.java)

@@ -32,6 +32,7 @@ import retrofit2.Response
 
 
 class AssesmentFragment : Fragment() {
+
     private lateinit var binding: FragmentAssesmentBinding
     private lateinit var students: List<Student>
     private lateinit var studentNamesMap: MutableMap<String, String>
@@ -308,6 +309,7 @@ class AssesmentFragment : Fragment() {
                 Log.d("StudentData", "Assigned curr_id: $curr_id")
                 binding.studentNumber.text = selectedStudent.student_id.toString()
                 binding.studentName.text = selectedStudent.student_name.toString()
+                binding.studentInfoLayout.visibility = View.VISIBLE
                 binding.assessmentCardView.visibility = View.VISIBLE
                 binding.nextButton.visibility = View.VISIBLE
                 getEnrolledSubs()
@@ -317,4 +319,6 @@ class AssesmentFragment : Fragment() {
             }
         }
     }
+
+
 }

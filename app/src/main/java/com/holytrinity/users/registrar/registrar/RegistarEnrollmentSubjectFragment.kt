@@ -113,10 +113,10 @@ class RegistarEnrollmentSubjectFragment : Fragment() {
                     val student = response.body()
                     if (student != null) {
                         // Show student information in the CardView
-                        binding.studentCardView.visibility = View.VISIBLE
+                        binding.studentInfoLayout.visibility = View.VISIBLE
+                        binding.pdfLayout.visibility = View.VISIBLE
                         binding.studentNameTextView.text = student.student_name
-                        binding.studentEmailTextView.text = "Email: ${student.student_email}"
-                        binding.studentCourseTextView.text = "Course: ${student.course?.course_name}"
+                        binding.studentNumber.text = "${student.student_id}"
 
                         // Clear previous subject cards (if any)
                         binding.subjectsContainer.removeAllViews()
@@ -137,15 +137,15 @@ class RegistarEnrollmentSubjectFragment : Fragment() {
                             if (subject.class_info != null) {
                                 val instructor = subject.class_info.instructor?.instructor_name ?: "Unknown Instructor"
                                 val schedule = subject.class_info.schedule ?: "TBA"
-                                subjectInstructorTextView.text = "Instructor: $instructor"
-                                subjectScheduleTextView.text = "Schedule: $schedule"
+                                subjectInstructorTextView.text = "$instructor"
+                                subjectScheduleTextView.text = "$schedule"
                             } else {
-                                subjectInstructorTextView.text = "Instructor: N/A"
-                                subjectScheduleTextView.text = "Schedule: N/A"
+                                subjectInstructorTextView.text = "N/A"
+                                subjectScheduleTextView.text = "N/A"
                             }
 
-                            subjectCodeTextView.text = "Code: ${subject.subject_id}"
-                            subjectUnitsTextView.text = "Units: ${subject.subject_units}"
+                            subjectCodeTextView.text = "${subject.subject_id}"
+                            subjectUnitsTextView.text = "${subject.subject_units}"
 
                             // Add the subject card to the container
                             binding.subjectsContainer.addView(subjectCardView)

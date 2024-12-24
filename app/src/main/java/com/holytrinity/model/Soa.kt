@@ -10,6 +10,7 @@ data class Soa(
     val year: String,    // Transaction number
     val date_of_transaction: String,  // Date of transaction (can be Date, String, or Timestamp depending on your requirement)
     val due_amount: Double,            // Amount due (Changed to Double for currency representation)
+    val total_due: Double,
     val total_paid: Double,           // Payment made (Changed to Double for currency representation)
     val student_name: String   ,        // Payment made (Changed to Double for currency representation)
     val balance: Double           // Payment made (Changed to Double for currency representation)

@@ -83,6 +83,10 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
 
             if (selectedStudent != null) {
                 binding.studentInfoLayout.visibility = View.VISIBLE
+
+                binding.linear.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.VISIBLE
+
                 binding.pdfLayout.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.studentNumber.text = selectedStudent.student_id.toString()

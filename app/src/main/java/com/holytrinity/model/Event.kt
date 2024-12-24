@@ -3,6 +3,7 @@ data class Event(
     val event_id: Int,
     val event_name: String,
     val event_date: String,
+    val end_date: String,
     val description: String
 )
 
