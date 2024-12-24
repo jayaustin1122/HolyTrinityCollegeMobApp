@@ -1,24 +1,53 @@
 package com.holytrinity.users.cashier.payment_transaction
 
+import StepOneCashierPaymentFragment
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.example.canorecoapp.utils.DialogUtils
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentCashierPaymentHolderBinding
+import com.holytrinity.users.cashier.payment_transaction.steps.StepThreeCashierPaymentFragment
+import com.holytrinity.users.cashier.payment_transaction.steps.StepTwoCashierPaymentFragment
+import com.holytrinity.users.cashier.payment_transaction.steps.ViewModelPayment
+import com.holytrinity.users.student.adapter.StudentAdmitAdapter
+import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepFourFragment
+import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepOneFragment
+import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepThreeFragment
+import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepTwoFragment
+import com.shuhart.stepview.StepView
 
 class CashierPaymentHolderFragment : Fragment() {
     private lateinit var binding : FragmentCashierPaymentHolderBinding
+    private lateinit var viewPager: ViewPager2
+    private lateinit var stepView: StepView
+    private lateinit var adapter: StudentAdmitAdapter
+    private lateinit var viewModel: ViewModelPayment
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCashierPaymentHolderBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
+        viewPager = binding.viewPager
+        stepView = binding.stepView
         return binding.root
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity())[ViewModelPayment::class.java]
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,6 +63,110 @@ class CashierPaymentHolderFragment : Fragment() {
                 }
                 findNavController().navigate(R.id.cashierDrawerFragment, bundle)
             }
+        }
+
+        adapter = StudentAdmitAdapter(requireActivity())
+        viewPager.adapter = adapter
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    backItem()
+                }
+            })
+        adapter.addFragment(StepOneCashierPaymentFragment())
+        adapter.addFragment(StepTwoCashierPaymentFragment())
+        adapter.addFragment(StepThreeCashierPaymentFragment())
+        stepView.go(0, true)
+        viewPager.isUserInputEnabled = false
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                stepView.go(position, true)
+
+                // Hide Back Button on the first page
+                if (position == 0) {
+                    binding.backButton.visibility = View.INVISIBLE
+                } else {
+                    binding.backButton.visibility = View.VISIBLE
+                }
+            }
+        })
+
+        binding.backButton.setOnClickListener {
+            if (viewPager.currentItem > 0) {
+                viewPager.currentItem = viewPager.currentItem - 1
+            }
+        }
+        binding.nextButton.setOnClickListener {
+            when (viewPager.currentItem) {
+                0 -> validateFragmentOne()
+                1 -> validateFragmentTwo()
+                2 -> validateFragmentThree()
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // For Android 11 and above (API 30+)
+            if (!Environment.isExternalStorageManager()) {
+                try {
+                    // Intent to redirect user to allow 'All Files Access'
+                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                    val packageName = requireContext().packageName // Get your app's package name
+                    intent.data = Uri.parse("package:$packageName")
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    // Handle the error or fallback to an alternative behavior
+                }
+            }
+        } else {
+            // For Android versions < 11 (API 29 and below)
+            val REQUEST_CODE = 1
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
+                REQUEST_CODE
+            )
+        }
+    }
+
+    private fun validateFragmentThree() {
+
+    }
+
+    private fun validateFragmentTwo() {
+
+    }
+
+    private fun validateFragmentOne() {
+        val userId = viewModel.studentID
+        val paymentTitle = viewModel.paymentTitle
+
+        if (userId.isEmpty() || paymentTitle.isEmpty()){
+            Toast.makeText(requireContext(), "Please Select Transaction or Search Student", Toast.LENGTH_SHORT).show()
+            return
+        }
+        else{
+            nextItem()
+        }
+    }
+
+    fun backItem() {
+        val currentItem = viewPager.currentItem
+        val nextItem = currentItem - 1
+        if (nextItem >= 0) {
+            viewPager.currentItem = nextItem
+        }
+    }
+
+    private fun nextItem() {
+        val currentItem = viewPager.currentItem
+        val nextItem = currentItem + 1
+        if (nextItem < adapter.itemCount) {
+            viewPager.currentItem = nextItem
         }
     }
 }

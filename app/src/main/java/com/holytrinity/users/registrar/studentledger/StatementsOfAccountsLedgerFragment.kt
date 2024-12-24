@@ -153,7 +153,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
 
     private fun setupRecyclerView(soaList: List<Soa>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        soaAdapter = SoaAdapter2(soaList, studentNames)
+        soaAdapter = SoaAdapter2(soaList, studentNames,false)
         binding.recyclerView.adapter = soaAdapter
     }
 }

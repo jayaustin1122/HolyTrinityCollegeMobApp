@@ -1,6 +1,7 @@
 package com.holytrinity.users.registrar.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.databinding.ItemStatementsOfAccountsBinding
@@ -8,10 +9,10 @@ import com.holytrinity.databinding.ItemSummaryOfAccountsBinding
 import com.holytrinity.model.Soa
 import java.text.NumberFormat
 import java.util.*
-
 class SoaAdapter2(
     private var soaList: List<Soa>,
-    private val studentNames: Map<String, String>
+    private val studentNames: Map<String, String>,
+    private val isRegistrarView: Boolean // Flag to differentiate views
 ) : RecyclerView.Adapter<SoaAdapter2.SoaViewHolder>() {
 
     private var filteredList: List<Soa> = soaList
@@ -33,7 +34,6 @@ class SoaAdapter2(
         } else {
             val lowerCaseQuery = query.lowercase()
             soaList.filter {
-
                 studentNames[it.student_id]?.lowercase()?.contains(lowerCaseQuery) == true ||
                         it.student_id.lowercase().contains(lowerCaseQuery)
             }
@@ -43,7 +43,7 @@ class SoaAdapter2(
 
     override fun onBindViewHolder(holder: SoaViewHolder, position: Int) {
         val soa = filteredList[position]
-        holder.bind(soa, studentNames[soa.student_id] ?: "Unknown", position)
+        holder.bind(soa, studentNames[soa.student_id] ?: "Unknown", position, isRegistrarView)
     }
 
     override fun getItemCount(): Int {
@@ -51,16 +51,44 @@ class SoaAdapter2(
     }
 
     class SoaViewHolder(private val binding: ItemStatementsOfAccountsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(soa: Soa, studentName: String, position: Int) {
+        fun bind(soa: Soa, studentName: String, position: Int, isRegistrarView: Boolean) {
             binding.tvNo.text = (position + 1).toString()
-            binding.tvIdNo.text = soa.student_id
-            binding.tvName.text = soa.student_name
 
-            // Format the balance to Peso format
-            val formattedBalance = formatCurrency(soa.balance)
-            binding.tvAmount.text = formattedBalance
-            val formattedBalance2 = formatCurrency(soa.total_paid)
-            binding.tvPaid.text = formattedBalance2
+            if (isRegistrarView) {
+                // Show only student name and balance
+                binding.tvAmount.visibility = View.VISIBLE
+                binding.tvPaid.visibility = View.GONE
+                binding.tvName.visibility = View.GONE
+                binding.tvNo.visibility = View.GONE
+                binding.tvAmount.text = formatCurrency(soa.balance)
+                binding.tvIdNo.text = "Balance"
+                binding.tvName.text = studentName
+
+                // Add 50dp margin to tvIdNo (start and end) and tvName (start only)
+                updateMargin(binding.tvIdNo, marginStartDp = 50, marginEndDp = 130)
+                updateMargin(binding.tvName, marginStartDp = 50, marginEndDp = 0)
+            } else {
+                binding.tvIdNo.text = soa.student_id
+                binding.tvName.text = studentName
+                binding.tvAmount.visibility = View.VISIBLE
+                binding.tvPaid.visibility = View.VISIBLE
+                binding.tvName.visibility = View.VISIBLE
+                binding.tvNo.visibility = View.VISIBLE
+                binding.tvAmount.text = formatCurrency(soa.balance)
+                binding.tvPaid.text = formatCurrency(soa.total_paid)
+
+                // Reset margin for tvIdNo and tvName
+                updateMargin(binding.tvIdNo, marginStartDp = 0, marginEndDp = 0)
+                updateMargin(binding.tvName, marginStartDp = 0, marginEndDp = 0)
+            }
+        }
+
+        private fun updateMargin(view: View, marginStartDp: Int, marginEndDp: Int) {
+            val params = view.layoutParams as ViewGroup.MarginLayoutParams
+            val density = view.context.resources.displayMetrics.density
+            params.marginStart = (marginStartDp * density).toInt()
+            params.marginEnd = (marginEndDp * density).toInt()
+            view.layoutParams = params
         }
 
         private fun formatCurrency(amount: Double): String {
@@ -68,4 +96,7 @@ class SoaAdapter2(
             return format.format(amount)
         }
     }
+
 }
+
+
