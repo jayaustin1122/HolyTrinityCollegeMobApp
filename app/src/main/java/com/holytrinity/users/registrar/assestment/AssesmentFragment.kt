@@ -44,7 +44,7 @@ class AssesmentFragment : Fragment() {
     private var allFeesList: MutableList<Fees> = mutableListOf()
     private var feesFetched = false
     private var enrolledSubsFetched = false
-
+    private lateinit var loadingDialog: SweetAlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -79,6 +79,8 @@ class AssesmentFragment : Fragment() {
 
             getEnrolledSubs()
             binding.nextButton.setOnClickListener {
+                loadingDialog = DialogUtils.showLoading(requireActivity())
+                loadingDialog.show()
                 addStudentLedgerToApi(
                     studentID.toInt(), enrollment_period_id.toInt(),
                     totalAmount, totalAmount
@@ -107,14 +109,17 @@ class AssesmentFragment : Fragment() {
                 if (response.isSuccessful) {
                     // Handle success
                     Log.d("Retrofit", "Student Ledger added successfully")
+                    loadingDialog.dismiss()
+                    DialogUtils.showSuccessMessage(requireActivity(),"Success","Student Assessment Complete")
+                    findNavController().navigate(R.id.registrarDrawerHolderFragment)
                 } else {
-                    // Handle error
+                    loadingDialog.dismiss()
                     Log.e("Retrofit", "Failed to add student ledger: ${response.errorBody()}")
                 }
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                // Handle failure
+                loadingDialog.dismiss()
                 Log.e("Retrofit", "Error: ${t.message}")
             }
         })
