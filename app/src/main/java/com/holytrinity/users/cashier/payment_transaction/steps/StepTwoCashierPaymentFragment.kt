@@ -83,6 +83,7 @@ class StepTwoCashierPaymentFragment : Fragment() {
         val formattedAmount = formatCurrency(updatedAmount)
         binding.totalAmountTextView.text = formattedAmount
         viewModel.total = formattedAmount
+        viewModel.discount_id = discount.discount_id.toInt()
     }
 
     private fun fetchDiscounts() {

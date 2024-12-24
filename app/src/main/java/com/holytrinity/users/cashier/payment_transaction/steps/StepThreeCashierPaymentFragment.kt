@@ -1,11 +1,15 @@
 package com.holytrinity.users.cashier.payment_transaction.steps
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.holytrinity.api.BeneFactorService
@@ -40,8 +44,11 @@ class StepThreeCashierPaymentFragment : Fragment() {
 
         getAllBenefactor(viewModel.studentID)
         getTransactionModes()
-    }
+        binding.amountInputEditLayout.addTextChangedListener {
+            viewModel.amountPay = it.toString()
+        }
 
+    }
     private fun getAllBenefactor(studentID: String) {
         val service = RetrofitInstance.create(BeneFactorService::class.java)
         service.getBenefactorName(studentID)!!.enqueue(object : Callback<BeneResponse> {
@@ -50,18 +57,49 @@ class StepThreeCashierPaymentFragment : Fragment() {
                     val responseData = response.body()
                     if (responseData?.error == null) {
                         val benefactorName = responseData!!.name
-                        Log.d("Benefactor Name", "Name: $benefactorName")
+                        val benefactorID = responseData.benefactor_id // Assuming 'id' is part of the BeneResponse model
+                        Log.d("Benefactor Name", "Name: $benefactorName, ID: $benefactorID")
 
-                        val dropdownItems = mutableListOf<String>()
-                        dropdownItems.add("") // Add blank value to the first position
-                        dropdownItems.add(benefactorName ?: "No Name")
+                        val dropdownItems = mutableListOf<Pair<String, String>>() // Pair of ID and Name
+                        dropdownItems.add("" to "Select Benefactor") // Add default blank option
+                        if (benefactorName != null && benefactorID != null) {
+                            dropdownItems.add(benefactorID.toString() to benefactorName)
+                        }
+
+                        // Extract only names for the Spinner display
+                        val benefactorNames = dropdownItems.map { it.second }
 
                         val adapter = ArrayAdapter(
                             requireContext(),
-                            android.R.layout.simple_dropdown_item_1line,
-                            dropdownItems
+                            android.R.layout.simple_spinner_item,
+                            benefactorNames
                         )
-                        binding.paymentBenefactorSpinner.setAdapter(adapter)
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        binding.paymentBenefactorSpinner.adapter = adapter
+
+                        // Set a listener to update ViewModel with the selected benefactor ID
+                        binding.paymentBenefactorSpinner.onItemSelectedListener = object :
+                            AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(
+                                parent: AdapterView<*>,
+                                view: View?,
+                                position: Int,
+                                id: Long
+                            ) {
+                                val selectedBenefactorId = dropdownItems[position].first
+                                if (selectedBenefactorId.isNotEmpty()) {
+                                    viewModel.benefactor_id = selectedBenefactorId.toInt()
+                                    Log.d("Selected Benefactor", "ID: ${viewModel.benefactor_id}")
+                                } else {
+                                    viewModel.benefactor_id = null // Reset if no valid selection
+                                    Log.d("Selected Benefactor", "No valid ID selected")
+                                }
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>) {
+                                // Handle no selection, if needed
+                            }
+                        }
                     } else {
                         Log.e("Error", responseData.error ?: "Unknown error")
                     }
@@ -76,14 +114,31 @@ class StepThreeCashierPaymentFragment : Fragment() {
         })
     }
 
-    // Fetch and set transaction modes to the AutoCompleteTextView
     private fun getTransactionModes() {
-        val modes = listOf("Cash", "Credit", "Debit", "Online") // You can replace this with a network call to fetch modes
+        val modes = listOf("Cash", "Credit", "Debit", "Online") // Replace with network call if needed
         val adapter = ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_dropdown_item_1line,
+            android.R.layout.simple_spinner_item,
             modes
         )
-        binding.modeOfTransactionSpinner.setAdapter(adapter)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.modeOfTransactionSpinner.adapter = adapter
+
+        // Set the default selected value in the spinner
+        val defaultMode = viewModel.transaction ?: "Cash" // Default to "Cash" if no value is set in ViewModel
+        val defaultPosition = modes.indexOf(defaultMode)
+        if (defaultPosition >= 0) {
+            binding.modeOfTransactionSpinner.setSelection(defaultPosition)
+        }
+             binding.modeOfTransactionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                viewModel.transaction = modes[position] // Update ViewModel with the selected mode
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Optional: Handle case where no selection is made (unlikely for a Spinner)
+            }
+        }
     }
+
 }

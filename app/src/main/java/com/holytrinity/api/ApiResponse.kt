@@ -7,7 +7,9 @@ data class ApiResponse(
     val assessment: List<AssessmentFee>,
     val discount: List<DiscountFee>,
     val payment: List<PaymentFee>,
-
+    val success: Boolean,
+    val doc_no: String?,
+    val error: String? = null,
     val courses: List<Courses>,
     val curriculum: List<Curriculum>,
     val subject: List<Subject>

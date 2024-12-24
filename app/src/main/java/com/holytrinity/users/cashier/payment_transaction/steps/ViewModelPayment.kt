@@ -10,10 +10,9 @@ class ViewModelPayment : ViewModel() {
     var paymentDescription: String = ""
     var student_name: String = ""
     var total: String = ""
-    var sex: String = ""
-    var dateOfBirth: String = ""
-    var email: String = ""
-    var phone: String = ""
-    var municipality: String = ""
-    var barangay: String = ""
+    var benefactor_id: Int? =0
+    var discount_id: Int? =0
+    var transaction: String = ""
+    var amountPay: String = ""
+
 }
