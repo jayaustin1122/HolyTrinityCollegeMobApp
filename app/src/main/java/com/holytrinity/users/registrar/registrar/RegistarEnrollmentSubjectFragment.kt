@@ -51,7 +51,7 @@ class RegistarEnrollmentSubjectFragment : Fragment() {
         val soaList: List<Soa> = emptyList()
         studentNames = mutableMapOf()
 
-        soaAdapter = SoaAdapter2(soaList, studentNames)
+        soaAdapter = SoaAdapter2(soaList, studentNames,false)
 
         loadingDialog = DialogUtils.showLoading(requireActivity())
         loadingDialog.show()

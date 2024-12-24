@@ -187,6 +187,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_bold"
                             android:gravity="center"
+                            android:id="@+id/discountName"
                             android:text="Discount"
                             android:textColor="@color/violet_primary" />
 
@@ -197,7 +198,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/roboto_bold"
                             android:gravity="center"
-                            android:text="P 00.00"
+                            android:text="+ Add Discount"
                             android:textColor="@color/violet_primary" />
 
                     </LinearLayout>
