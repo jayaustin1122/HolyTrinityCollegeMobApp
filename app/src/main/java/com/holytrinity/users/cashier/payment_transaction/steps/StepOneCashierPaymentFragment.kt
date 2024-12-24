@@ -78,6 +78,7 @@ class StepOneCashierPaymentFragment : Fragment() {
 
             if (selectedStudent != null) {
                 viewModel.studentID = selectedStudent.student_id.toString()
+                viewModel.student_name = selectedStudent.student_name.toString()
             }
         }
     }

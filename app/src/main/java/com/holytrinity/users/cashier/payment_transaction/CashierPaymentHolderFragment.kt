@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -22,11 +21,6 @@ import com.example.canorecoapp.utils.DialogUtils
 import com.holytrinity.R
 import com.holytrinity.databinding.FragmentCashierPaymentHolderBinding
 import com.holytrinity.model.Payment
-import com.holytrinity.util.BluetoothHelper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import com.holytrinity.users.cashier.payment_transaction.steps.StepThreeCashierPaymentFragment
 import com.holytrinity.users.cashier.payment_transaction.steps.StepTwoCashierPaymentFragment
 import com.holytrinity.users.cashier.payment_transaction.steps.ViewModelPayment
@@ -35,16 +29,23 @@ import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepFourFragm
 import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepOneFragment
 import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepThreeFragment
 import com.holytrinity.users.student.admit.steps.StudentGetAdmittedStepTwoFragment
+import com.holytrinity.util.BluetoothHelper
 import com.shuhart.stepview.StepView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CashierPaymentHolderFragment : Fragment() {
-    private lateinit var binding : FragmentCashierPaymentHolderBinding
-    private lateinit var bluetoothFn: BluetoothHelper
-
+    private lateinit var binding: FragmentCashierPaymentHolderBinding
     private lateinit var viewPager: ViewPager2
     private lateinit var stepView: StepView
     private lateinit var adapter: StudentAdmitAdapter
     private lateinit var viewModel: ViewModelPayment
+    private lateinit var bluetoothFn : BluetoothHelper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +55,7 @@ class CashierPaymentHolderFragment : Fragment() {
         stepView = binding.stepView
         return binding.root
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[ViewModelPayment::class.java]
@@ -63,7 +65,10 @@ class CashierPaymentHolderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbarBackButton.setOnClickListener {
-            DialogUtils.showWarningMessage(requireActivity(), "Confirm Exit", "Click \"Yes\" to cancel discard any changes made."
+            DialogUtils.showWarningMessage(
+                requireActivity(),
+                "Confirm Exit",
+                "Click \"Yes\" to cancel discard any changes made."
             ) { sweetAlertDialog ->
                 sweetAlertDialog.dismissWithAnimation()
 
@@ -73,69 +78,6 @@ class CashierPaymentHolderFragment : Fragment() {
                 findNavController().navigate(R.id.cashierDrawerFragment, bundle)
             }
         }
-
-// Onclick for printing Receipt
-//        binding.nextButton.setOnClickListener {
-//            val message = generateReceiptMessage(
-//                date, time, studentId, studentName, itemsToPay, totalAmount, cashAmount, changeAmount
-//            )
-//
-//            CoroutineScope(Dispatchers.IO).launch {
-//                val isPrinted = bluetoothFn.printTextFeed(message)
-//                withContext(Dispatchers.Main) {
-//                    if (isPrinted) {
-//                        Toast.makeText(requireContext(), "Printed Successfully", Toast.LENGTH_SHORT)
-//                            .show()
-//                    } else {
-//                        Toast.makeText(requireContext(), "Printing Failed", Toast.LENGTH_SHORT)
-//                            .show()
-//                    }
-//                }
-//            }
-//        }
-    }
-
-    fun generateReceiptMessage(
-        date: String,
-        time: String,
-        studentId: String,
-        studentName: String,
-        itemsToPay: List<Payment>,
-        totalAmount: String,
-        cashAmount: String,
-        changeAmount: String
-    ): String {
-        return StringBuilder().apply {
-            append("\n\n\n\nRoman Catholic Bishop of Daet\n")
-            append("\u001B\u0045\u0001") // Bold ON
-            append("HOLY TRINITY COLLEGE SEMINARY\n")
-            append("       FOUNDATION, Inc.      \n")
-            append("\u001B\u0045\u0000") // Bold OFF
-            append("Holy Trinity College Seminary\n")
-            append("   P.3 Bautista 4604, Labo   \n")
-            append("Camarines Norte, Philippines \n")
-            append("=============================\n")
-            append("ID:   $studentId  DATE: $date\n")
-            append("Name: $studentName   TIME: $time\n")
-            append("=============================\n")
-            append("\u001B\u0045\u0001") // Bold ON
-            append("Description         Amount   \n")
-            append("\u001B\u0045\u0000") // Bold OFF
-            // Add items dynamically
-            itemsToPay.forEach { item ->
-                append("${item.description.padEnd(17)} ${item.amount.padStart(10)}\n")
-            }
-            append("=============================\n")
-            append("\u001B\u0045\u0001") // Bold ON
-            append("Total              $totalAmount   \n")
-            append("\u001B\u0045\u0000") // Bold OFF
-            append("Cash               $cashAmount   \n")
-            append("Change             $changeAmount   \n")
-            append("=============================\n\n")
-            append("\u001B\u0045\u0001") // Bold ON
-            append("          Thank You!         \n\n\n\n")
-            append("\u001B\u0045\u0000") // Bold OFF
-        }.toString()
 
         adapter = StudentAdmitAdapter(requireActivity())
         viewPager.adapter = adapter
@@ -203,25 +145,58 @@ class CashierPaymentHolderFragment : Fragment() {
                 REQUEST_CODE
             )
         }
-    }
 
+    }
+    fun printDetails(){
+        val itemsToPay = listOf(
+            Payment(description = viewModel.paymentTitle, amount = viewModel.paymentAmount.toString()),
+
+            )
+
+
+        // Get the current date and time
+        val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+
+        // Generate the receipt message with the current date and time
+        val message = generateReceiptMessage(
+            currentDate, currentTime, viewModel.studentID, viewModel.student_name, itemsToPay, viewModel.total, "s1000", "1209102"
+        )
+
+        // Start a coroutine to print the receipt
+        CoroutineScope(Dispatchers.IO).launch {
+            val isPrinted = bluetoothFn.printTextFeed(message)
+            withContext(Dispatchers.Main) {
+                if (isPrinted) {
+                    Toast.makeText(requireContext(), "Printed Successfully", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    Toast.makeText(requireContext(), "Printing Failed", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
     private fun validateFragmentThree() {
 
     }
 
     private fun validateFragmentTwo() {
-
+        nextItem()
     }
 
     private fun validateFragmentOne() {
         val userId = viewModel.studentID
         val paymentTitle = viewModel.paymentTitle
 
-        if (userId.isEmpty() || paymentTitle.isEmpty()){
-            Toast.makeText(requireContext(), "Please Select Transaction or Search Student", Toast.LENGTH_SHORT).show()
+        if (userId.isEmpty() || paymentTitle.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "Please Select Transaction or Search Student",
+                Toast.LENGTH_SHORT
+            ).show()
             return
-        }
-        else{
+        } else {
             nextItem()
         }
     }
@@ -241,4 +216,47 @@ class CashierPaymentHolderFragment : Fragment() {
             viewPager.currentItem = nextItem
         }
     }
-}
+
+    fun generateReceiptMessage(
+        date: String,
+        time: String,
+        studentId: String,
+        studentName: String,
+        itemsToPay: List<Payment>,
+        totalAmount: String,
+        cashAmount: String,
+        changeAmount: String
+    ): String {
+        return StringBuilder().apply {
+            append("\n\n\n\nRoman Catholic Bishop of Daet\n")
+            append("\u001B\u0045\u0001") // Bold ON
+            append("HOLY TRINITY COLLEGE SEMINARY\n")
+            append("       FOUNDATION, Inc.      \n")
+            append("\u001B\u0045\u0000") // Bold OFF
+            append("Holy Trinity College Seminary\n")
+            append("   P.3 Bautista 4604, Labo   \n")
+            append("Camarines Norte, Philippines \n")
+            append("=============================\n")
+            append("ID:   $studentId  DATE: $date\n")
+            append("Name: $studentName   TIME: $time\n")
+            append("=============================\n")
+            append("\u001B\u0045\u0001") // Bold ON
+            append("Description         Amount   \n")
+            append("\u001B\u0045\u0000") // Bold OFF
+            // Add items dynamically
+            itemsToPay.forEach { item ->
+                append("${item.description.padEnd(17)} ${item.amount.padStart(10)}\n")
+            }
+            append("=============================\n")
+            append("\u001B\u0045\u0001") // Bold ON
+            append("Total              $totalAmount   \n")
+            append("\u001B\u0045\u0000") // Bold OFF
+            append("Cash               $cashAmount   \n")
+            append("Change             $changeAmount   \n")
+            append("=============================\n\n")
+            append("\u001B\u0045\u0001") // Bold ON
+            append("          Thank You!         \n\n\n\n")
+            append("\u001B\u0045\u0000") // Bold OFF
+        }.toString()
+    }
+    }

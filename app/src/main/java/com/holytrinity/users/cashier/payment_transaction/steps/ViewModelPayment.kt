@@ -8,7 +8,8 @@ class ViewModelPayment : ViewModel() {
     var studentID: String = ""
     var paymentAmount: Double = 0.0
     var paymentDescription: String = ""
-    var middleName: String = ""
+    var student_name: String = ""
+    var total: String = ""
     var sex: String = ""
     var dateOfBirth: String = ""
     var email: String = ""
