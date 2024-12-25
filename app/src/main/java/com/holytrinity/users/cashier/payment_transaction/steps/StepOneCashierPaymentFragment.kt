@@ -82,6 +82,7 @@ class StepOneCashierPaymentFragment : Fragment() {
             }
         }
     }
+
     private fun fetchPaymentFees() {
         apiService.getAllFees().enqueue(object : Callback<List<PaymentFee>> {
             override fun onResponse(

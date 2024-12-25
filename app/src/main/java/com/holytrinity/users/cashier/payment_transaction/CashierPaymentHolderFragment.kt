@@ -163,14 +163,11 @@ class CashierPaymentHolderFragment : Fragment() {
                 REQUEST_CODE
             )
         }
-
     }
+
     fun printDetails(){
         val itemsToPay = listOf(
-            Payment(description = viewModel.paymentTitle, amount = viewModel.paymentAmount.toString()),
-
-            )
-
+            Payment(description = viewModel.paymentTitle, amount = viewModel.paymentAmount.toString()))
 
         // Get the current date and time
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -180,6 +177,13 @@ class CashierPaymentHolderFragment : Fragment() {
         val message = generateReceiptMessage(
             currentDate, currentTime, viewModel.studentID, viewModel.student_name, itemsToPay, viewModel.total, viewModel.amountPay, "0"
         )
+
+        val isConnected = bluetoothFn.connectPrinter()
+        if (isConnected) {
+            Toast.makeText(requireContext(), "Connected to Printer", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Connection Failed", Toast.LENGTH_SHORT).show()
+        }
 
         // Start a coroutine to print the receipt
         CoroutineScope(Dispatchers.IO).launch {
@@ -195,6 +199,7 @@ class CashierPaymentHolderFragment : Fragment() {
             }
         }
     }
+
     private fun validateFragmentThree() {
         val  amountPay = viewModel.amountPay
 
@@ -205,9 +210,10 @@ class CashierPaymentHolderFragment : Fragment() {
         else{
             findNavController().navigate(R.id.cashierDrawerFragment)
             insertToPayments()
-//            printDetails()
+            printDetails()
         }
     }
+
     private fun insertToPayments() {
         val studentId = viewModel.studentID
         val amount = viewModel.amountPay
@@ -244,6 +250,7 @@ class CashierPaymentHolderFragment : Fragment() {
             }
         })
     }
+
     private fun validateFragmentTwo() {
         nextItem()
     }
