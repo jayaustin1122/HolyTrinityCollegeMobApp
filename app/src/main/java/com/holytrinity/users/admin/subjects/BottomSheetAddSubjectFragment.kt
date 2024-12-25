@@ -103,7 +103,7 @@ class BottomSheetAddSubjectFragment : BottomSheetDialogFragment() {
 
 
     private fun addSubject(code: String, name: String, units: Int) {
-        val subject = com.holytrinity.model.Subject(code, name, units)
+        val subject = com.holytrinity.model.Subject(null,code, name, units,null)
 
         apiService.addSubject(subject).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {

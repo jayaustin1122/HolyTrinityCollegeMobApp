@@ -1,5 +1,6 @@
 package com.holytrinity.api
 
+import com.holytrinity.model.Student
 import com.holytrinity.model.Subject
 import retrofit2.Call
 import retrofit2.http.Body
@@ -20,5 +21,9 @@ interface SubjectService {
 
     @POST("crud-android/trinity/Subject.php?action=updateSubject")
     fun updateSubject(@Body subject: com.holytrinity.api.Subject): Call<ApiResponse>
+
+    @GET("crud-android/trinity/getAllSubjectsCurriculum.php")
+    fun getAllSubjects(): Call<List<Subject>>
+
 
 }

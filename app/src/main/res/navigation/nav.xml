@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/cashierDrawerFragment">
 
     <fragment
         android:id="@+id/splashFragment"
@@ -154,4 +154,9 @@
         android:name="com.holytrinity.users.admin.curriculums.AdminCurriculumDetailsFragment"
         android:label="fragment_admin_curriculum_details"
         tools:layout="@layout/fragment_admin_curriculum_details" />
+    <fragment
+        android:id="@+id/adminSchedulingFragment"
+        android:name="com.holytrinity.users.admin.scheduling.AdminSchedulingFragment"
+        android:label="fragment_admin_scheduling"
+        tools:layout="@layout/fragment_admin_scheduling" />
 </navigation>
