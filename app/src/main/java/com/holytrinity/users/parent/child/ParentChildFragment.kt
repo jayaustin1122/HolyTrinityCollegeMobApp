@@ -32,7 +32,7 @@ class ParentChildFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userId = UserPreferences.getRoleId(requireContext())
+        val userId = UserPreferences.getUserId(requireContext())
 
         binding.textViewUser.text = UserPreferences.getName(requireContext())
 

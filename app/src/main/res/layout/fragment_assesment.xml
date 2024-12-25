@@ -91,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +169,8 @@
                 android:id="@+id/pdfLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:paddingTop="5dp">
 
                 <TextView
@@ -177,16 +178,31 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
                     android:text="Assessment"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_text_color"
                     android:textSize="22sp" />
 
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/pdfChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="PDF"
+                    android:textColor="@color/dark_icon_color"
+                    app:chipCornerRadius="20dp"
+                    app:chipStrokeColor="@color/dark_icon_color"
+                    app:layout_constraintEnd_toStartOf="@+id/xlsChip"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp" />
 
             </LinearLayout>
+
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/assessmentCardView"

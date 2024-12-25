@@ -225,9 +225,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:hint="Parish"
-            android:importantForAccessibility="yes"
-            app:endIconDrawable="@drawable/baseline_cloud_upload_24"
-            app:endIconMode="custom">
+            android:importantForAccessibility="yes">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_parish"
