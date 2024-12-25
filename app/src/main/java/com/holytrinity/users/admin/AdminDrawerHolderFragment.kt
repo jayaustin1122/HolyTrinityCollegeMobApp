@@ -78,6 +78,12 @@ class AdminDrawerHolderFragment : Fragment() {
             when (menuItem.itemId) {
                 R.id.nav_dashboard_admin -> openFragment(AdminDashboardFragment())
                 R.id.nav_manage_account_admin -> openFragment(AdminManageAccountFragment())
+
+                R.id.nav_admission_admin -> openFragment(RegistrarAdmissionFragment())
+                R.id.nav_enrollment_admin -> openFragment(RegistrarEnrollmentFragment())
+                R.id.nav_fee_management_admin -> openFragment(CashierFeeManagementHolderFragment())
+                R.id.nav_assessment_admin -> openFragment(AssesmentFragment())
+
                 R.id.nav_offerings_admin -> openFragment(AdminOfferingsFragment())
                 R.id.nav_ledger_admin -> openFragment(RegistrarStudentLedgerFragment())
                 R.id.nav_school_calendar_admin -> openFragment(RegistrarSchoolCalendarFragment())

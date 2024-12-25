@@ -59,20 +59,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <AutoCompleteTextView
-        android:id="@+id/useridTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchFilterContainer"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/background_auto_select"
-        android:fontFamily="@font/roboto_regular"
-        android:hint="Search Student"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="fill_horizontal"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTextView">
+
+        <AutoCompleteTextView
+            android:id="@+id/useridTextView"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/background_auto_select"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="Search Student"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnFilter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFilter"
+            style="?attr/materialIconButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/icon_filter_list_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerEnrolledSubjects"
@@ -84,6 +108,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_admission"
-        app:layout_constraintTop_toBottomOf="@+id/useridTextView"
+        app:layout_constraintTop_toBottomOf="@+id/searchFilterContainer"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

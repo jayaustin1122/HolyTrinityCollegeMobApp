@@ -1,4 +1,4 @@
-package com.holytrinity.users.student.soa
+package com.holytrinity.users.benefactor.beneficiaries
 
 import android.os.Bundle
 import android.util.Log
@@ -13,29 +13,27 @@ import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.SoaService
 import com.holytrinity.api.StudentService
-import com.holytrinity.databinding.FragmentStudentSoaBinding
+import com.holytrinity.databinding.FragmentBeneficiariesDetailsBinding
 import com.holytrinity.model.Soa
 import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.SoaAdapter2
-import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Response
 
+class BeneficiariesDetailsFragment : Fragment() {
+    private lateinit var binding: FragmentBeneficiariesDetailsBinding
 
-class StudentSoaFragment : Fragment() {
-    private lateinit var binding : FragmentStudentSoaBinding
-    private lateinit var soaList: List<Soa>
-    private lateinit var loadingDialog: SweetAlertDialog
+    // For demonstration
     private lateinit var soaAdapter: SoaAdapter2
-    private lateinit var students: List<Student>
-    private lateinit var studentNamesMap: MutableMap<String, String>
-    private lateinit var studentNames: MutableMap<String, String>
+    private var soaList: List<Soa> = emptyList()
+    private var studentNames: MutableMap<String, String> = mutableMapOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentStudentSoaBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
+    ): View {
+        binding = FragmentBeneficiariesDetailsBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -43,25 +41,25 @@ class StudentSoaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.toolbarBackButton.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt("selectedFragmentId", null ?: R.id.nav_dashboard_student)
-            }
-            findNavController().navigate(R.id.studentDrawerHolderFragment, bundle)
+            findNavController().navigateUp() // or whichever navigation
         }
 
-        val studentID = UserPreferences.getUserId(requireContext())
-        fetchAllSoa(studentID.toString())
+        // 1) Get the "student_id" from arguments
+        val studentId = arguments?.getString("student_id") ?: ""
+        Log.d("BeneficiariesDetails", "Received student_id = $studentId")
+
+        // 2) Now fetch the SOA for this student
+        fetchAllSoa(studentId)
     }
 
-    private fun fetchAllSoa(studentId: String? = null) {
+    private fun fetchAllSoa(studentId: String) {
         val service = RetrofitInstance.create(SoaService::class.java)
         service.getAllSoa(studentId).enqueue(object : Callback<List<Soa>> {
-            override fun onResponse(call: Call<List<Soa>>, response: retrofit2.Response<List<Soa>>) {
+            override fun onResponse(call: Call<List<Soa>>, response: Response<List<Soa>>) {
                 if (response.isSuccessful) {
                     soaList = response.body() ?: emptyList()
                     if (soaList.isNotEmpty()) {
-                        // Update the adapter with the new data and refresh the RecyclerView
-
+                        // Once we have SOA list, we can also load student data
                         searchStudents()
                     } else {
                         Log.e("No Data", "No SOA records found for student ID: $studentId")
@@ -80,14 +78,12 @@ class StudentSoaFragment : Fragment() {
     private fun searchStudents() {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents().enqueue(object : Callback<List<Student>> {
-            override fun onResponse(
-                call: Call<List<Student>>,
-                response: retrofit2.Response<List<Student>>
-            ) {
+            override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
-                    students.forEach { student ->
-                        studentNames[student.student_id.toString()] = student.student_name.toString()
+                    for (stud in students) {
+                        // Map student ID to student name
+                        studentNames[stud.student_id.toString()] = stud.student_name.toString()
                     }
                     if (::soaAdapter.isInitialized) {
                         soaAdapter.updateSoaList(soaList)
@@ -107,7 +103,7 @@ class StudentSoaFragment : Fragment() {
 
     private fun setupRecyclerView(soaList: List<Soa>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        soaAdapter = SoaAdapter2(soaList, studentNames,false)
+        soaAdapter = SoaAdapter2(soaList, studentNames, false)
         binding.recyclerView.adapter = soaAdapter
     }
 }

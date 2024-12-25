@@ -24,6 +24,7 @@ import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.EnrollmentAdapter
 import com.holytrinity.users.registrar.adapter.SoaAdapter
 import com.holytrinity.util.SharedPrefsUtil
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -106,18 +107,38 @@ class RegistrarEnrollmentFragment : Fragment() {
 
         getAllStudents()
 
+        val roleId = UserPreferences.getRoleId(requireContext())
         binding.toolbarBackButton.setOnClickListener {
             DialogUtils.showWarningMessage(requireActivity(), "Confirm Exit", "Click \"Yes\" to cancel discard any changes made."
             ) { sweetAlertDialog ->
                 sweetAlertDialog.dismissWithAnimation()
 
-                val bundle = Bundle().apply {
-                    putInt("selectedFragmentId", null ?: R.id.nav_dashboard)
-                }
-                findNavController().navigate(R.id.registrarDrawerHolderFragment, bundle)
+                navigateBasedOnRole(roleId)
             }
         }
     }
+
+    private fun navigateBasedOnRole(roleId: Int) {
+        when (roleId) {
+            1 -> findNavController().navigate(R.id.adminDrawerFragment)
+            2 -> findNavController().navigate(R.id.registrarDrawerHolderFragment)
+            4 -> findNavController().navigate(R.id.cashierDrawerFragment)
+            5 -> findNavController().navigate(R.id.instructorDrawerHolderFragment)
+            6 -> findNavController().navigate(R.id.parentDrawerHolderFragment)
+            7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
+            10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
+            else -> {
+                // Default navigation if roleId doesn't match any of the above
+                Toast.makeText(
+                    requireContext(),
+                    "Invalid role, navigating back to dashboard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.nav_dashboard) // You can replace this with a default fragment
+            }
+        }
+    }
+
     private fun saveStudentInPreEnlist() {
         val deptId = viewModel.dept_id.value?.toString() ?: ""
         val course = viewModel.course.value?.toString() ?: ""
@@ -156,8 +177,6 @@ class RegistrarEnrollmentFragment : Fragment() {
             })
         }
     }
-
-
 
     private fun getAllStudents(studentId: Int? = null, registrationVerified: Int? = 1) {
         val studentService = RetrofitInstance.create(StudentService::class.java)
@@ -224,7 +243,5 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
-
-
 
 }
