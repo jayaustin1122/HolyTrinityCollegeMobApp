@@ -65,7 +65,7 @@ class SoaAdapter2(
                 binding.tvName.text = studentName
 
                 // Add 50dp margin to tvIdNo (start and end) and tvName (start only)
-                updateMargin(binding.tvIdNo, marginStartDp = 50, marginEndDp = 130)
+                updateMargin(binding.tvIdNo, marginStartDp = 30, marginEndDp = 100)
                 updateMargin(binding.tvName, marginStartDp = 50, marginEndDp = 0)
             } else {
                 binding.tvIdNo.text = soa.student_id
