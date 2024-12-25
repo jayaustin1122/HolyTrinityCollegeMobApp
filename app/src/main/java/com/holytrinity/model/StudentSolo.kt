@@ -38,6 +38,8 @@ data class EnrolledSubject(
     val subject_id: Int,
     val subject_name: String,
     val subject_units: Int,
+    val grade: Double,
+    val remarks: String,
 
     @SerializedName("class")
     val class_info: ClassInfo

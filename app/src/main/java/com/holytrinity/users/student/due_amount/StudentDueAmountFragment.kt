@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
@@ -36,9 +37,15 @@ class StudentDueAmountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val studentID = "2024026"
+        val studentID = UserPreferences.getUserId(requireContext())
         fetchAllSoa(studentID.toString())
 
+        binding.toolbarBackButton.setOnClickListener {
+            val bundle = Bundle().apply {
+                putInt("selectedFragmentId", null ?: R.id.nav_dashboard_student)
+            }
+            findNavController().navigate(R.id.studentDrawerHolderFragment, bundle)
+        }
     }
 
     private fun fetchAllSoa(studentId: String? = null) {
@@ -52,8 +59,6 @@ class StudentDueAmountFragment : Fragment() {
 
                     // Assuming you want the total due amount to be the sum of all due_amounts
                     val totalDueAmount = soaList.sumOf { it.total_due }
-
-                    Log.d("SOALista", "$totalDueAmount")
 
                     // Set the value in totalBalanceEditText
                     binding.totalBalanceEditText.setText(String.format("%.2f", totalDueAmount))
