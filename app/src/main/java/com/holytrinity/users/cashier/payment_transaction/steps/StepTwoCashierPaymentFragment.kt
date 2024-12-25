@@ -21,7 +21,6 @@ import retrofit2.Callback
 import java.text.NumberFormat
 import java.util.Locale
 
-
 class StepTwoCashierPaymentFragment : Fragment() {
     private lateinit var binding: FragmentStepTwoCashierPaymentBinding
     private lateinit var viewModel: ViewModelPayment
@@ -29,20 +28,23 @@ class StepTwoCashierPaymentFragment : Fragment() {
     private lateinit var soaList: List<Soa>
     private var discountList: List<Discount> = emptyList()
     private var selectedDiscount: Discount? = null
-    private var initialTotalAmount: Double = 0.0  // Store the initial total amount
+    private var initialTotalAmount: Double = 0.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStepTwoCashierPaymentBinding.inflate(layoutInflater)
-        // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[ViewModelPayment::class.java]
+
+        // Initialize default values in ViewModel
+        viewModel.discount_id = 0 // Default discount ID
+        viewModel.total = formatCurrency(0.0) // Default total
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,10 +54,10 @@ class StepTwoCashierPaymentFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = soaAdapter
         binding.recyclerView.setHasFixedSize(true)
+
         fetchAllSoa(studentId)
         fetchDiscounts()
 
-        // Store the initial total when the fragment is first created
         binding.addDiscountButton.setOnClickListener {
             showDiscountDialog()
         }
@@ -70,7 +72,10 @@ class StepTwoCashierPaymentFragment : Fragment() {
                 val discount = discountList[which]
                 applyDiscount(discount)
             }
-            .setNegativeButton("Cancel", null)
+            .setNegativeButton("Cancel") { _, _ ->
+                // Ensure ViewModel is updated even if no discount is selected
+                clearDiscount()
+            }
             .show()
     }
 
@@ -78,12 +83,29 @@ class StepTwoCashierPaymentFragment : Fragment() {
         selectedDiscount = discount
         binding.addDiscountButton.text = "${formatCurrency(discount.amount)}"
         binding.discountName.text = discount.title
-        var totalAmount = initialTotalAmount
-        val updatedAmount = totalAmount - discount.amount
+
+        // Update the total amount
+        val updatedAmount = initialTotalAmount - discount.amount
         val formattedAmount = formatCurrency(updatedAmount)
         binding.totalAmountTextView.text = formattedAmount
+
+        // Update ViewModel
         viewModel.total = formattedAmount
         viewModel.discount_id = discount.discount_id.toInt()
+    }
+
+    private fun clearDiscount() {
+        selectedDiscount = null
+        binding.addDiscountButton.text = "Add Discount"
+        binding.discountName.text = "No Discount"
+
+        // Reset total amount to initial
+        val formattedAmount = formatCurrency(initialTotalAmount)
+        binding.totalAmountTextView.text = formattedAmount
+
+        // Update ViewModel
+        viewModel.total = formattedAmount
+        viewModel.discount_id = 0 // Default value when no discount is selected
     }
 
     private fun fetchDiscounts() {
@@ -110,17 +132,13 @@ class StepTwoCashierPaymentFragment : Fragment() {
                 if (response.isSuccessful) {
                     soaList = response.body() ?: emptyList()
                     if (soaList.isNotEmpty()) {
-                        soaList.forEach { student ->
-                            Log.d("StudentData", "ID: ${student.student_id}, Name: ${student.student_name}")
-                        }
                         val totalAmount = soaList.sumOf { it.balance }
                         val formattedTotalAmount = formatCurrency(totalAmount)
                         binding.totalAmountTextView.text = formattedTotalAmount
-                        viewModel.total = formattedTotalAmount
 
                         // Store the initial total amount
                         initialTotalAmount = totalAmount
-
+                        viewModel.total = formattedTotalAmount
                         soaAdapter.updateSoaList(soaList)
                         soaAdapter.notifyDataSetChanged()
                         binding.studentIDTextView.text = soaList.firstOrNull()?.student_id ?: ""

@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Date *"
+        android:text="Schedule *"
         android:textColor="@color/dark_icon_color"
         android:textSize="16sp" />
 
@@ -102,40 +102,24 @@
         android:id="@+id/dateInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Select Date"
-            android:inputType="date" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="5dp"/>
 
     <!-- Time -->
-    <TextView
-        android:id="@+id/timeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Time *"
-        android:textColor="@color/dark_icon_color"
-        android:textSize="16sp" />
 
+    <Spinner
+        android:id="@+id/schedSpinner"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="56dp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/background_spinner"
+        android:spinnerMode="dropdown" />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/timeInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/timeEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Select Time"
-            android:inputType="time" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_marginTop="5dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/doneButton"

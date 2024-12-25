@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.databinding.ItemClassListBinding
-import com.holytrinity.model.Class
+import com.holytrinity.model.ClassResponses
 
 class ClassesAdapter(
-    private var classesList: List<Class>,
+    private var classesList: List<ClassResponses>,
     private val onItemClick: (Int) -> Unit // Pass class_id as Int
 ) : RecyclerView.Adapter<ClassesAdapter.ClassViewHolder>() {
 
     // ViewHolder class using View Binding
     inner class ClassViewHolder(private val binding: ItemClassListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(classItem: Class) {
+        fun bind(classItem: ClassResponses) {
             binding.codeTextView.text = classItem.code
             binding.nameTextView.text = classItem.name
             binding.sectionTextView.text = classItem.section
@@ -40,7 +40,7 @@ class ClassesAdapter(
     override fun getItemCount(): Int = classesList.size
 
     // Method to update the data
-    fun updateData(newClassesList: List<Class>) {
+    fun updateData(newClassesList: List<ClassResponses>) {
         classesList = newClassesList
         notifyDataSetChanged()
     }

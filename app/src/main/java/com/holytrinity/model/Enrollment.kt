@@ -1,19 +1,21 @@
 package com.holytrinity.model
 
-// Updated Enrollment class to handle multiple classes inside each subject
+
+
+
 data class Subjects(
     val subjectId: Int,
     val code: String,
     val name: String,
     val units: Int,
-    val classes: List<Class> // Nested list of classes for each subject
+    val classes: List<ClassResponses>
 )
 
 data class Enrollment(
-    val subjects: List<Subjects> // List of subjects, each with its classes
+    val subjects: List<Subjects>
 )
 data class EnrollmentResponse(
-    val subjects: List<Subjects> // Wrap the list of subjects inside a response object
+    val subjects: List<Subjects>
 )
 data class Assessment(
     val studentId: Int,

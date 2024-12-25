@@ -216,7 +216,7 @@ class CashierPaymentHolderFragment : Fragment() {
 
     private fun insertToPayments() {
         val studentId = viewModel.studentID
-        val amount = viewModel.amountPay
+        val amount = viewModel.total
         val transactionMode = viewModel.transaction
         val benefactorId = viewModel.benefactor_id
         val discountId = viewModel.discount_id
