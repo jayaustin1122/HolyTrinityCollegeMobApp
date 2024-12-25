@@ -20,4 +20,26 @@ interface CurriculumService {
 
     @POST("crud-android/trinity/Curriculum.php?action=updateCurriculum")
     fun updateCurriculum(@Body curriculum: com.holytrinity.api.Curriculum): Call<ApiResponse>
+
+    @GET("crud-android/trinity/Curriculum.php")
+    fun getCurriculumSubjects(
+        @Query("action") action: String,
+        @Query("curriculum_id") curriculumId: Int
+    ): Call<ApiResponse>
+
+    @POST("crud-android/trinity/Curriculum.php?action=removeSubjectFromCurriculum")
+    fun removeSubjectFromCurriculum(
+        @Body requestBody: Map<String, Int> // { "curriculum_id": X, "subject_id": Y }
+    ): Call<ApiResponse>
+
+    @GET("crud-android/trinity/Curriculum.php")
+    fun getAllSubjects(
+        @Query("action") action: String
+    ): Call<ApiResponse>
+
+    @POST("crud-android/trinity/Curriculum.php?action=addSubjectToCurriculum")
+    fun addSubjectToCurriculum(
+        @Body request: AddSubjectRequest
+    ): Call<ApiResponse>
+
 }

@@ -72,32 +72,56 @@ class RegistrarEnrollmentListFragment : Fragment() {
             paint.textSize = 12f
             var yPosition = 50f // Starting Y position
 
-            // Title
+            // ---------------------------------------------------------
+            // 1) Print the multi-line header text:
+            // ---------------------------------------------------------
+            // We'll just do them line by line. Adjust the xPosition if you want them centered differently.
+            val headerLines = listOf(
+                "   HOLY TRINITY COLLEGE SEMINARY   ",
+                "Bautista 4604, Labo Camarines Norte"
+            )
+            headerLines.forEach { line ->
+                canvas.drawText(line, 200.5f, yPosition, paint)
+                yPosition += 20f
+            }
+            // Add spacing before title
+            yPosition += 20f
+
+            // ---------------------------------------------------------
+            // 2) Title: "Enrolled Students"
+            // ---------------------------------------------------------
             paint.textSize = 16f
             paint.isFakeBoldText = true
             canvas.drawText("Enrolled Students", 220f, yPosition, paint)
 
+            // Reset paint for table content
             paint.textSize = 12f
             paint.isFakeBoldText = false
             yPosition += 30f // Move down
 
-            // Headers
+            // ---------------------------------------------------------
+            // 3) Table headers
+            // ---------------------------------------------------------
             canvas.drawText("ID", 50f, yPosition, paint)
             canvas.drawText("Name", 150f, yPosition, paint)
             canvas.drawText("Status", 350f, yPosition, paint)
-            yPosition += 20f // Move down
+            yPosition += 20f
 
-            // Data rows
+            // ---------------------------------------------------------
+            // 4) Data rows
+            // ---------------------------------------------------------
             filteredStudents.forEach { student ->
                 canvas.drawText(student.student_id.toString(), 50f, yPosition, paint)
                 canvas.drawText(student.student_name ?: "", 150f, yPosition, paint)
                 student.official_status?.let { canvas.drawText(it, 350f, yPosition, paint) }
-                yPosition += 20f // Move to the next row
+                yPosition += 20f
             }
 
             pdfDocument.finishPage(page)
 
-            // Save the PDF file
+            // ---------------------------------------------------------
+            // 5) Save the PDF file
+            // ---------------------------------------------------------
             val fileName = "Enrolled_Students.pdf"
             val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
             FileOutputStream(file).use { outputStream ->

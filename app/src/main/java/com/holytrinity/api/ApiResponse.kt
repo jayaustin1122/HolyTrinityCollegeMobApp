@@ -17,6 +17,14 @@ data class ApiResponse(
 data class ParentChildResponse(
     val students: List<String>
 )
+
+data class AddSubjectRequest(
+    val curriculum_id: Int,
+    val subject_id: Int,
+    val recommended_year_level: Int,
+    val recommended_sem: String
+)
+
 data class ChangePasswordRequest(
     val user_id: Int,
     val old_password: String,

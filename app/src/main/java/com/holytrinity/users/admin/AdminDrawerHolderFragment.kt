@@ -26,6 +26,7 @@ import com.holytrinity.users.registrar.dashboard.RegistrarDashBoardFragment
 import com.holytrinity.users.registrar.enrollment.enroll.RegistrarEnrollmentFragment
 import com.holytrinity.users.registrar.fee_management.CashierFeeManagementHolderFragment
 import com.holytrinity.users.registrar.registrar.RegistrarHolderFragment
+import com.holytrinity.users.registrar.schoolcalendar.RegistrarSchoolCalendarFragment
 import com.holytrinity.users.registrar.studentledger.RegistrarStudentLedgerFragment
 import com.holytrinity.users.setup.SetUpFragment
 import com.holytrinity.util.LogoutHelper
@@ -79,6 +80,7 @@ class AdminDrawerHolderFragment : Fragment() {
                 R.id.nav_manage_account_admin -> openFragment(AdminManageAccountFragment())
                 R.id.nav_offerings_admin -> openFragment(AdminOfferingsFragment())
                 R.id.nav_ledger_admin -> openFragment(RegistrarStudentLedgerFragment())
+                R.id.nav_school_calendar_admin -> openFragment(RegistrarSchoolCalendarFragment())
                 R.id.nav_registrar_admin -> openFragment(RegistrarHolderFragment())
                 R.id.nav_setup_admin -> openFragment(SetUpFragment())
                 R.id.nav_logout_admin -> {

@@ -20,6 +20,7 @@ import com.holytrinity.api.sample.calendar.BottomSheetAddEventFragment
 import com.holytrinity.databinding.FragmentRegistrarSchoolCalendarBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -59,11 +60,9 @@ class RegistrarSchoolCalendarFragment : Fragment() {
         binding.buttonPrevMonth.setOnClickListener { changeMonth(-1) }
         binding.buttonNextMonth.setOnClickListener { changeMonth(1) }
 
+        val roleId = UserPreferences.getRoleId(requireContext())
         binding.toolbarBackButton.setOnClickListener {
-            val bundle = Bundle().apply {
-                putInt("selectedFragmentId", null ?: R.id.nav_dashboard)
-            }
-            findNavController().navigate(R.id.registrarDrawerHolderFragment, bundle)
+            navigateBasedOnRole(roleId)
         }
 
         // FAB button click to add an event
@@ -187,5 +186,26 @@ class RegistrarSchoolCalendarFragment : Fragment() {
     private fun showEventsForDate(date: String) {
         val events = eventMap[date] ?: emptyList()
         eventAdapter.updateEvents(events)
+    }
+
+    private fun navigateBasedOnRole(roleId: Int) {
+        when (roleId) {
+            1 -> findNavController().navigate(R.id.adminDrawerFragment)
+            2 -> findNavController().navigate(R.id.registrarDrawerHolderFragment)
+            4 -> findNavController().navigate(R.id.cashierDrawerFragment)
+            5 -> findNavController().navigate(R.id.instructorDrawerHolderFragment)
+            6 -> findNavController().navigate(R.id.parentDrawerHolderFragment)
+            7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
+            10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
+            else -> {
+                // Default navigation if roleId doesn't match any of the above
+                Toast.makeText(
+                    requireContext(),
+                    "Invalid role, navigating back to dashboard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.nav_dashboard) // You can replace this with a default fragment
+            }
+        }
     }
 }
