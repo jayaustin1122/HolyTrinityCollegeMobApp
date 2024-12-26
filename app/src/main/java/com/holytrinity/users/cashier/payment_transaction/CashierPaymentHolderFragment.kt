@@ -53,7 +53,7 @@ class CashierPaymentHolderFragment : Fragment() {
     private lateinit var stepView: StepView
     private lateinit var adapter: StudentAdmitAdapter
     private lateinit var viewModel: ViewModelPayment
-    private lateinit var bluetoothFn : BluetoothHelper
+    private lateinit var bluetoothFn: BluetoothHelper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,6 +64,7 @@ class CashierPaymentHolderFragment : Fragment() {
 
         return binding.root
     }
+
     @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
@@ -165,9 +166,13 @@ class CashierPaymentHolderFragment : Fragment() {
         }
     }
 
-    fun printDetails(){
+    fun printDetails() {
         val itemsToPay = listOf(
-            Payment(description = viewModel.paymentTitle, amount = viewModel.paymentAmount.toString()))
+            Payment(
+                description = viewModel.paymentTitle,
+                amount = viewModel.paymentAmount.toString()
+            )
+        )
 
         // Get the current date and time
         val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
@@ -175,7 +180,14 @@ class CashierPaymentHolderFragment : Fragment() {
 
         // Generate the receipt message with the current date and time
         val message = generateReceiptMessage(
-            currentDate, currentTime, viewModel.studentID, viewModel.student_name, itemsToPay, viewModel.total, viewModel.amountPay, "0"
+            currentDate,
+            currentTime,
+            viewModel.studentID,
+            viewModel.student_name,
+            itemsToPay,
+            viewModel.total,
+            viewModel.amountPay,
+            "0"
         )
 
         val isConnected = bluetoothFn.connectPrinter()
@@ -201,17 +213,27 @@ class CashierPaymentHolderFragment : Fragment() {
     }
 
     private fun validateFragmentThree() {
-        val  amountPay = viewModel.amountPay
+        val amountPay = viewModel.amountPay
+        val benefactor = viewModel.benefactor_id
+        val modeOfPayment = viewModel.transaction
 
-        if (amountPay.isEmpty()){
+        if (amountPay.isEmpty()) {
             Toast.makeText(requireContext(), "Amount cannot be Empty", Toast.LENGTH_SHORT).show()
             return
         }
-        else{
-            insertToPayments()
-            findNavController().navigate(R.id.cashierDrawerFragment)
-            printDetails()
+
+        if (benefactor == null || benefactor == 0) {
+            Toast.makeText(requireContext(), "Please select a benefactor", Toast.LENGTH_SHORT).show()
+            return
         }
+
+        if (modeOfPayment.isEmpty()) {
+            Toast.makeText(requireContext(), "Please select a transaction mode", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        insertToPayments()
+        findNavController().navigate(R.id.cashierDrawerFragment)
     }
 
     private fun insertToPayments() {
@@ -221,20 +243,12 @@ class CashierPaymentHolderFragment : Fragment() {
         val benefactorId = viewModel.benefactor_id
         val discountId = viewModel.discount_id
         val paymentService = RetrofitInstance.create(PaymentFeeApiService::class.java)
-
-        // Create the request object
-        // Suppose viewModel.total = "₱24,318.00"
-
-// 1) Remove "₱" and all commas
-        val sanitized = viewModel.total
-            .replace("₱", "")       // remove currency symbol
-            .replace(",", "")       // remove thousand separator
-            .replace(".00", "")     // remove trailing .00 if all amounts are .00
-
-// 2) Now sanitized might be "24318"
+        val type = viewModel.paymentTitle
+        val sanitized = viewModel.amountPay
+            .replace("₱", "")
+            .replace(",", "")
+            .replace(".00", "")
         val numericValue = sanitized.toIntOrNull() ?: 0
-
-// 3) Then you pass numericValue to PaymentRequest
         val paymentRequest = PaymentRequest(
             student_id = studentId.toInt(),
             amount = numericValue,
@@ -242,39 +256,116 @@ class CashierPaymentHolderFragment : Fragment() {
             benefactor_id = benefactorId!!.toInt(),
             discount_id = discountId!!.toInt()
         )
-        paymentService.insertToPayments(paymentRequest).enqueue(object : Callback<PaymentRequest> {
-            override fun onResponse(call: Call<PaymentRequest>, response: Response<PaymentRequest>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null ) {
+        if (type == "Assessment Fee") {
 
-                        if (isAdded) {
-                            printDetails()
+            paymentService.insertToPayments(paymentRequest)
+                .enqueue(object : Callback<PaymentRequest> {
+                    override fun onResponse(
+                        call: Call<PaymentRequest>,
+                        response: Response<PaymentRequest>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            if (responseBody != null) {
+
+                                if (isAdded) {
+                                    printDetails()
+
+                                } else {
+                                    Log.w(
+                                        "Payment",
+                                        "Fragment no longer attached, skipping printDetails()"
+                                    )
+                                }
+                            } else {
+                            }
                         } else {
-                            Log.w("Payment", "Fragment no longer attached, skipping printDetails()")
+                            Log.e(
+                                "Payment",
+                                "Response Error: ${response.code()} - ${response.message()}"
+                            )
                         }
-                   } else {
-                     }
-                } else {
-                    Log.e("Payment", "Response Error: ${response.code()} - ${response.message()}")
-                }
-            }
+                    }
 
-            override fun onFailure(call: Call<PaymentRequest>, t: Throwable) {
-                Log.e("Payment", "Failure: ${t.message}")
-            }
-        })
+                    override fun onFailure(call: Call<PaymentRequest>, t: Throwable) {
+                        Log.e("Payment", "Failure: ${t.message}")
+                    }
+                })
+        } else {
+
+            paymentService.insertToPaymentss(
+                studentId.toInt(),
+                numericValue,
+                transactionMode,
+                benefactorId.toInt(),
+                discountId.toInt()
+            ).enqueue(object : Callback<PaymentRequest> {
+                override fun onResponse(
+                    call: Call<PaymentRequest>,
+                    response: Response<PaymentRequest>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+
+                            if (isAdded) {
+                                printDetails()
+                            } else {
+                                Log.w(
+                                    "Payment",
+                                    "Fragment no longer attached, skipping printDetails()"
+                                )
+                            }
+                        } else {
+                        }
+                    } else {
+                        Log.e(
+                            "Payment",
+                            "Response Error: ${response.code()} - ${response.message()}"
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<PaymentRequest>, t: Throwable) {
+                    Log.e("Payment", "Failure: ${t.message}")
+                }
+            })
+        }
+
+
     }
 
     private fun validateFragmentTwo() {
-        nextItem()
+        val discount = viewModel.discount_id
+        val type = viewModel.paymentTitle
+
+
+        if (type == "Assessment Fee") {
+            if ( discount == null || discount == 0) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Please Select a Discount",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            } else {
+                nextItem()
+            }
+        }
+        else{
+            viewModel.discount_id = 12
+            nextItem()
+        }
+
     }
 
     private fun validateFragmentOne() {
         val userId = viewModel.studentID
         val paymentTitle = viewModel.paymentTitle
+        val discount = viewModel.discount_id
 
-        if (userId.isEmpty() || paymentTitle.isEmpty()) {
+        if (userId.isEmpty() || paymentTitle.isEmpty())  {
             Toast.makeText(
                 requireContext(),
                 "Please Select Transaction or Search Student",
@@ -344,4 +435,4 @@ class CashierPaymentHolderFragment : Fragment() {
             append("\u001B\u0045\u0000") // Bold OFF
         }.toString()
     }
-    }
+}

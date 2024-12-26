@@ -11,7 +11,7 @@ class ViewModelPayment : ViewModel() {
     var student_name: String = ""
     var total: String = ""
     var benefactor_id: Int? =0
-    var discount_id: Int? =0
+    var discount_id: Int? = 0
     var transaction: String = ""
     var amountPay: String = ""
 
