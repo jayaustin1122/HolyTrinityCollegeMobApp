@@ -140,6 +140,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="beneficiariesDetailsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-575" />
+                            <option name="y" value="-521" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="calendarFragment">
                     <value>
                       <LayoutPositions>

@@ -208,8 +208,8 @@ class CashierPaymentHolderFragment : Fragment() {
             return
         }
         else{
-            findNavController().navigate(R.id.cashierDrawerFragment)
             insertToPayments()
+            findNavController().navigate(R.id.cashierDrawerFragment)
             printDetails()
         }
     }
@@ -223,21 +223,36 @@ class CashierPaymentHolderFragment : Fragment() {
         val paymentService = RetrofitInstance.create(PaymentFeeApiService::class.java)
 
         // Create the request object
+        // Suppose viewModel.total = "₱24,318.00"
+
+// 1) Remove "₱" and all commas
+        val sanitized = viewModel.total
+            .replace("₱", "")       // remove currency symbol
+            .replace(",", "")       // remove thousand separator
+            .replace(".00", "")     // remove trailing .00 if all amounts are .00
+
+// 2) Now sanitized might be "24318"
+        val numericValue = sanitized.toIntOrNull() ?: 0
+
+// 3) Then you pass numericValue to PaymentRequest
         val paymentRequest = PaymentRequest(
             student_id = studentId.toInt(),
-            amount = amount.toInt(),
+            amount = numericValue,
             mode_of_transaction = transactionMode,
             benefactor_id = benefactorId!!.toInt(),
             discount_id = discountId!!.toInt()
         )
-
         paymentService.insertToPayments(paymentRequest).enqueue(object : Callback<PaymentRequest> {
             override fun onResponse(call: Call<PaymentRequest>, response: Response<PaymentRequest>) {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null ) {
 
-                        printDetails()
+                        if (isAdded) {
+                            printDetails()
+                        } else {
+                            Log.w("Payment", "Fragment no longer attached, skipping printDetails()")
+                        }
                    } else {
                      }
                 } else {
