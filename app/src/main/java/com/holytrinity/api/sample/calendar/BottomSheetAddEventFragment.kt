@@ -39,8 +39,8 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.titleTextView.setOnClickListener {
             val notificationIntent = Intent(context, NotificationService::class.java).apply {
-                putExtra("title", "Event Added")
-                putExtra("message", "Your event has been successfully added.")
+                putExtra("title", "New Event!")
+                putExtra("message", "Read and View New Event")
             }
             context?.startService(notificationIntent)
 
