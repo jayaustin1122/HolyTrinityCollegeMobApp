@@ -37,14 +37,7 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.titleTextView.setOnClickListener {
-            val notificationIntent = Intent(context, NotificationService::class.java).apply {
-                putExtra("title", "New Event!")
-                putExtra("message", "Read and View New Event")
-            }
-            context?.startService(notificationIntent)
 
-        }
         // Set up listeners for date pickers
         binding.etDate.setOnClickListener { showDatePicker(binding.etDate) }
         binding.etEndDate.setOnClickListener { showDatePicker(binding.etEndDate) }
@@ -120,14 +113,11 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                             "Event added successfully!",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        // Sending a broadcast to trigger the notification
-                        val notificationIntent = Intent(context, NotificationService::class.java).apply {
-                            putExtra("title", "Event Added")
-                            putExtra("message", "Your event has been successfully added.")
-                        }
-                        context?.startService(notificationIntent)
-
+                          val notificationIntent = Intent(context, NotificationService::class.java).apply {
+                                putExtra("title", "New Event!")
+                                putExtra("message", "Read and View New Event")
+                            }
+                            context?.startService(notificationIntent)
                         dismiss()
                     } else {
                         Toast.makeText(requireContext(), "Failed to add event.", Toast.LENGTH_SHORT).show()
