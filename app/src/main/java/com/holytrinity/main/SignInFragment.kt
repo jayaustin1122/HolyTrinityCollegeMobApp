@@ -2,12 +2,16 @@ package com.holytrinity.main
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.canorecoapp.utils.DialogUtils
 import com.holytrinity.R
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.StudentService
@@ -22,8 +26,7 @@ import retrofit2.Response
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
-
-
+    private lateinit var loadingDialog: SweetAlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,8 +43,14 @@ class SignInFragment : Fragment() {
         }
 
         binding.loginButton.setOnClickListener {
-            validateLogin()
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                validateLogin()
+            }, 2000)
         }
+
     }
 
     private fun validateLogin() {
@@ -51,6 +60,7 @@ class SignInFragment : Fragment() {
         if (userName.isNotEmpty() && password.isNotEmpty()) {
             getUserData(userName, password)
         } else {
+            loadingDialog.dismiss()
             Toast.makeText(requireContext(), "All fields are required", Toast.LENGTH_SHORT).show()
         }
     }
@@ -74,7 +84,7 @@ class SignInFragment : Fragment() {
                         editor.putString("email", user.email)
                         editor.putBoolean("is_logged_in", true)
                         editor.apply()
-
+                        loadingDialog.dismiss()
                         Toast.makeText(requireContext(), "Welcome ${user.name}", Toast.LENGTH_SHORT).show()
 
                         // Navigate based on role
@@ -89,14 +99,17 @@ class SignInFragment : Fragment() {
                             else -> Toast.makeText(requireContext(), "Role not recognized", Toast.LENGTH_SHORT).show()
                         }
                     } else {
+                        loadingDialog.dismiss()
                         Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
                     }
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(requireContext(), "Invalid credentials", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(requireContext(), "Login failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

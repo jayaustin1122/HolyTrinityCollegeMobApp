@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.canorecoapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.holytrinity.api.AccountRequest
 import com.holytrinity.api.ApiResponse
@@ -26,6 +27,7 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentBottomSheetAddAccountBinding? = null
     private val binding get() = _binding!!
+    private lateinit var loadingDialog: SweetAlertDialog
     private val apiService: AccountService by lazy {
         RetrofitInstance.create(AccountService::class.java)
     }
@@ -62,6 +64,8 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
         binding.roleSpinner.adapter = adapter
 
         binding.doneButton.setOnClickListener {
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
             validateAndConfirmData(roles)
         }
     }
@@ -74,14 +78,17 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
         val name = binding.nameEditText.text.toString().trim()
         if (username.isEmpty() || password.isEmpty() || name.isEmpty()) {
             Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            loadingDialog.dismiss()
             return
         }
 
         if (password != confirmPassword) {
+            loadingDialog.dismiss()
             Toast.makeText(context, "Passwords do not match.", Toast.LENGTH_SHORT).show()
             return
         }
         if (password.length < 6) {
+            loadingDialog.dismiss()
             Toast.makeText(context, "Password must be at least 6 characters long.", Toast.LENGTH_SHORT).show()
             return
         }
@@ -106,14 +113,22 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
         apiService.addAccount(username, roleId, password, name).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
+                    DialogUtils.showSuccessMessage(
+                        requireActivity(),
+                        "Success",
+                        "Account Added"
+                    ).show()
                     Toast.makeText(context, "Account added successfully!", Toast.LENGTH_SHORT).show()
                     dismiss()
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(context, "Failed to add account.", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
                 Log.e("AddAccountError", "Error: ${t.message}")
+                loadingDialog.dismiss()
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
@@ -123,11 +138,13 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        loadingDialog.dismiss()
         onDismissListener?.invoke()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        loadingDialog.dismiss()
     }
 }
