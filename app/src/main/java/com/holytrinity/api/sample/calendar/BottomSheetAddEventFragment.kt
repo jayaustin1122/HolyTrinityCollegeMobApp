@@ -1,5 +1,6 @@
 package com.holytrinity.api.sample.calendar
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import com.holytrinity.NotificationService
 import com.holytrinity.api.CalendarService
 import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.api.RetrofitInstance
@@ -35,7 +37,14 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.titleTextView.setOnClickListener {
+            val notificationIntent = Intent(context, NotificationService::class.java).apply {
+                putExtra("title", "Event Added")
+                putExtra("message", "Your event has been successfully added.")
+            }
+            context?.startService(notificationIntent)
 
+        }
         // Set up listeners for date pickers
         binding.etDate.setOnClickListener { showDatePicker(binding.etDate) }
         binding.etEndDate.setOnClickListener { showDatePicker(binding.etEndDate) }
@@ -111,6 +120,14 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                             "Event added successfully!",
                             Toast.LENGTH_LONG
                         ).show()
+
+                        // Sending a broadcast to trigger the notification
+                        val notificationIntent = Intent(context, NotificationService::class.java).apply {
+                            putExtra("title", "Event Added")
+                            putExtra("message", "Your event has been successfully added.")
+                        }
+                        context?.startService(notificationIntent)
+
                         dismiss()
                     } else {
                         Toast.makeText(requireContext(), "Failed to add event.", Toast.LENGTH_SHORT).show()
@@ -125,4 +142,5 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
             }
         })
     }
+
 }
