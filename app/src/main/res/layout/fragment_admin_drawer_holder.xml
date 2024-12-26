@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="@dimen/dimen_30dp"
+                app:title=" "
                 android:background="@color/dark_primary"
                 app:popupTheme="@style/Theme.AppCompat" >
 

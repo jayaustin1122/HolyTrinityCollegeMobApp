@@ -25,6 +25,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:title=" "
                 android:paddingTop="@dimen/dimen_30dp"
                 android:background="@color/dark_primary"
                 app:popupTheme="@style/Theme.AppCompat" >
