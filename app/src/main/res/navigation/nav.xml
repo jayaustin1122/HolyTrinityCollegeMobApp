@@ -149,4 +149,14 @@
         android:id="@+id/testPrinterFragment"
         android:name="com.holytrinity.util.TestPrinterFragment"
         android:label="TestPrinterFragment" />
+    <fragment
+        android:id="@+id/adminCurriculumDetailsFragment"
+        android:name="com.holytrinity.users.admin.curriculums.AdminCurriculumDetailsFragment"
+        android:label="fragment_admin_curriculum_details"
+        tools:layout="@layout/fragment_admin_curriculum_details" />
+    <fragment
+        android:id="@+id/beneficiariesDetailsFragment"
+        android:name="com.holytrinity.users.benefactor.beneficiaries.BeneficiariesDetailsFragment"
+        android:label="fragment_beneficiaries_details"
+        tools:layout="@layout/fragment_beneficiaries_details" />
 </navigation>

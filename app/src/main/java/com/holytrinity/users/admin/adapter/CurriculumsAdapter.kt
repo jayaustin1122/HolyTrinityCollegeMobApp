@@ -13,7 +13,8 @@ import com.holytrinity.api.Curriculum
 class CurriculumAdapter(
     private val curriculums: MutableList<Curriculum>,
     private val deleteListener: (Curriculum) -> Unit,
-    private val editListener: (Curriculum) -> Unit
+    private val editListener: (Curriculum) -> Unit,
+    private val onItemClick: (Curriculum) -> Unit
 ) : RecyclerView.Adapter<CurriculumAdapter.CurriculumViewHolder>() {
 
     inner class CurriculumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,6 +26,7 @@ class CurriculumAdapter(
         val amountTitleTextView: TextView = itemView.findViewById(R.id.amountTitleTextView) // This will be hidden
         val deleteChip: Chip = itemView.findViewById(R.id.deleteChip)
         val editChip: Chip = itemView.findViewById(R.id.editChip)
+        val itemLayout: View = itemView.findViewById(R.id.itemLayout)
 
         init {
             deleteChip.setOnClickListener {
@@ -35,6 +37,10 @@ class CurriculumAdapter(
                 val curriculum = curriculums[adapterPosition]
                 Log.d("CurriculumAdapter", "Editing: $curriculum")
                 editListener(curriculum)
+            }
+            itemLayout.setOnClickListener {
+                val curriculum = curriculums[adapterPosition]
+                onItemClick(curriculum)
             }
         }
     }

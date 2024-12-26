@@ -20,6 +20,28 @@
                     android:icon="@drawable/icon_enroll_24"
                     android:title="Offerings" />
 
+                <item
+                    android:id="@+id/nav_admission_admin"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Admission" />
+                <item
+                    android:id="@+id/nav_enrollment_admin"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Enrollment" />
+                <item
+                    android:id="@+id/nav_assessment_admin"
+                    android:icon="@drawable/icon_assessment_24"
+                    android:title="Assessment" />
+                <item
+                    android:id="@+id/nav_fee_management_admin"
+                    android:icon="@drawable/icon_enroll_24"
+                    android:title="Fee Management" />
+
+                <item
+                    android:id="@+id/nav_school_calendar_admin"
+                    android:icon="@drawable/icon_calendar_24"
+                    android:title="School Calendar" />
+
             </group>
         </menu>
     </item>

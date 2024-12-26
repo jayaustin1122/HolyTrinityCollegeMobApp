@@ -17,7 +17,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import androidx.navigation.fragment.navArgs
 import com.holytrinity.api.ClassService
-import com.holytrinity.model.Class
+import com.holytrinity.model.ClassResponses
 import com.holytrinity.model.StudentsResponse
 import com.holytrinity.users.instructor.adapter.StudentsAdapter
 

@@ -64,6 +64,7 @@ class AdminCurriculumsFragment : Fragment() {
                 navigate(R.id.adminOfferingsFragment)
             }
         }
+
     }
 
     private fun fetchDiscountFees() {
@@ -94,6 +95,15 @@ class AdminCurriculumsFragment : Fragment() {
                                     }
                                 }
                                 editDialog.show(childFragmentManager, "BottomSheetAddAssessmentFragment")
+                            },
+                            onItemClick = { curr ->
+                                val bundle = Bundle().apply {
+                                    putInt("curriculum_id", curr.curriculum_id)
+                                }
+                                findNavController().navigate(
+                                    R.id.adminCurriculumDetailsFragment,
+                                    bundle
+                                )
                             }
                         )
                         binding.recyclerView.adapter = adapter
