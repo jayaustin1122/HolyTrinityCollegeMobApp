@@ -54,9 +54,26 @@ class StepTwoCashierPaymentFragment : Fragment() {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = soaAdapter
         binding.recyclerView.setHasFixedSize(true)
+        binding.studentIDTextView.text = viewModel.studentID
+        binding.studentNameTextView.text = viewModel.student_name
 
-        fetchAllSoa(studentId)
-        fetchDiscounts()
+
+        if (viewModel.paymentTitle == "Assessment Fee"){
+            binding.linearDiscount.visibility = View.VISIBLE
+            binding.coecog.visibility = View.GONE
+            fetchAllSoa(studentId)
+            fetchDiscounts()
+        }
+        else{
+            binding.addDiscountButton.visibility = View.GONE
+            binding.discountName.visibility = View.GONE
+            binding.coecog.visibility = View.VISIBLE
+            binding.title.text = viewModel.paymentTitle
+            binding.Amount.text = viewModel.paymentAmount.toString()
+            binding.totalAmountTextView.text = viewModel.paymentAmount.toString()
+
+        }
+
 
         binding.addDiscountButton.setOnClickListener {
             showDiscountDialog()
@@ -143,6 +160,7 @@ class StepTwoCashierPaymentFragment : Fragment() {
                         soaAdapter.notifyDataSetChanged()
                         binding.studentIDTextView.text = soaList.firstOrNull()?.student_id ?: ""
                         binding.studentNameTextView.text = soaList.firstOrNull()?.student_name ?: ""
+
                     } else {
                         Log.e("No Data", "No SOA records found for student ID: $studentId")
                     }

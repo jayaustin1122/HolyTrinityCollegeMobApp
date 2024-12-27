@@ -2,6 +2,8 @@ package com.holytrinity.users.admin.courses
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
-
+    private lateinit var loadingDialog: SweetAlertDialog
     private var _binding: FragmentBottomSheetAddCoursesBinding? = null
     private val binding get() = _binding!!
     private val apiService: CoursesService by lazy { // Assuming same service interface
@@ -61,7 +63,12 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
         }
 
         binding.doneButton.setOnClickListener {
-            validateAndConfirmData()
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                validateAndConfirmData()
+            }, 2000)
+
         }
     }
 
@@ -72,6 +79,7 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
 
         if (code.isEmpty() || name.isEmpty() || description.isEmpty()) {
             Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            loadingDialog.dismiss()
             return
         }
 
@@ -96,6 +104,7 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
                 }
             }
             .setCancelClickListener { dialog ->
+                loadingDialog.dismiss()
                 dialog.dismissWithAnimation()
                 Log.d("AddCourseFragment", "Add/Update Cancelled")
             }
@@ -108,18 +117,22 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
         apiService.addCourses(course).enqueue(object : Callback<ApiResponse> { // Assuming addCurriculum handles courses
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
                     DialogUtils.showSuccessMessage(
                         requireActivity(),
                         "Success",
                         "Course Added Successfully"
                     ).show()
                     dismiss()
+
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(context, "Failed to add course.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("AddCourseFragment", "Error: ${t.message}")
             }
@@ -132,6 +145,7 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
         apiService.updateCourses(course).enqueue(object : Callback<ApiResponse> { // Assuming updateCurriculum handles courses
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
                     DialogUtils.showSuccessMessage(
                         requireActivity(),
                         "Success",
@@ -144,6 +158,7 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("UpdateCourseFragment", "Error: ${t.message}")
             }
@@ -152,11 +167,13 @@ class BottomSheetAddCoursesFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        loadingDialog.dismiss()
         onDismissListener?.invoke() // Trigger the callback when dialog is dismissed
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        loadingDialog.dismiss()
         _binding = null
     }
 }

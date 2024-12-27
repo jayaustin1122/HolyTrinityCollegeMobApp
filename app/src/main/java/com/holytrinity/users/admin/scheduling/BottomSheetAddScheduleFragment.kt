@@ -10,6 +10,8 @@
     import android.widget.Spinner
     import android.widget.Toast
     import androidx.navigation.fragment.findNavController
+    import cn.pedant.SweetAlert.SweetAlertDialog
+    import com.example.canorecoapp.utils.DialogUtils
     import com.google.android.material.bottomsheet.BottomSheetDialogFragment
     import com.holytrinity.R
     import com.holytrinity.api.ClassesService
@@ -39,7 +41,7 @@
         private var selectedInstructor_id: Int = 0
         private var sched: String = ""
         private var sectionSect: String = ""
-
+        private lateinit var loadingDialog: SweetAlertDialog
         override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -75,6 +77,9 @@
             binding.doneButton.setOnClickListener {
                 val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
                 val enrollmentperiod = savedPeriod!!.enrollment_period_id
+                loadingDialog = DialogUtils.showLoading(requireActivity())
+                loadingDialog.show()
+
                 uploadDB(selectedSubject_id,selectedInstructor_id,enrollmentperiod,sched,sectionSect,30)
             }
         }
@@ -92,7 +97,7 @@
 
             val service = RetrofitInstance.create(InsertClassService::class.java)
 
-            // Call insertInClasses(...)
+
             service.insertInClasses(
                 subjectId = subjectId,
                 instructorUserId = instructorUserId,
@@ -109,17 +114,20 @@
                         val resp = response.body()!!
                         if (resp.status == "success") {
                             Log.d("UploadDB", "Class inserted successfully: ${resp.message}")
-
+                            loadingDialog.dismiss()
                             Toast.makeText(requireContext(), "Class Schedule  inserted successfully", Toast.LENGTH_SHORT).show()
                         } else {
+                            loadingDialog.dismiss()
                             Log.e("UploadDB", "Error inserting class: ${resp.error}")
                         }
                     } else {
+                        loadingDialog.dismiss()
                         Log.e("UploadDB", "Error: ${response.errorBody()?.string()}")
                     }
                 }
 
                 override fun onFailure(call: Call<InsertClassResponse>, t: Throwable) {
+                    loadingDialog.dismiss()
                     Log.e("UploadDB", "Failed to insert class", t)
                 }
             })
