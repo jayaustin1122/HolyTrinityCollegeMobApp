@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface PaymentFeeApiService {
     @GET("crud-android/trinity/CashierPaymentTransactions/Payment.php")
@@ -20,4 +21,13 @@ interface PaymentFeeApiService {
         @Body paymentData: PaymentRequest
     ): Call<PaymentRequest>
 
+    @Headers("Content-Type: application/json")
+    @POST("crud-android/trinity/insertToPaymentNotAssessment.php")
+    fun insertToPaymentss(
+        @Query("student_id") student_id: Int,
+        @Query("amount") amount: Int,
+        @Query("mode_of_transaction") mode_of_transaction: String,
+        @Query("benefactor_id") benefactor_id: Int?,
+        @Query("discount_id") discount_id: Int
+    ): Call<PaymentRequest>
 }

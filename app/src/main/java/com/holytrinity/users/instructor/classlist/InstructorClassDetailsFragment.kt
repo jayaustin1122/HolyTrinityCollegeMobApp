@@ -29,11 +29,7 @@ class InstructorClassDetailsFragment : Fragment(R.layout.fragment_instructor_cla
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Initialize View Binding
         binding = FragmentInstructorClassDetailsBinding.bind(view)
-
-        // Retrieve the class_id from arguments
         arguments?.let {
             classId = it.getInt("class_id", -1)
         }
@@ -50,16 +46,19 @@ class InstructorClassDetailsFragment : Fragment(R.layout.fragment_instructor_cla
             }
             findNavController().navigate(R.id.instructorDrawerHolderFragment, bundle)
         }
+        adapter = StudentsAdapter(emptyList(), classId) { studentId, classId ->
+            val bundle = Bundle().apply {
+                putInt("student_id", studentId)
+                putInt("class_id", classId)
+            }
+            val bottomSheet = BottomSheetAddGradeFragment()
+            bottomSheet.arguments = bundle
+            bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+        }
 
-        // Initialize RecyclerView with an empty list
-        adapter = StudentsAdapter(emptyList())
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.eventRecyclerView.adapter = adapter
 
-        // Optionally, display class details at the top
-        // Fetch and display class details if needed using classId
-
-        // Make the API call to fetch enrolled students
         val apiService = RetrofitInstance.create(ClassService::class.java)
         apiService.getEnrolledStudents(classId).enqueue(object : Callback<StudentsResponse> {
             override fun onResponse(call: Call<StudentsResponse>, response: Response<StudentsResponse>) {

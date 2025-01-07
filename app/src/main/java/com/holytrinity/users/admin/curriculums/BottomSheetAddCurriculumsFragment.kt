@@ -2,6 +2,8 @@ package com.holytrinity.users.admin.curriculums
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +35,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
     // Variables to determine if we are in edit mode
     private var editMode = false
     private var editId: Int? = null
-
+    private lateinit var loadingDialog: SweetAlertDialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -59,7 +61,11 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
         }
 
         binding.doneButton.setOnClickListener {
-            validateAndConfirmData()
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                validateAndConfirmData()
+            }, 2000)
         }
     }
 
@@ -70,6 +76,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
 
         if (code.isEmpty() || name.isEmpty() || description.isEmpty()) {
             Toast.makeText(context, "Please fill all fields.", Toast.LENGTH_SHORT).show()
+            loadingDialog.dismiss()
             return
         }
 
@@ -94,6 +101,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
                 }
             }
             .setCancelClickListener { dialog ->
+                loadingDialog.dismiss()
                 dialog.dismissWithAnimation()
                 Log.d("AddCurriculumFragment", "Add/Update Cancelled")
             }
@@ -106,6 +114,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
         apiService.addCurriculum(curriculum).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
                     DialogUtils.showSuccessMessage(
                         requireActivity(),
                         "Success",
@@ -113,11 +122,13 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
                     ).show()
                     dismiss()
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(context, "Failed to add curriculum.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("AddCurriculumFragment", "Error: ${t.message}")
             }
@@ -130,6 +141,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
         apiService.updateCurriculum(curriculum).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
                     DialogUtils.showSuccessMessage(
                         requireActivity(),
                         "Success",
@@ -137,11 +149,13 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
                     ).show()
                     dismiss()
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(context, "Failed to update curriculum.", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("UpdateCurriculumFragment", "Error: ${t.message}")
             }
@@ -150,11 +164,13 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+        loadingDialog.dismiss()
         onDismissListener?.invoke() // Trigger the callback when dialog is dismissed
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        loadingDialog.dismiss()
         _binding = null
     }
 }

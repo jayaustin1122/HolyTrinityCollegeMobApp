@@ -113,15 +113,25 @@ class StepOneCashierPaymentFragment : Fragment() {
 
     private fun populateDropdown(paymentFees: List<PaymentFee>) {
         val titles = paymentFees.map { it.title }
+        val titleToFeeMap = paymentFees.associateBy { it.title } // Maps title to its corresponding PaymentFee
+
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, titles)
         binding.transactionTypeTextView.setAdapter(adapter)
 
         binding.transactionTypeTextView.setOnItemClickListener { _, _, position, _ ->
-            val selectedFee = paymentFees[position]
-            viewModel.paymentTitle = selectedFee.title
-            viewModel.paymentAmount = selectedFee.amount
-            viewModel.paymentDescription = selectedFee.description
-            //Toast.makeText(requireContext(), "Selected: ${selectedFee.title}", Toast.LENGTH_SHORT).show()
+            val selectedTitle = adapter.getItem(position) // Get title from adapter at clicked position
+            val selectedFee = titleToFeeMap[selectedTitle] // Fetch the PaymentFee based on the title
+
+            if (selectedFee != null) {
+                viewModel.paymentTitle = selectedFee.title
+                viewModel.paymentAmount = selectedFee.amount
+                viewModel.paymentDescription = selectedFee.description
+
+                Log.d("Selected Fee", "Title: ${selectedFee.title}, Amount: ${selectedFee.amount}, Description: ${selectedFee.description}")
+            } else {
+                Log.e("Dropdown Error", "Selected title not found in the map.")
+            }
         }
     }
+
 }

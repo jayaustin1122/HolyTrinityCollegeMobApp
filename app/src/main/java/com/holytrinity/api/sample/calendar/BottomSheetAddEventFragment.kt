@@ -1,5 +1,6 @@
 package com.holytrinity.api.sample.calendar
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import com.holytrinity.NotificationService
 import com.holytrinity.api.CalendarService
 import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.api.RetrofitInstance
@@ -111,6 +113,11 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                             "Event added successfully!",
                             Toast.LENGTH_LONG
                         ).show()
+                          val notificationIntent = Intent(context, NotificationService::class.java).apply {
+                                putExtra("title", "New Event!")
+                                putExtra("message", "Read and View New Event")
+                            }
+                            context?.startService(notificationIntent)
                         dismiss()
                     } else {
                         Toast.makeText(requireContext(), "Failed to add event.", Toast.LENGTH_SHORT).show()
@@ -125,4 +132,5 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
             }
         })
     }
+
 }

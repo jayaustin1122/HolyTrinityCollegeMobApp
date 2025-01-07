@@ -1,11 +1,15 @@
 package com.holytrinity.users.admin.curriculums
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.canorecoapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.holytrinity.R
 import com.holytrinity.api.AddSubjectRequest
@@ -19,7 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
-
+    private lateinit var loadingDialog: SweetAlertDialog
     private lateinit var binding: FragmentBottomSheetAddCurriculumSubjectsBinding
     private val apiService: CurriculumService by lazy {
         RetrofitInstance.create(CurriculumService::class.java)
@@ -46,14 +50,18 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
 
         curriculumId = arguments?.getInt("curriculum_id", 0) ?: 0
 
-        // I-load ang spinner data
+
         loadSubjectSpinner()
         loadYearSpinner()
         loadSemesterSpinner()
 
-        // Kapag pinindot ang Done:
+
         binding.doneButton.setOnClickListener {
-            addSubjectToCurriculum()
+            loadingDialog = DialogUtils.showLoading(requireActivity())
+            loadingDialog.show()
+            Handler(Looper.getMainLooper()).postDelayed({
+                addSubjectToCurriculum()
+            }, 2000)
         }
     }
 
@@ -85,6 +93,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     binding.subjectSpinner.adapter = adapter
                 } else {
+
                     Toast.makeText(
                         context,
                         "Failed to load subjects",
@@ -94,6 +103,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+
                 Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
@@ -118,6 +128,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
         val selectedSubjectIndex = binding.subjectSpinner.selectedItemPosition
         if (selectedSubjectIndex < 0 || selectedSubjectIndex >= subjectList.size) {
             Toast.makeText(requireContext(), "Please select a subject", Toast.LENGTH_SHORT).show()
+            loadingDialog.dismiss()
             return
         }
 
@@ -155,6 +166,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
         apiService.addSubjectToCurriculum(request).enqueue(object : Callback<ApiResponse>  {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if (response.isSuccessful && response.body()?.status == "success") {
+                    loadingDialog.dismiss()
                     Toast.makeText(
                         requireContext(),
                         "Subject added successfully",
@@ -163,6 +175,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
                     // I-dismiss ang bottom sheet
                     dismiss()
                 } else {
+                    loadingDialog.dismiss()
                     Toast.makeText(
                         requireContext(),
                         "Failed to add subject",
@@ -172,6 +185,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
             }
 
             override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                loadingDialog.dismiss()
                 Toast.makeText(
                     requireContext(),
                     "Error: ${t.message}",
@@ -183,6 +197,7 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        loadingDialog.dismiss()
         // Tawagin ang onDismissListener kung meron
         onDismissListener?.invoke()
     }
