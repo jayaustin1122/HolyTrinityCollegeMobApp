@@ -138,13 +138,12 @@ class BottomSheetAddAccountFragment : BottomSheetDialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        loadingDialog.dismiss()
         onDismissListener?.invoke()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        loadingDialog.dismiss()
+
     }
 }

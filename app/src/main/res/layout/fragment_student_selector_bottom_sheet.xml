@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Done"
+        android:text="Add Student"
         android:textColor="@color/light_text_color"
         app:backgroundTint="@color/violet_primary"
         app:layout_constraintEnd_toEndOf="parent"

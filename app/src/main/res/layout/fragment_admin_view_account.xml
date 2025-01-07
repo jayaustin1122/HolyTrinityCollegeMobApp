@@ -201,5 +201,15 @@
         app:layout_constraintTop_toBottomOf="@id/linear"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item_parent_benefactor" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/blue_btn_bg_color"
+        android:contentDescription="@string/add_event"
+        android:src="@drawable/icon_add_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

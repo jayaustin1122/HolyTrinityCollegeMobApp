@@ -18,7 +18,13 @@ interface StudentService {
         @Field("total_due") totalDue: Double,
         @Field("balance") balance: Double
     ): Call<ApiResponse>
-
+    @POST("crud-android/trinity/addBene.php")
+    fun addStudentsBene(
+        @Query("user_id") benefactorId: Int? = null,
+        @Query("student_id") studentId: Int? = null,
+        @Query("from") from: String? = null,
+        @Query("status") status: String? = null
+    ): Call<List<Student>>
 
     @GET("crud-android/trinity/getAllStudents.php")
     fun getStudents(

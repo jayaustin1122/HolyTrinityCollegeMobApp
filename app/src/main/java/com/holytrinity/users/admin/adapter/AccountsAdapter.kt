@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.databinding.ItemSummaryOfAccountsBinding
 import com.holytrinity.model.Account
 
-class AccountsAdapter(private var accounts: List<Account> , private val onAccountClick: (Int) -> Unit) : RecyclerView.Adapter<AccountsAdapter.AccountViewHolder>() {
+class AccountsAdapter(private var accounts: List<Account> , private val onAccountClick: (Int,String,Int) -> Unit) : RecyclerView.Adapter<AccountsAdapter.AccountViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         val binding = ItemSummaryOfAccountsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +36,7 @@ class AccountsAdapter(private var accounts: List<Account> , private val onAccoun
             binding.tvAmount.visibility = View.GONE
             if (account.role_id == 10 || account.role_id == 6) {
                 binding.root.setOnClickListener {
-                    onAccountClick(account.user_id)
+                    onAccountClick(account.user_id,account.name,account.role_id)
                 }
             } else {
                 binding.root.setOnClickListener(null)
