@@ -202,11 +202,7 @@ class CashierPaymentHolderFragment : Fragment() {
             val isPrinted = bluetoothFn.printTextFeed(message)
             withContext(Dispatchers.Main) {
                 if (isPrinted) {
-                    Toast.makeText(requireContext(), "Printed Successfully", Toast.LENGTH_SHORT)
-                        .show()
                 } else {
-                    Toast.makeText(requireContext(), "Printing Failed", Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
         }
@@ -220,15 +216,13 @@ class CashierPaymentHolderFragment : Fragment() {
             Toast.makeText(requireContext(), "Amount cannot be Empty", Toast.LENGTH_SHORT).show()
             return
         }
-
-
         if (modeOfPayment.isEmpty()) {
             Toast.makeText(requireContext(), "Please select a transaction mode", Toast.LENGTH_SHORT).show()
             return
         }
-
         insertToPayments()
         findNavController().navigate(R.id.cashierDrawerFragment)
+        printDetails()
     }
 
     private fun insertToPayments() {
@@ -245,9 +239,6 @@ class CashierPaymentHolderFragment : Fragment() {
 
         // Sanitizing the values
         val sanitized = viewModel.amountPay
-            .replace("₱", "")
-            .replace(",", "")
-            .replace(".00", "")
         val sanitized2 = viewModel.total
             .replace("₱", "")
             .replace(",", "")
@@ -267,7 +258,7 @@ class CashierPaymentHolderFragment : Fragment() {
 
         val paymentRequest = PaymentRequest(
             student_id = studentId.toInt(),
-            amount = numericValue - numericValue2,
+            amount = numericValue,
             mode_of_transaction = transactionMode,
             benefactor_id = benefactorId!!.toInt(),
             discount_id = discountId!!.toInt()
