@@ -40,7 +40,7 @@ class StepOneEnrollmentFragment : Fragment() {
         )
 
         val courseList = listOf("") + listOf(
-            "BSCS - Computer Science",
+            "AB PHILO - Bachelor of Arts",
             "BSIT - Information Technology",
             "BSA - Accountancy",
             "BSBA - Business Administration",

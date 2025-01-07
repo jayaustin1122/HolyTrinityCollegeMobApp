@@ -43,7 +43,7 @@ class StepTwoCashierPaymentFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity())[ViewModelPayment::class.java]
 
         // Initialize default values in ViewModel
-        viewModel.discount_id = 0 // Default discount ID
+        viewModel.discount_id = 12 // Default discount ID
         viewModel.total = formatCurrency(0.0) // Default total
     }
 
@@ -122,7 +122,7 @@ class StepTwoCashierPaymentFragment : Fragment() {
 
         // Update ViewModel
         viewModel.total = formattedAmount
-        viewModel.discount_id = 0 // Default value when no discount is selected
+        viewModel.discount_id = 12 // Default value when no discount is selected
     }
 
     private fun fetchDiscounts() {
@@ -152,8 +152,6 @@ class StepTwoCashierPaymentFragment : Fragment() {
                         val totalAmount = soaList.sumOf { it.balance }
                         val formattedTotalAmount = formatCurrency(totalAmount)
                         binding.totalAmountTextView.text = formattedTotalAmount
-
-                        // Store the initial total amount
                         initialTotalAmount = totalAmount
                         viewModel.total = formattedTotalAmount
                         soaAdapter.updateSoaList(soaList)

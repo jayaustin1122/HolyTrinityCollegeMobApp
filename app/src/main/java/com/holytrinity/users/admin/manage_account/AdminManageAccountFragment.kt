@@ -65,13 +65,21 @@ class AdminManageAccountFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        accountsAdapter = AccountsAdapter(filteredAccounts)
+        accountsAdapter = AccountsAdapter(emptyList()) { userId ->
+            findNavController().navigate(R.id)
+        }
         binding.recyclerSummary.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = accountsAdapter
         }
     }
-
+    private fun showStudentSelector(userId: Int) {
+        val bottomSheet = StudentSelectorBottomSheet()
+        val args = Bundle()
+        args.putInt("user_id", userId)
+        bottomSheet.arguments = args
+        bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+    }
     private fun setupSearch() {
         binding.searchStudentTextView.addTextChangedListener {
             filterAccounts()
