@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:orientation="vertical"
-        android:visibility="gone"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/searchStudentTextView">
@@ -131,7 +131,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:visibility="gone"
+
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingTop="5dp"
@@ -168,7 +168,7 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+
         android:layout_marginTop="5dp"
         android:background="@color/gray_btn_bg_pressed_color"
         android:orientation="horizontal"
@@ -243,7 +243,7 @@
         android:layout_marginTop="10dp"
         android:scrollbarStyle="outsideInset"
         android:scrollbars="vertical"
-        android:visibility="gone"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

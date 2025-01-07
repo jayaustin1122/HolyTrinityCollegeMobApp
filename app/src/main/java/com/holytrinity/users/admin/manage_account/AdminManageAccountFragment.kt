@@ -66,7 +66,7 @@ class AdminManageAccountFragment : Fragment() {
 
     private fun setupRecyclerView() {
         accountsAdapter = AccountsAdapter(emptyList()) { userId ->
-            findNavController().navigate(R.id)
+//            findNavController().navigate(R.id)
         }
         binding.recyclerSummary.apply {
             layoutManager = LinearLayoutManager(context)
