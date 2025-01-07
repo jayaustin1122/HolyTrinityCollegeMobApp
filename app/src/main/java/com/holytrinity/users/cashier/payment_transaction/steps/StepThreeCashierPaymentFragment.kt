@@ -61,7 +61,7 @@ class StepThreeCashierPaymentFragment : Fragment() {
                         Log.d("Benefactor Name", "Name: $benefactorName, ID: $benefactorID")
 
                         val dropdownItems = mutableListOf<Pair<String, String>>() // Pair of ID and Name
-                        dropdownItems.add("" to "Select Benefactor") // Add default blank option
+                        dropdownItems.add("0" to "Select Benefactor") // Add default blank option with ID 0
                         if (benefactorName != null && benefactorID != null) {
                             dropdownItems.add(benefactorID.toString() to benefactorName)
                         }
@@ -87,35 +87,44 @@ class StepThreeCashierPaymentFragment : Fragment() {
                                 id: Long
                             ) {
                                 val selectedBenefactorId = dropdownItems[position].first
-                                if (selectedBenefactorId.isNotEmpty()) {
+                                if (selectedBenefactorId != "12") {
+                                    // Update ViewModel with the valid benefactor ID
                                     viewModel.benefactor_id = selectedBenefactorId.toInt()
                                     Log.d("Selected Benefactor", "ID: ${viewModel.benefactor_id}")
                                 } else {
-                                    viewModel.benefactor_id = null // Reset if no valid selection
-                                    Log.d("Selected Benefactor", "No valid ID selected")
+                                    // If "Select Benefactor" is selected, set benefactor_id to 0
+                                    viewModel.benefactor_id = 12
+                                    Log.d("Selected Benefactor", "No valid ID selected, default to 0")
                                 }
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>) {
-                                // Handle no selection, if needed
+                                // Handle case where no selection is made, should not happen with default option
+                                viewModel.benefactor_id = 12 // Default to 0 if nothing selected
                             }
                         }
                     } else {
                         Log.e("Error", responseData.error ?: "Unknown error")
+                        // In case of error, we set the default value (0) in the ViewModel
+                        viewModel.benefactor_id = 12
                     }
                 } else {
                     Log.e("Error", "Failed to fetch data")
+                    // Set the default value (0) in case of failure to fetch data
+                    viewModel.benefactor_id = 12
                 }
             }
 
             override fun onFailure(call: Call<BeneResponse>, t: Throwable) {
                 Log.e("Error", "Network error: ${t.message}")
+                // Set the default value (0) in case of network failure
+                viewModel.benefactor_id = 12
             }
         })
     }
 
     private fun getTransactionModes() {
-        val modes = listOf("Cash", "Credit", "Debit", "Online") // Replace with network call if needed
+        val modes = listOf("Cash", "Credit", "Debit", "Online")
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_item,
@@ -124,19 +133,17 @@ class StepThreeCashierPaymentFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.modeOfTransactionSpinner.adapter = adapter
 
-        // Set the default selected value in the spinner
-        val defaultMode = viewModel.transaction ?: "Cash" // Default to "Cash" if no value is set in ViewModel
+        val defaultMode = viewModel.transaction
         val defaultPosition = modes.indexOf(defaultMode)
         if (defaultPosition >= 0) {
             binding.modeOfTransactionSpinner.setSelection(defaultPosition)
         }
              binding.modeOfTransactionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                viewModel.transaction = modes[position] // Update ViewModel with the selected mode
+                viewModel.transaction = modes[position]
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                // Optional: Handle case where no selection is made (unlikely for a Spinner)
             }
         }
     }

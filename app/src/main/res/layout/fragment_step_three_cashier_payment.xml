@@ -145,7 +145,7 @@
                     android:id="@+id/amountInputEditLayout"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:inputType="textMultiLine"
+                    android:inputType="number"
                     android:lines="1"
                     android:scrollbars="vertical"
                     app:boxStrokeWidth="1dp"

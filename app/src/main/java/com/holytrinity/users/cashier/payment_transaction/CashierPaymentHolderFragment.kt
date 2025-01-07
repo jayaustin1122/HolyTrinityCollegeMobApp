@@ -214,7 +214,6 @@ class CashierPaymentHolderFragment : Fragment() {
 
     private fun validateFragmentThree() {
         val amountPay = viewModel.amountPay
-        val benefactor = viewModel.benefactor_id
         val modeOfPayment = viewModel.transaction
 
         if (amountPay.isEmpty()) {
@@ -222,10 +221,6 @@ class CashierPaymentHolderFragment : Fragment() {
             return
         }
 
-        if (benefactor == null || benefactor == 0) {
-            Toast.makeText(requireContext(), "Please select a benefactor", Toast.LENGTH_SHORT).show()
-            return
-        }
 
         if (modeOfPayment.isEmpty()) {
             Toast.makeText(requireContext(), "Please select a transaction mode", Toast.LENGTH_SHORT).show()
@@ -238,20 +233,41 @@ class CashierPaymentHolderFragment : Fragment() {
 
     private fun insertToPayments() {
         val studentId = viewModel.studentID
-        val amount = viewModel.total
         val transactionMode = viewModel.transaction
         val benefactorId = viewModel.benefactor_id
         val discountId = viewModel.discount_id
         val paymentService = RetrofitInstance.create(PaymentFeeApiService::class.java)
         val type = viewModel.paymentTitle
+
+        // Logging original values
+        Log.d("PaymentDebug", "Original amountPay: ${viewModel.amountPay}")
+        Log.d("PaymentDebug", "Original total: ${viewModel.total}")
+
+        // Sanitizing the values
         val sanitized = viewModel.amountPay
             .replace("₱", "")
             .replace(",", "")
             .replace(".00", "")
+        val sanitized2 = viewModel.total
+            .replace("₱", "")
+            .replace(",", "")
+            .replace(".00", "")
+
+        // Logging sanitized values
+        Log.d("PaymentDebug", "Sanitized amountPay: $sanitized")
+        Log.d("PaymentDebug", "Sanitized total: $sanitized2")
+
+        // Parsing sanitized values
         val numericValue = sanitized.toIntOrNull() ?: 0
+        val numericValue2 = sanitized2.toIntOrNull() ?: 0
+
+        // Logging numeric values
+        Log.d("PaymentDebug", "Numeric value from amountPay: $numericValue")
+        Log.d("PaymentDebug", "Numeric value from total: $numericValue2")
+
         val paymentRequest = PaymentRequest(
             student_id = studentId.toInt(),
-            amount = numericValue,
+            amount = numericValue - numericValue2,
             mode_of_transaction = transactionMode,
             benefactor_id = benefactorId!!.toInt(),
             discount_id = discountId!!.toInt()
@@ -281,14 +297,14 @@ class CashierPaymentHolderFragment : Fragment() {
                             }
                         } else {
                             Log.e(
-                                "Payment",
+                                "Payment Assessment",
                                 "Response Error: ${response.code()} - ${response.message()}"
                             )
                         }
                     }
 
                     override fun onFailure(call: Call<PaymentRequest>, t: Throwable) {
-                        Log.e("Payment", "Failure: ${t.message}")
+                        Log.e("Payment Assessment", "Failure: ${t.message}")
                     }
                 })
         } else {
@@ -320,14 +336,14 @@ class CashierPaymentHolderFragment : Fragment() {
                         }
                     } else {
                         Log.e(
-                            "Payment",
+                            "Payment Not Assessment",
                             "Response Error: ${response.code()} - ${response.message()}"
                         )
                     }
                 }
 
                 override fun onFailure(call: Call<PaymentRequest>, t: Throwable) {
-                    Log.e("Payment", "Failure: ${t.message}")
+                    Log.e("Payment Not Assessment", "Failure: ${t.message}")
                 }
             })
         }
