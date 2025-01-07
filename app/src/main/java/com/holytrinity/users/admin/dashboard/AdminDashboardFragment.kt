@@ -44,10 +44,11 @@ class AdminDashboardFragment : Fragment() {
             override fun onResponse(call: Call<DashboardStats>, response: Response<DashboardStats>) {
                 if (response.isSuccessful && response.body() != null) {
                     val stats = response.body()!!
-                    // Ipakita ang tatlong bilang
                     binding.tvTotalStudents.text     = stats.total_students.toString()
                     binding.tvAdmittedStudents.text  = stats.admitted_students.toString()
                     binding.tvPendingStudents.text   = stats.pending_students.toString()
+                    binding.tvDeniedStudents.text    = stats.denied_students.toString()
+                    binding.tvEnrolledStudents.text  = stats.enrolled_students.toString()
                 } else {
                     Toast.makeText(requireContext(),
                         "Failed to load dashboard stats",
@@ -64,4 +65,5 @@ class AdminDashboardFragment : Fragment() {
             }
         })
     }
+
 }

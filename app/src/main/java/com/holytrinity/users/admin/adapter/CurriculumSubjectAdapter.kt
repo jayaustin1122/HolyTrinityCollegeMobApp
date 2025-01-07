@@ -28,7 +28,7 @@ class CurriculumSubjectAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubjectViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_subject_card, parent, false)
+            .inflate(R.layout.item_curr_subjects, parent, false)
         return SubjectViewHolder(view)
     }
 
@@ -37,6 +37,7 @@ class CurriculumSubjectAdapter(
         holder.codeTextView.text = subject.code
         holder.nameTextView.text = subject.name
         holder.unitsTextView.text = subject.units.toString() // Kung Int
+
     }
 
     override fun getItemCount(): Int = subjects.size

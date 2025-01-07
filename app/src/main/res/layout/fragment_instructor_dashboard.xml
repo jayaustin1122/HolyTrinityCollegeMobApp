@@ -61,7 +61,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-
     <!-- Card #1: Total Students -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_total_students"
@@ -101,7 +100,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-
     <!-- Card #2: Admitted -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_admitted_students"
@@ -138,7 +136,6 @@
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <!-- Card #3: Pending -->
     <androidx.cardview.widget.CardView
@@ -178,6 +175,5 @@
                 android:layout_marginTop="5dp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
