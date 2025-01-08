@@ -284,6 +284,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="registrarSchoolCalendarFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-406" />
+                            <option name="y" value="-628" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="sampleFragment">
                     <value>
                       <LayoutPositions>

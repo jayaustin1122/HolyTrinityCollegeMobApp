@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.holytrinity.R
 import com.holytrinity.adapter.CalendarAdapter
-import com.holytrinity.adapter.EventAdapter
 import com.holytrinity.api.CalendarService
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.api.sample.calendar.BottomSheetAddEventFragment
+import com.holytrinity.api.sample.calendar.EventAdapter
 import com.holytrinity.databinding.FragmentRegistrarSchoolCalendarBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
@@ -32,7 +32,7 @@ class RegistrarSchoolCalendarFragment : Fragment() {
     private lateinit var binding:FragmentRegistrarSchoolCalendarBinding
     private val eventMap = mutableMapOf<String, MutableList<Event>>() // Stores events mapped by date
     private var currentCalendar: Calendar = Calendar.getInstance()
-    private lateinit var eventAdapter: EventAdapter
+    private lateinit var eventAdapter: com.holytrinity.api.sample.calendar.EventAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,13 +44,18 @@ class RegistrarSchoolCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val roleId = UserPreferences.getRoleId(requireContext())
 
         // Configure RecyclerViews
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // Initialize the event adapter
-        eventAdapter = com.holytrinity.adapter.EventAdapter(emptyList())
+        eventAdapter =  EventAdapter(emptyList(), roleId, childFragmentManager, object :
+            EventAdapter.OnEventUpdatedListener {
+            override fun onEventUpdated(updatedEvent: Event) {
+                // Handle the update, e.g., update the list
+                eventAdapter.updateEventInList(updatedEvent)
+            }
+        })
         binding.eventRecyclerView.adapter = eventAdapter
 
         // Load events and update calendar
@@ -60,7 +65,6 @@ class RegistrarSchoolCalendarFragment : Fragment() {
         binding.buttonPrevMonth.setOnClickListener { changeMonth(-1) }
         binding.buttonNextMonth.setOnClickListener { changeMonth(1) }
 
-        val roleId = UserPreferences.getRoleId(requireContext())
         binding.toolbarBackButton.setOnClickListener {
             navigateBasedOnRole(roleId)
         }

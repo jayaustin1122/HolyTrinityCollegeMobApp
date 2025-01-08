@@ -31,9 +31,16 @@ interface StudentService {
         @Query("student_id") studentId: Int? = null,
         @Query("registrationVerified") registrationVerified: Int? = null
     ): Call<List<Student>>
+
         //   getStudents() // No parameters, fetches all students
         //   getStudents(studentId = "12345")  Get a Student by ID:
         //   getStudents(registrationVerified = "1")  Get Students with Registration Verified:
+        @GET("crud-android/trinity/getStudentsBeneParent.php")
+        fun getStudentsInBeneParent(
+            @Query("user_id") userId: Int? = null,
+            @Query("from") from: String? = null
+        ): Call<List<Student>>
+
 
     @GET("crud-android/trinity/getStudent.php")
     fun getStudent(

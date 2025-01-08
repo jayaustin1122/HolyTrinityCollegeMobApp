@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-
     android:paddingHorizontal="20dp"
     android:paddingVertical="15dp">
 
@@ -22,11 +21,11 @@
     <TextView
         android:id="@+id/tvIdNo"
         android:layout_weight="1"
+        android:text="20202"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="21-1238"
-        android:layout_marginHorizontal="10dp"
         android:gravity="center"
+        android:layout_marginHorizontal="10dp"
         android:textSize="16sp"
         android:textColor="#000000" />
 
@@ -37,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Well D. Fargo"
+        android:text="sample"
         android:textSize="16sp"
         android:textColor="#000000" />
 </LinearLayout>

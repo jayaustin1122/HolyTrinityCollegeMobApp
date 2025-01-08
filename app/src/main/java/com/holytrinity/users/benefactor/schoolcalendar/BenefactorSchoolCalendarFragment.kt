@@ -19,6 +19,7 @@ import com.holytrinity.adapter.CalendarAdapter
 import com.holytrinity.databinding.FragmentBenefactorSchoolCalendarBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,13 +43,21 @@ class BenefactorSchoolCalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val roleId = UserPreferences.getRoleId(requireContext())
         // Configure RecyclerViews
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        eventAdapter =  EventAdapter(
+            emptyList(),
+            roleId,
+            childFragmentManager,
+            object :
+                EventAdapter.OnEventUpdatedListener {
+                override fun onEventUpdated(updatedEvent: Event) {
 
-        // Initialize the event adapter
-        eventAdapter = com.holytrinity.adapter.EventAdapter(emptyList())
+                    eventAdapter.updateEventInList(updatedEvent)
+                }
+            })
         binding.eventRecyclerView.adapter = eventAdapter
 
         // Load events and update calendar

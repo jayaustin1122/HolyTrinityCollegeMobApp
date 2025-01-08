@@ -13,4 +13,7 @@ interface CalendarService {
 
     @GET("crud-android/trinity/get_all_events.php")
     fun getAllEvents(): Call<AddEventResponse>
+
+    @POST("crud-android/trinity/delete_edit.php")
+    fun getDeleteEdit(@Body event: Event): Call<AddEventResponse>
 }

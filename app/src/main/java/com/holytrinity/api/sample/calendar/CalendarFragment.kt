@@ -14,6 +14,7 @@ import com.holytrinity.databinding.FragmentCalendarBinding
 import com.holytrinity.api.CalendarService
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,23 +37,28 @@ class CalendarFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val roleId = UserPreferences.getRoleId(requireContext()) // Get the roleId
 
-        // Configure RecyclerViews
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-        // Initialize the event adapter
-        eventAdapter = EventAdapter(emptyList())
+        eventAdapter =  EventAdapter(emptyList(), roleId, childFragmentManager, object :
+            EventAdapter.OnEventUpdatedListener {
+            override fun onEventUpdated(updatedEvent: Event) {
+                // Handle the update, e.g., update the list
+                eventAdapter.updateEventInList(updatedEvent)
+            }
+        })
         binding.eventRecyclerView.adapter = eventAdapter
-
-        // Load events and update calendar
         loadEvents()
-
-        // Navigation for months
         binding.buttonPrevMonth.setOnClickListener { changeMonth(-1) }
         binding.buttonNextMonth.setOnClickListener { changeMonth(1) }
-
-        // FAB button click to add an event
+        if (roleId == 1) {
+            binding.fabAddEvent.setOnClickListener {
+                BottomSheetAddEventFragment().show(childFragmentManager, BottomSheetAddEventFragment.TAG)
+            }
+        } else {
+            binding.fabAddEvent.isEnabled = false
+        }
         binding.fabAddEvent.setOnClickListener {
             BottomSheetAddEventFragment().show(childFragmentManager, BottomSheetAddEventFragment.TAG)
         }
@@ -60,7 +66,7 @@ class CalendarFragment : Fragment() {
 
     private fun changeMonth(offset: Int) {
         currentCalendar.add(Calendar.MONTH, offset)
-        loadEvents() // Reload events for the updated month
+        loadEvents()
     }
 
     private fun loadEvents() {
@@ -106,24 +112,14 @@ class CalendarFragment : Fragment() {
         val year = currentCalendar.get(Calendar.YEAR)
         val month = currentCalendar.get(Calendar.MONTH)
         val sdf = SimpleDateFormat("MMMM yyyy")
-
-        // Set the header for the current month and year
         binding.textViewMonthYear.text = sdf.format(currentCalendar.time)
-
-        // Prepare the data list for RecyclerView
         val calendarItems = mutableListOf<String>()
-
-        // Move to the first day of the month
         val tempCalendar = currentCalendar.clone() as Calendar
         tempCalendar.set(Calendar.DAY_OF_MONTH, 1)
-
-        // Add empty cells for days before the first day of the month
         val firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK)
         for (i in 1 until firstDayOfWeek) {
             calendarItems.add("")
         }
-
-        // Add days of the current month
         val maxDaysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         for (i in 1..maxDaysInMonth) {
             val dateString = String.format(
@@ -134,13 +130,9 @@ class CalendarFragment : Fragment() {
             )
             calendarItems.add(dateString)
         }
-
-        // Add empty cells to fill the grid
         while (calendarItems.size % 7 != 0) {
             calendarItems.add("")
         }
-
-        // Set the adapter with event-aware data
         binding.recyclerView.adapter = CalendarAdapter(calendarItems, eventMap) { day ->
             if (day.isNotEmpty()) {
                 showEventsForDate(day)

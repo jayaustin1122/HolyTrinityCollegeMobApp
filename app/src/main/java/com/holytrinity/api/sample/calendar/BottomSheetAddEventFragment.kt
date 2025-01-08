@@ -1,18 +1,21 @@
 package com.holytrinity.api.sample.calendar
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.holytrinity.NotificationService
+import com.holytrinity.R
 import com.holytrinity.api.CalendarService
-import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.api.RetrofitInstance
+import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
 import retrofit2.Call
@@ -24,8 +27,39 @@ import java.util.*
 class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentBottomSheetAddEventBinding
 
+    private var eventUpdatedListener: EventAdapter.OnEventUpdatedListener? = null
+    private fun onEventUpdated(event: Event) {
+        eventUpdatedListener?.onEventUpdated(event)
+        dismiss()
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is EventAdapter.OnEventUpdatedListener) {
+            eventUpdatedListener = context
+        }
+    }
     companion object {
         const val TAG = "BottomSheetAddEventFragment"
+
+        // Keys for the arguments
+        private const val ARG_EVENT_ID = "event_id"
+        private const val ARG_EVENT_NAME = "event_name"
+        private const val ARG_START_DATE = "start_date"
+        private const val ARG_END_DATE = "end_date"
+        private const val ARG_DESCRIPTION = "description"
+
+        // Create a new instance of the fragment with event data
+        fun newInstance(eventId: Int, eventName: String, startDate: String, endDate: String, description: String): BottomSheetAddEventFragment {
+            val fragment = BottomSheetAddEventFragment()
+            val args = Bundle()
+            args.putInt(ARG_EVENT_ID, eventId)
+            args.putString(ARG_EVENT_NAME, eventName)
+            args.putString(ARG_START_DATE, startDate)
+            args.putString(ARG_END_DATE, endDate ?: "")
+            args.putString(ARG_DESCRIPTION, description)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun onCreateView(
@@ -35,8 +69,24 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         binding = FragmentBottomSheetAddEventBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val eventId = arguments?.getInt(ARG_EVENT_ID, 0)
+        val eventName = arguments?.getString(ARG_EVENT_NAME, "")
+        val startDate = arguments?.getString(ARG_START_DATE, "")
+        val endDate = arguments?.getString(ARG_END_DATE, "")
+        val description = arguments?.getString(ARG_DESCRIPTION, "")
+
+        // Populate fields with event data if editing
+        if (eventId != 0) {
+            binding.etName.setText(eventName)
+            binding.etDate.setText(startDate)
+            binding.etEndDate.setText(endDate)
+            binding.etDescription.setText(description)
+            binding.btnSave.text = "Update Event"
+        }
 
         // Set up listeners for date pickers
         binding.etDate.setOnClickListener { showDatePicker(binding.etDate) }
@@ -45,36 +95,27 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         // Save button click
         binding.btnSave.setOnClickListener {
             val name = binding.etName.text.toString()
-            val startDate = binding.etDate.text.toString()
-            val endDate = binding.etEndDate.text.toString()
-            val description = binding.etDescription.text.toString()
+            val startDateInput = binding.etDate.text.toString()
+            val endDateInput = binding.etEndDate.text.toString()
+            val descriptionInput = binding.etDescription.text.toString()
 
-            if (name.isEmpty() || startDate.isEmpty() || description.isEmpty()) {
+            if (name.isEmpty() || startDateInput.isEmpty() || descriptionInput.isEmpty()) {
                 Toast.makeText(requireContext(), "All required fields must be filled", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            try {
-                val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                val startDateParsed = sdf.parse(startDate)
-                val currentDate = Calendar.getInstance().time
+            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val startDateParsed = sdf.parse(startDateInput)
+            val endDateParsed = if (endDateInput.isNotEmpty()) sdf.parse(endDateInput) else startDateParsed
 
-                if (startDateParsed.before(currentDate)) {
-                    Toast.makeText(requireContext(), "Start date cannot be before the current date", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
+            val event = Event(eventId ?: 0, name, startDateInput, endDateInput, descriptionInput,"")
 
-                val endDateParsed = if (endDate.isNotEmpty()) sdf.parse(endDate) else startDateParsed
-
-                if (endDateParsed.before(startDateParsed)) {
-                    Toast.makeText(requireContext(), "End date cannot be before start date", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-
-                val event = Event(0, name, startDate, endDate, description)
+            if (eventId == 0) {
+                // If eventId is 0, it's a new event, otherwise it's an edit
                 saveEvent(event)
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Invalid date format", Toast.LENGTH_SHORT).show()
+            } else {
+                binding.btnSave.text = "Update"
+                updateEvent(event)
             }
         }
     }
@@ -94,34 +135,15 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         datePicker.show(parentFragmentManager, "date_picker")
     }
 
-
     private fun saveEvent(event: Event) {
         val service = RetrofitInstance.create(CalendarService::class.java)
         val call = service.addEvent(event)
 
         call.enqueue(object : Callback<AddEventResponse> {
-            override fun onResponse(
-                call: Call<AddEventResponse>,
-                response: Response<AddEventResponse>
-            ) {
+            override fun onResponse(call: Call<AddEventResponse>, response: Response<AddEventResponse>) {
                 if (response.isSuccessful) {
-                    val body = response.body()
-                    if (body?.success != null) {
-                        val eventData = body.events
-                        Toast.makeText(
-                            requireContext(),
-                            "Event added successfully!",
-                            Toast.LENGTH_LONG
-                        ).show()
-                          val notificationIntent = Intent(context, NotificationService::class.java).apply {
-                                putExtra("title", "New Event!")
-                                putExtra("message", "Read and View New Event")
-                            }
-                            context?.startService(notificationIntent)
-                        dismiss()
-                    } else {
-                        Toast.makeText(requireContext(), "Failed to add event.", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(requireContext(), "Event added successfully!", Toast.LENGTH_LONG).show()
+                    dismiss()
                 } else {
                     Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
@@ -133,4 +155,27 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
         })
     }
 
+    private fun updateEvent(event: Event) {
+        val service = RetrofitInstance.create(CalendarService::class.java)
+
+        // Define the event with "update" action
+        val updatedEvent = event.copy(action = "update")
+
+        val call = service.getDeleteEdit(updatedEvent)
+
+        call.enqueue(object : Callback<AddEventResponse> {
+            override fun onResponse(call: Call<AddEventResponse>, response: Response<AddEventResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "Event updated successfully!", Toast.LENGTH_LONG).show()
+                    onEventUpdated(updatedEvent)
+                } else {
+                    Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<AddEventResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
