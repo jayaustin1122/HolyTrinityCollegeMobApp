@@ -18,6 +18,7 @@ import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.databinding.FragmentBottomSheetAddEventBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -168,6 +169,8 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Event updated successfully!", Toast.LENGTH_LONG).show()
                     onEventUpdated(updatedEvent)
+                    val roleId = UserPreferences.getRoleId(requireContext())
+                    navigateBasedOnRole(roleId)
                 } else {
                     Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
@@ -177,5 +180,25 @@ class BottomSheetAddEventFragment : BottomSheetDialogFragment() {
                 Toast.makeText(requireContext(), "Request failed: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+    private fun navigateBasedOnRole(roleId: Int) {
+        when (roleId) {
+            1 -> findNavController().navigate(R.id.adminDrawerFragment)
+            2 -> findNavController().navigate(R.id.registrarDrawerHolderFragment)
+            4 -> findNavController().navigate(R.id.cashierDrawerFragment)
+            5 -> findNavController().navigate(R.id.instructorDrawerHolderFragment)
+            6 -> findNavController().navigate(R.id.parentDrawerHolderFragment)
+            7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
+            10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
+            else -> {
+                // Default navigation if roleId doesn't match any of the above
+                Toast.makeText(
+                    requireContext(),
+                    "Invalid role, navigating back to dashboard",
+                    Toast.LENGTH_SHORT
+                ).show()
+                findNavController().navigate(R.id.nav_dashboard) // You can replace this with a default fragment
+            }
+        }
     }
 }

@@ -33,7 +33,6 @@ class StepOneEnrollmentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val departmentOptions = listOf("College", "Senior High")
         val levelOptions = mapOf(
             "College" to listOf("1st Year", "2nd Year", "3rd Year", "4th Year"),
             "Senior High" to listOf("Grade 11", "Grade 12")
@@ -41,15 +40,6 @@ class StepOneEnrollmentFragment : Fragment() {
 
         val courseList = listOf("") + listOf(
             "AB PHILO - Bachelor of Arts",
-            "BSIT - Information Technology",
-            "BSA - Accountancy",
-            "BSBA - Business Administration",
-            "BSEd - Education",
-            "BSCpE - Computer Engineering",
-            "BSME - Mechanical Engineering",
-            "BSBio - Biology",
-            "BSChem - Chemistry",
-            "BFA - Fine Arts"
         )
 
         val semesterYearList = listOf(
@@ -98,16 +88,7 @@ class StepOneEnrollmentFragment : Fragment() {
                 val selectedCourse = courseList[position]
                 viewModel.setCourseId(
                     when (selectedCourse) {
-                        "BSCS - Computer Science" -> "1"
-                        "BSIT - Information Technology" -> "2"
-                        "BSA - Accountancy" -> "3"
-                        "BSBA - Business Administration" -> "4"
-                        "BSEd - Education" -> "5"
-                        "BSCpE - Computer Engineering" -> "6"
-                        "BSME - Mechanical Engineering" -> "7"
-                        "BSBio - Biology" -> "8"
-                        "BSChem - Chemistry" -> "9"
-                        "BFA - Fine Arts" -> "10"
+                        "AB PHILO - Bachelor of Arts" -> "1"
                         else -> ""
                     }
                 )

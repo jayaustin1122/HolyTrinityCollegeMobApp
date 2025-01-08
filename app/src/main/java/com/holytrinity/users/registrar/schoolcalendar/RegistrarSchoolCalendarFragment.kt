@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,13 +50,15 @@ class RegistrarSchoolCalendarFragment : Fragment() {
         // Configure RecyclerViews
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
         binding.eventRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        eventAdapter =  EventAdapter(emptyList(), roleId, childFragmentManager, object :
-            EventAdapter.OnEventUpdatedListener {
-            override fun onEventUpdated(updatedEvent: Event) {
-                // Handle the update, e.g., update the list
-                eventAdapter.updateEventInList(updatedEvent)
+        eventAdapter =  EventAdapter(
+            requireContext(), emptyList(), roleId, childFragmentManager, object :
+                EventAdapter.OnEventUpdatedListener {
+                override fun onEventUpdated(updatedEvent: Event) {
+                    // Handle the update, e.g., update the list
+                    eventAdapter.updateEventInList(updatedEvent)
+                }
             }
-        })
+        )
         binding.eventRecyclerView.adapter = eventAdapter
 
         // Load events and update calendar

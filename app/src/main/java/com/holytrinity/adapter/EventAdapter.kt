@@ -1,11 +1,14 @@
 package com.holytrinity.adapter
 
 import android.app.AlertDialog
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.holytrinity.R
 import com.holytrinity.api.CalendarService
@@ -14,11 +17,12 @@ import com.holytrinity.api.sample.calendar.BottomSheetAddEventFragment
 import com.holytrinity.databinding.ItemEventBinding
 import com.holytrinity.model.AddEventResponse
 import com.holytrinity.model.Event
+import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class EventAdapter(
+    private val context: Context,
     private var events: List<Event>,
     private val roleId: Int,
     private val fragmentManager: androidx.fragment.app.FragmentManager,
@@ -75,6 +79,10 @@ class EventAdapter(
             builder.setPositiveButton("Yes") { dialog, which ->
                 Log.d("EventAdapter", "Delete event ID: ${event.event_id}")
                 deleteEvent(event.event_id)
+
+                // Retrieve the NavController from the current view
+                val navController = Navigation.findNavController(itemView)
+                navigateBasedOnRole(roleId, navController)
             }
             builder.setNegativeButton("No") { dialog, which ->
                 dialog.dismiss()
@@ -82,6 +90,22 @@ class EventAdapter(
             builder.show()
         }
     }
+
+    private fun navigateBasedOnRole(roleId: Int, navController: NavController) {
+        when (roleId) {
+            1 -> navController.navigate(R.id.adminDrawerFragment)
+            2 -> navController.navigate(R.id.registrarDrawerHolderFragment)
+            4 -> navController.navigate(R.id.cashierDrawerFragment)
+            5 -> navController.navigate(R.id.instructorDrawerHolderFragment)
+            6 -> navController.navigate(R.id.parentDrawerHolderFragment)
+            7 -> navController.navigate(R.id.studentDrawerHolderFragment)
+            10 -> navController.navigate(R.id.benefactorDrawerHolderFragment)
+            else -> {
+                navController.navigate(R.id.nav_dashboard) // Default fragment
+            }
+        }
+    }
+
     private fun deleteEvent(eventId: Int) {
         val service = RetrofitInstance.create(CalendarService::class.java)
         val eventToDelete = Event(event_id = eventId, event_name = "", event_date = "", end_date = "", description = "", action = "delete")
@@ -96,7 +120,7 @@ class EventAdapter(
                     // Find the event in the list and remove it
                     val eventIndex = events.indexOfFirst { it.event_id == eventId }
                     if (eventIndex != -1) {
-                        events.toMutableList().apply {
+                        events = events.toMutableList().apply {
                             removeAt(eventIndex)
                             notifyItemRemoved(eventIndex)
                         }
@@ -121,6 +145,7 @@ class EventAdapter(
             notifyItemChanged(index)
         }
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val binding = ItemEventBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return EventViewHolder(binding)
@@ -136,6 +161,7 @@ class EventAdapter(
         events = newEvents
         notifyDataSetChanged()
     }
+
     interface OnEventUpdatedListener {
         fun onEventUpdated(updatedEvent: Event)
     }
