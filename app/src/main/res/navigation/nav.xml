@@ -164,9 +164,4 @@
         android:name="com.holytrinity.users.admin.manage_account.AdminViewAccountFragment"
         android:label="fragment_admin_view_account"
         tools:layout="@layout/fragment_admin_view_account" />
-    <fragment
-        android:id="@+id/registrarSchoolCalendarFragment"
-        android:name="com.holytrinity.users.registrar.schoolcalendar.RegistrarSchoolCalendarFragment"
-        android:label="fragment_registrar_school_calendar"
-        tools:layout="@layout/fragment_registrar_school_calendar" />
 </navigation>

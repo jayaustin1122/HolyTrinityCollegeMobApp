@@ -33,6 +33,10 @@ data class Course(
     val course_name: String,
     val course_description: String
 )
+data class CourseResponse(
+    val status: String,
+    val courses: List<Course>  // The list of courses in the "courses" field
+)
 
 data class EnrolledSubject(
     val subject_id: Int,

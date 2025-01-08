@@ -11,7 +11,17 @@ import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.holytrinity.R
+import com.holytrinity.api.ApiResponse
+import com.holytrinity.api.EnrollmentService
+import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.databinding.FragmentStepOneEnrollmentBinding
+import com.holytrinity.model.Course
+import com.holytrinity.model.CourseResponse
+import com.holytrinity.model.Courses
+import com.holytrinity.model.EnrollmentResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StepOneEnrollmentFragment : Fragment() {
     private lateinit var binding: FragmentStepOneEnrollmentBinding
@@ -38,10 +48,8 @@ class StepOneEnrollmentFragment : Fragment() {
             "Senior High" to listOf("Grade 11", "Grade 12")
         )
 
-        val courseList = listOf("") + listOf(
-            "AB PHILO - Bachelor of Arts",
-        )
 
+        getAllCourses()
         val semesterYearList = listOf(
             "1st Semester 2024",
             "2nd Semester 2024",
@@ -80,22 +88,8 @@ class StepOneEnrollmentFragment : Fragment() {
         }
 
         setSpinnerSelection(binding.curriculumSpinner, semesterYearList, viewModel.curr_id.value)
-        setSpinnerSelection(binding.courseSpinner, courseList, viewModel.course.value)
         setSpinnerSelection(binding.sectionSpinner, sectionList, viewModel.section.value)
 
-        binding.courseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedCourse = courseList[position]
-                viewModel.setCourseId(
-                    when (selectedCourse) {
-                        "AB PHILO - Bachelor of Arts" -> "1"
-                        else -> ""
-                    }
-                )
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
 
         binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -122,9 +116,72 @@ class StepOneEnrollmentFragment : Fragment() {
         setupRadioButtons()
     }
 
+    private fun getAllCourses() {
+        val service = RetrofitInstance.create(EnrollmentService::class.java)
+        service.getAllCourses()
+            .enqueue(object : Callback<CourseResponse> {  // Now expecting CourseResponse
+                override fun onFailure(call: Call<CourseResponse>, t: Throwable) {
+                    Log.e("API_ERROR", "Failed to connect", t)
+                }
+
+                override fun onResponse(call: Call<CourseResponse>, response: Response<CourseResponse>) {
+                    if (response.isSuccessful) {
+                        val coursesList = response.body()?.courses ?: emptyList()  // Get the courses list
+                        updateCourseSpinner(coursesList)
+                    } else {
+                        Log.e("API_ERROR", "Error fetching courses: ${response.message()}")
+                    }
+                }
+            })
+    }
+
+
+
+    private fun updateCourseSpinner(courses: List<Course>) {
+        if (courses.isNullOrEmpty()) {
+            Log.e("StepOneEnrollmentFragment", "No courses available")
+            return
+        }
+
+        val courseNames = courses.mapNotNull { it.course_name }
+        val courseIds = courses.mapNotNull { it.course_id }
+
+        if (courseNames.isEmpty() || courseIds.isEmpty()) {
+            Log.e("StepOneEnrollmentFragment", "Course names or IDs are empty")
+            return
+        }
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            courseNames
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.courseSpinner.adapter = adapter
+
+        binding.courseSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedCourseId = courseIds.getOrNull(position)
+
+                // Check if selectedCourseId is not null before updating the ViewModel
+                if (selectedCourseId != null) {
+                    viewModel.setCourseId(selectedCourseId.toString())
+                } else {
+                    Log.e("StepOneEnrollmentFragment", "Selected course ID is null")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
 
     fun handleDepartmentSelection(selectedDepartment: String, levelOptions: Map<String, List<String>>) {
         val levels = levelOptions[selectedDepartment] ?: listOf("No Levels Available")
+
+        // Check if levels is empty and log accordingly
+        if (levels.isEmpty() || levels.first() == "No Levels Available") {
+            Log.e("StepOneEnrollmentFragment", "No levels available for department: $selectedDepartment")
+        }
 
         // Create an ArrayAdapter for the level spinner
         val adapter = ArrayAdapter(
@@ -160,9 +217,8 @@ class StepOneEnrollmentFragment : Fragment() {
                 Log.d("SpinnerSelection", "No level selected")
             }
         }
-
-
     }
+
     private fun setupRadioButtons() {
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
