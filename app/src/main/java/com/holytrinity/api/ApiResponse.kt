@@ -28,7 +28,7 @@ data class ClassesResponse(
 data class AddSubjectRequest(
     val curriculum_id: Int,
     val subject_id: Int,
-    val recommended_year_level: Int,
+    val recommended_year_level: String,
     val recommended_sem: String
 )
 

@@ -50,31 +50,14 @@ class AdminViewAccountFragment : Fragment() {
         }
 
         getStudentsInBeneParent(fromRole, userId)
-        val roleId = UserPreferences.getRoleId(requireContext())
+
         binding.toolbarBackButton.setOnClickListener {
-            navigateBasedOnRole(roleId)
-        }
-    }
-    private fun navigateBasedOnRole(roleId: Int) {
-        when (roleId) {
-            1 -> findNavController().navigate(R.id.adminDrawerFragment)
-            2 -> findNavController().navigate(R.id.registrarDrawerHolderFragment)
-            4 -> findNavController().navigate(R.id.cashierDrawerFragment)
-            5 -> findNavController().navigate(R.id.instructorDrawerHolderFragment)
-            6 -> findNavController().navigate(R.id.parentDrawerHolderFragment)
-            7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
-            10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
-            else -> {
-                // Default navigation if roleId doesn't match any of the above
-                Toast.makeText(
-                    requireContext(),
-                    "Invalid role, navigating back to dashboard",
-                    Toast.LENGTH_SHORT
-                ).show()
-                findNavController().navigate(R.id.nav_dashboard) // You can replace this with a default fragment
+            findNavController().apply {
+                navigate(R.id.adminManageAccountFragment)
             }
         }
     }
+
     private fun getStudentsInBeneParent(fromRole: String, userId: Int?) {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         val call = studentService.getStudentsInBeneParent(userId, fromRole)

@@ -137,29 +137,15 @@ class BottomSheetAddCurriculumSubjectsFragment : BottomSheetDialogFragment() {
 
         // Kunin ang year level (1,2,3,4) mula spinner text
         val selectedYearString = binding.yearSpinner.selectedItem as String? ?: ""
-        // Convert to int
-        val yearLevel = when (selectedYearString) {
-            "1st Year" -> 1
-            "2nd Year" -> 2
-            "3rd Year" -> 3
-            "4th Year" -> 4
-            else -> 0
-        }
-
         // Kunin ang semester (1st Sem o 2nd Sem)
         val selectedSemString = binding.semesterSpinner.selectedItem as String? ?: ""
         // Halimbawa: store as "1st Sem" / "2nd Sem" (pwede mo rin gawing numeric kung gusto mo)
         val semValue = selectedSemString
 
-        if (yearLevel == 0 || semValue.isEmpty()) {
-            Toast.makeText(requireContext(), "Year and Semester are required", Toast.LENGTH_SHORT).show()
-            return
-        }
-
         val request = AddSubjectRequest(
             curriculum_id = curriculumId,
             subject_id = selectedSubject.subject_id,
-            recommended_year_level = yearLevel,
+            recommended_year_level = selectedYearString,
             recommended_sem = semValue
         )
 
