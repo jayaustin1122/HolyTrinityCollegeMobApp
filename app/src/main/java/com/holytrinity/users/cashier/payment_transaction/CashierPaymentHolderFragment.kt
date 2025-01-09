@@ -228,7 +228,7 @@ class CashierPaymentHolderFragment : Fragment() {
     private fun insertToPayments() {
         val studentId = viewModel.studentID
         val transactionMode = viewModel.transaction
-        val benefactorId = viewModel.benefactor_id
+        val benefactorId = viewModel.benefactor_id ?: 0 // Set to 0 if null
         val discountId = viewModel.discount_id
         val paymentService = RetrofitInstance.create(PaymentFeeApiService::class.java)
         val type = viewModel.paymentTitle
@@ -260,11 +260,11 @@ class CashierPaymentHolderFragment : Fragment() {
             student_id = studentId.toInt(),
             amount = numericValue,
             mode_of_transaction = transactionMode,
-            benefactor_id = benefactorId!!.toInt(),
+            benefactor_id = benefactorId, // Benefactor ID is set to 0 if null
             discount_id = discountId!!.toInt()
         )
-        if (type == "Assessment Fee") {
 
+        if (type == "Assessment Fee") {
             paymentService.insertToPayments(paymentRequest)
                 .enqueue(object : Callback<PaymentRequest> {
                     override fun onResponse(
@@ -274,23 +274,14 @@ class CashierPaymentHolderFragment : Fragment() {
                         if (response.isSuccessful) {
                             val responseBody = response.body()
                             if (responseBody != null) {
-
                                 if (isAdded) {
                                     printDetails()
-
                                 } else {
-                                    Log.w(
-                                        "Payment",
-                                        "Fragment no longer attached, skipping printDetails()"
-                                    )
+                                    Log.w("Payment", "Fragment no longer attached, skipping printDetails()")
                                 }
-                            } else {
                             }
                         } else {
-                            Log.e(
-                                "Payment Assessment",
-                                "Response Error: ${response.code()} - ${response.message()}"
-                            )
+                            Log.e("Payment Assessment", "Response Error: ${response.code()} - ${response.message()}")
                         }
                     }
 
@@ -299,13 +290,12 @@ class CashierPaymentHolderFragment : Fragment() {
                     }
                 })
         } else {
-
             paymentService.insertToPaymentss(
                 studentId.toInt(),
                 numericValue,
                 transactionMode,
-                benefactorId.toInt(),
-                discountId.toInt()
+                benefactorId, // Benefactor ID is set to 0 if null
+                discountId!!.toInt()
             ).enqueue(object : Callback<PaymentRequest> {
                 override fun onResponse(
                     call: Call<PaymentRequest>,
@@ -314,22 +304,14 @@ class CashierPaymentHolderFragment : Fragment() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
-
                             if (isAdded) {
                                 printDetails()
                             } else {
-                                Log.w(
-                                    "Payment",
-                                    "Fragment no longer attached, skipping printDetails()"
-                                )
+                                Log.w("Payment", "Fragment no longer attached, skipping printDetails()")
                             }
-                        } else {
                         }
                     } else {
-                        Log.e(
-                            "Payment Not Assessment",
-                            "Response Error: ${response.code()} - ${response.message()}"
-                        )
+                        Log.e("Payment Not Assessment", "Response Error: ${response.code()} - ${response.message()}")
                     }
                 }
 
@@ -338,8 +320,6 @@ class CashierPaymentHolderFragment : Fragment() {
                 }
             })
         }
-
-
     }
 
     private fun validateFragmentTwo() {

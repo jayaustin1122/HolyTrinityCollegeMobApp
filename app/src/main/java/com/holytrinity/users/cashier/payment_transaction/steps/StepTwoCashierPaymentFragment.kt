@@ -131,10 +131,12 @@ class StepTwoCashierPaymentFragment : Fragment() {
             override fun onResponse(call: Call<List<Discount>>, response: retrofit2.Response<List<Discount>>) {
                 if (response.isSuccessful) {
                     discountList = response.body() ?: emptyList()
+                    Log.d("Discounts", "Fetched discounts: $discountList")
                 } else {
                     Log.e("Error", "Failed to fetch discounts")
                 }
             }
+
 
             override fun onFailure(call: Call<List<Discount>>, t: Throwable) {
                 Log.e("Error", "Failed to fetch discounts: ${t.message}")

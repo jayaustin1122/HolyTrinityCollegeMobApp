@@ -61,7 +61,7 @@ class StepThreeCashierPaymentFragment : Fragment() {
                         Log.d("Benefactor Name", "Name: $benefactorName, ID: $benefactorID")
 
                         val dropdownItems = mutableListOf<Pair<String, String>>() // Pair of ID and Name
-                        dropdownItems.add("0" to "Select Benefactor") // Add default blank option with ID 0
+                        dropdownItems.add("12" to "Select Benefactor") // Add default blank option with ID 0
                         if (benefactorName != null && benefactorID != null) {
                             dropdownItems.add(benefactorID.toString() to benefactorName)
                         }
