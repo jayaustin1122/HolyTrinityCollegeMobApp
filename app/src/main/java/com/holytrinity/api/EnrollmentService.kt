@@ -2,7 +2,7 @@ package com.holytrinity.api
 
 import com.holytrinity.model.Course
 import com.holytrinity.model.CourseResponse
-import com.holytrinity.model.Enrollment
+
 import com.holytrinity.model.EnrollmentResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +19,8 @@ interface EnrollmentService {
     ): Call<EnrollmentResponse>
 
     @GET("crud-android/trinity/getAllCourses.php")
-    fun getAllCourses(): Call<CourseResponse>  // Return the entire response object
+    fun getAllCourses(): Call<CourseResponse>
+
 
 }
 

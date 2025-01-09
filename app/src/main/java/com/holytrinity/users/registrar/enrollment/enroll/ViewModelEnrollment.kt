@@ -14,8 +14,8 @@ class ViewModelEnrollment : ViewModel() {
     private val _dept_id = MutableLiveData<String>()
     val dept_id: LiveData<String> get() = _dept_id
 
-    private val _curr_id = MutableLiveData<String>()
-    val curr_id: LiveData<String> get() = _curr_id
+    private val _curr_id = MutableLiveData<Int>()
+    val curr_id: LiveData<Int> get() = _curr_id
 
     private val _course = MutableLiveData<String>()
     val course: LiveData<String> get() = _course
@@ -84,10 +84,9 @@ class ViewModelEnrollment : ViewModel() {
         _dept_id.value = value
     }
 
-    fun setCurrId(value: String) {
-        _curr_id.value = value
+    fun setCurrId(value: Int) {
+        _curr_id.value = value as Int?
     }
-
     fun setCourseId(value: String) {
         _course.value = value
     }

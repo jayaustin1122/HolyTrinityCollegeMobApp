@@ -43,7 +43,7 @@ class StepTwoEnrollmentFragment : Fragment() {
         val studentId = viewModel.studentID.value
         val name = viewModel.name.value
         val deptId = viewModel.dept_id.value // dept id
-        val currId = viewModel.curr_id.value!!.toInt() // curriculum id
+        val currId = viewModel.curr_id.value
         val course = viewModel.course.value //course id
         val status = viewModel.status.value
         val section = viewModel.section.value
@@ -55,6 +55,7 @@ class StepTwoEnrollmentFragment : Fragment() {
         val enrollment_period = savedPeriod!!.enrollment_period_id
 
         getAllSubjects(currId, level, enrollment_period.toString(), studentID)
+        Log.d("currid", "$currId $level ")
     }
 
 
