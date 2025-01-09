@@ -109,7 +109,7 @@ class BottomSheetAddCurriculumsFragment : BottomSheetDialogFragment() {
     }
 
     private fun addCurriculum(code: String, name: String, description: String) {
-        val curriculum = com.holytrinity.model.Curriculum(code, name, description)
+        val curriculum = com.holytrinity.model.Curriculum(null,code, name, description)
 
         apiService.addCurriculum(curriculum).enqueue(object : Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {

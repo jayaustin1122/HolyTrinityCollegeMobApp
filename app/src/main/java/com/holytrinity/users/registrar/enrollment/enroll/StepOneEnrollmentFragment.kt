@@ -8,17 +8,25 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.holytrinity.R
 import com.holytrinity.api.ApiResponse
+import com.holytrinity.api.Curriculum
+import com.holytrinity.api.CurriculumService
 import com.holytrinity.api.EnrollmentService
 import com.holytrinity.api.RetrofitInstance
 import com.holytrinity.databinding.FragmentStepOneEnrollmentBinding
 import com.holytrinity.model.Course
 import com.holytrinity.model.CourseResponse
 import com.holytrinity.model.Courses
+import com.holytrinity.model.CurriculumResponse
 import com.holytrinity.model.EnrollmentResponse
+import com.holytrinity.users.admin.curriculums.BottomSheetAddCurriculumsFragment
+import com.holytrinity.users.registrar.adapter.CurriculumAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,18 +58,8 @@ class StepOneEnrollmentFragment : Fragment() {
 
 
         getAllCourses()
-        val semesterYearList = listOf(
-            "1st Semester 2024",
-            "2nd Semester 2024",
-            "1st Semester 2025",
-            "2nd Semester 2025",
-            "1st Semester 2026",
-            "2nd Semester 2026",
-            "1st Semester 2027",
-            "2nd Semester 2027",
-            "1st Semester 2028",
-            "2nd Semester 2028"
-        )
+        getAllCurriculums()
+
 
         val sectionList = listOf("") + listOf("A", "B")
 
@@ -87,34 +85,79 @@ class StepOneEnrollmentFragment : Fragment() {
             Log.d("StepOneFragment", "Updated name: $name")
         }
 
-        setSpinnerSelection(binding.curriculumSpinner, semesterYearList, viewModel.curr_id.value)
+
         setSpinnerSelection(binding.sectionSpinner, sectionList, viewModel.section.value)
 
+        setupRadioButtons()
+    }
 
+    private fun getAllCurriculums() {
+        val service = RetrofitInstance.create(CurriculumService::class.java)
+        service.getAllCurriculums("getCurriculums").enqueue(object : Callback<CurriculumResponse> {
+            override fun onResponse(call: Call<CurriculumResponse>, response: Response<CurriculumResponse>) {
+                if (response.isSuccessful && response.body() != null) {
+                    val curriculumResponse = response.body()
+                    if (curriculumResponse?.status == "success") {
+                        val curriculums = curriculumResponse.curriculum ?: emptyList()
+                         updateCurriculumSpinner(curriculums)
+                    } else {
+                        Toast.makeText(context, "Failed to fetch curriculums", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Failed to fetch curriculums", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<CurriculumResponse>, t: Throwable) {
+                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Log.e("StepOneFragment", "Error: ${t.message}")
+            }
+        })
+    }
+
+
+    private fun updateCurriculumSpinner(curriculums: List<com.holytrinity.model.Curriculum>) {
+        if (curriculums.isNullOrEmpty()) {
+            Log.e("StepOneEnrollmentFragment", "No curriculums available")
+            return
+        }
+
+        val curriculumNames = curriculums.map { it.name }
+        val curriculumIds = curriculums.map { it.curriculum_id }
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            curriculumNames
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.curriculumSpinner.adapter = adapter
+
+        // Set the spinner selection listener
         binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedSemesterYear = semesterYearList[position]
-                val semesterId = when (selectedSemesterYear) {
-                    "1st Semester 2024" -> "1"
-                    "2nd Semester 2024" -> "2"
-                    "1st Semester 2025" -> "3"
-                    "2nd Semester 2025" -> "4"
-                    "1st Semester 2026" -> "5"
-                    "2nd Semester 2026" -> "6"
-                    "1st Semester 2027" -> "7"
-                    "2nd Semester 2027" -> "8"
-                    "1st Semester 2028" -> "9"
-                    "2nd Semester 2028" -> "10"
-                    else -> ""
+                val selectedCurriculumId = curriculumIds.getOrNull(position)
+
+                // Check if selectedCurriculumId is not null before updating the ViewModel
+                if (selectedCurriculumId != null) {
+                    viewModel.setCurrId(selectedCurriculumId)
+                } else {
+                    Log.e("StepOneEnrollmentFragment", "Selected curriculum ID is null")
                 }
-                viewModel.setCurrId(semesterId)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        setupRadioButtons()
+        // Preselect the curriculum if it's already set in the ViewModel
+        viewModel.curr_id.value?.let { currId ->
+            val selectedPosition = curriculumIds.indexOf(currId)
+            if (selectedPosition >= 0) {
+                binding.curriculumSpinner.setSelection(selectedPosition)
+            }
+        }
     }
+
 
     private fun getAllCourses() {
         val service = RetrofitInstance.create(EnrollmentService::class.java)
@@ -124,15 +167,20 @@ class StepOneEnrollmentFragment : Fragment() {
                     Log.e("API_ERROR", "Failed to connect", t)
                 }
 
-                override fun onResponse(call: Call<CourseResponse>, response: Response<CourseResponse>) {
+                override fun onResponse(
+                    call: Call<CourseResponse>,
+                    response: Response<CourseResponse>
+                ) {
                     if (response.isSuccessful) {
-                        val coursesList = response.body()?.courses ?: emptyList()  // Get the courses list
+                        val coursesList =
+                            response.body()?.courses ?: emptyList()  // Get the courses list
                         updateCourseSpinner(coursesList)
                     } else {
                         Log.e("API_ERROR", "Error fetching courses: ${response.message()}")
                     }
                 }
             })
+
     }
 
 

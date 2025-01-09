@@ -1,6 +1,7 @@
 package com.holytrinity.api
 
 import com.holytrinity.model.Curriculum
+import com.holytrinity.model.CurriculumResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -14,6 +15,8 @@ interface CurriculumService {
 
     @GET("crud-android/trinity/Curriculum.php")
     fun getCurriculums(@Query("action") action: String): Call<ApiResponse>
+    @GET("crud-android/trinity/Curriculum.php")
+    fun getAllCurriculums(@Query("action") action: String): Call<CurriculumResponse>
 
     @POST("crud-android/trinity/Curriculum.php?action=deleteCurriculum")
     fun deleteCurriculum(@Body requestBody: Map<String, Int>): Call<ApiResponse>
