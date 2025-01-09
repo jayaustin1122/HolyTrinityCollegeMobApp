@@ -203,7 +203,7 @@
                                     id: Long
                                 ) {
                                     selectedSubject = subjects[position]
-                                selectedSubject_id = subjects[position].subject_id!!
+                                    selectedSubject_id = subjects[position].subject_id!!
                                     selectedSubject_hrs = subjects[position].required_hrs!!
                                     Log.d("SelectedInstructor", "Selected Instructor ID: ${subjects[position].required_hrs}")
                                 }

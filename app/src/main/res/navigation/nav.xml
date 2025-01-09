@@ -169,4 +169,9 @@
         android:name="com.holytrinity.users.admin.manage_account.AdminManageAccountFragment"
         android:label="fragment_admin_manage_account"
         tools:layout="@layout/fragment_admin_manage_account" />
+    <fragment
+        android:id="@+id/adminSchedulingFragment"
+        android:name="com.holytrinity.users.admin.scheduling.AdminSchedulingFragment"
+        android:label="fragment_admin_scheduling"
+        tools:layout="@layout/fragment_admin_scheduling" />
 </navigation>

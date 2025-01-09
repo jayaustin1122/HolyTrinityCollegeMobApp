@@ -48,6 +48,12 @@ class AdminOfferingsFragment : Fragment() {
                 navigate(R.id.adminPreRequisitesFragment)
             }
         }
+
+        binding.schedulingCard.setOnClickListener {
+            findNavController().apply {
+                navigate(R.id.adminSchedulingFragment)
+            }
+        }
     }
 
 }
