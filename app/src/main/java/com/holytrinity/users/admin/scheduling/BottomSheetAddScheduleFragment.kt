@@ -175,10 +175,11 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                     if (response.isSuccessful) {
                         val suggestedSchedule = response.body()
                         suggestedSchedule?.suggested_schedules?.let { schedules ->
+                            val scheduleStrings = schedules.map { "${it.day} ${it.time}" }  // Convert to readable format
                             val adapter = ArrayAdapter(
                                 this@BottomSheetAddScheduleFragment.requireContext(),
                                 android.R.layout.simple_spinner_item,
-                                schedules
+                                scheduleStrings
                             )
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                             binding.schedSpinner.adapter = adapter
@@ -191,14 +192,9 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                                         position: Int,
                                         id: Long
                                     ) {
-                                        val selectedSchedule = schedules[position]
+                                        val selectedSchedule = scheduleStrings[position]
                                         sched = selectedSchedule
-                                        Log.d(
-                                            "SelectedInstructor",
-                                            "Selected Instructor sced: ${selectedSchedule}"
-                                        )
-
-
+                                        Log.d("SelectedInstructor", "Selected Instructor sched: $selectedSchedule")
                                     }
 
                                     override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -213,10 +209,12 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                 }
 
                 override fun onFailure(call: Call<SuggestedSchedule>, t: Throwable) {
-                    Log.e("API_ERROR", "Failed to fetch classes", t)
+                    Log.e("API_FAILURE", "Error fetching classes", t)
                 }
             })
     }
+
+
 
 
     private fun getAllSubjects() {

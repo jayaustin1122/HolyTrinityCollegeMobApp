@@ -25,6 +25,7 @@ import com.holytrinity.model.Fees
 import com.holytrinity.model.Student
 import com.holytrinity.model.StudentLedger
 import com.holytrinity.users.registrar.adapter.FeesAdapter
+import com.holytrinity.util.SharedPrefsUtil
 import com.holytrinity.util.UserPreferences
 import retrofit2.Call
 import retrofit2.Callback
@@ -163,53 +164,63 @@ class AssesmentFragment : Fragment() {
             Log.e("getEnrolledSubs", "Year level is empty or invalid")
             return
         }
+        val semester = SharedPrefsUtil.getSelectedPeriod(requireContext())
+        if (semester != null) {
+            Log.d(
+                "SavedPeriod", "Year: ${semester.enrollment_period_id}, Semester: ${semester.semester}, " +
+                        "Start Date: ${semester.start_date}, End Date: ${semester.end_date}"
+            )
+            val yearLevelString = getYearLevelString(yearLevel)
+            service.enrollFlow(
+                curr_id.toIntOrNull() ?: 0,
+                yearLevelString,
+                enrollment_period_id.toIntOrNull() ?: 0,
+                studentID.toIntOrNull() ?: 0,semester.semester
+            ).enqueue(object : Callback<EnrollmentResponse> {
+                override fun onResponse(
+                    call: Call<EnrollmentResponse>,
+                    response: Response<EnrollmentResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val enrollmentResponse = response.body()
+                        if (enrollmentResponse != null) {
+                            val subjects = enrollmentResponse.subjects ?: emptyList()
+                            val enrolledFeesList = subjects.map { subject ->
+                                val title = "${subject.name} (${subject.units} units)"
+                                // Example: 250 per unit
+                                val amount = subject.units * 250.0
+                                Fees(
+                                    fee_id = null,
+                                    title = title,
+                                    amount = amount,
+                                    description = title,
+                                    data = null
+                                )
+                            }
 
-        val yearLevelString = getYearLevelString(yearLevel)
-        service.enrollFlow(
-            curr_id.toIntOrNull() ?: 0,
-            yearLevelString,
-            enrollment_period_id.toIntOrNull() ?: 0,
-            studentID.toIntOrNull() ?: 0,""
-        ).enqueue(object : Callback<EnrollmentResponse> {
-            override fun onResponse(
-                call: Call<EnrollmentResponse>,
-                response: Response<EnrollmentResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val enrollmentResponse = response.body()
-                    if (enrollmentResponse != null) {
-                        val subjects = enrollmentResponse.subjects ?: emptyList()
-                        val enrolledFeesList = subjects.map { subject ->
-                            val title = "${subject.name} (${subject.units} units)"
-                            // Example: 250 per unit
-                            val amount = subject.units * 250.0
-                            Fees(
-                                fee_id = null,
-                                title = title,
-                                amount = amount,
-                                description = title,
-                                data = null
-                            )
+                            allFeesList.addAll(enrolledFeesList)
+                            enrolledSubsFetched = true
+                            checkAndUpdateAdapter()
+                        } else {
+                            Log.e("getEnrolledSubs", "EnrollmentResponse is null")
                         }
-
-                        allFeesList.addAll(enrolledFeesList)
-                        enrolledSubsFetched = true
-                        checkAndUpdateAdapter()
                     } else {
-                        Log.e("getEnrolledSubs", "EnrollmentResponse is null")
+                        Log.e(
+                            "API_ERROR",
+                            "Error fetching subjects: ${response.message()} | Code: ${response.code()}"
+                        )
                     }
-                } else {
-                    Log.e(
-                        "API_ERROR",
-                        "Error fetching subjects: ${response.message()} | Code: ${response.code()}"
-                    )
                 }
-            }
 
-            override fun onFailure(call: Call<EnrollmentResponse>, t: Throwable) {
-                Log.e("API_ERROR", "Failed to connect", t)
-            }
-        })
+                override fun onFailure(call: Call<EnrollmentResponse>, t: Throwable) {
+                    Log.e("API_ERROR", "Failed to connect", t)
+                }
+            })
+        } else {
+            Log.d("SavedPeriod", "No saved period found.")
+            return
+        }
+
     }
 
     /**
