@@ -15,7 +15,8 @@ interface EnrollmentService {
         @Query("curr_id") currId: Int,
         @Query("yearLevel") yearLevel: String,
         @Query("enrollment_period_id") enrollmentPeriodId: Int,
-        @Query("student_id") studentId: Int
+        @Query("student_id") studentId: Int,
+        @Query("semester") semester: String?,
     ): Call<EnrollmentResponse>
 
     @GET("crud-android/trinity/getAllCourses.php")

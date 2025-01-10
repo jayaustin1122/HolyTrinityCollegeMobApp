@@ -156,9 +156,6 @@ class AssesmentFragment : Fragment() {
             })
     }
 
-    /**
-     * 2) getEnrolledSubs(): Pull enrolled subjects, transform them to Fees, add to the container
-     */
     private fun getEnrolledSubs() {
         val service = RetrofitInstance.create(EnrollmentService::class.java)
 
@@ -172,7 +169,7 @@ class AssesmentFragment : Fragment() {
             curr_id.toIntOrNull() ?: 0,
             yearLevelString,
             enrollment_period_id.toIntOrNull() ?: 0,
-            studentID.toIntOrNull() ?: 0
+            studentID.toIntOrNull() ?: 0,""
         ).enqueue(object : Callback<EnrollmentResponse> {
             override fun onResponse(
                 call: Call<EnrollmentResponse>,
