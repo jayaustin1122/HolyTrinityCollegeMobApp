@@ -128,13 +128,12 @@ class RegistrarEnrollmentFragment : Fragment() {
             7 -> findNavController().navigate(R.id.studentDrawerHolderFragment)
             10 -> findNavController().navigate(R.id.benefactorDrawerHolderFragment)
             else -> {
-                // Default navigation if roleId doesn't match any of the above
                 Toast.makeText(
                     requireContext(),
                     "Invalid role, navigating back to dashboard",
                     Toast.LENGTH_SHORT
                 ).show()
-                findNavController().navigate(R.id.nav_dashboard) // You can replace this with a default fragment
+                findNavController().navigate(R.id.nav_dashboard)
             }
         }
     }

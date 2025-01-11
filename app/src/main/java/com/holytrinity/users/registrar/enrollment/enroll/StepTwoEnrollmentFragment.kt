@@ -61,6 +61,7 @@ class StepTwoEnrollmentFragment : Fragment() {
     ) {
         val semester = SharedPrefsUtil.getSelectedPeriod(requireContext())
         if (savedPeriod != null) {
+
             Log.d(
                 "SavedPeriod", "Year: ${semester!!.enrollment_period_id}, Semester: ${semester!!.semester}, " +
                         "Start Date: ${semester!!.start_date}, End Date: ${semester!!.end_date}"
@@ -69,7 +70,6 @@ class StepTwoEnrollmentFragment : Fragment() {
                 Log.e("API_ERROR", "Invalid parameters: currId=$currId, level=$level, savedPeriod=$savedPeriod, studentID=$studentID")
                 return
             }
-
             val service = RetrofitInstance.create(EnrollmentService::class.java)
             service.enrollFlow(currId, level, savedPeriod.toInt(), studentID,semester.semester)
                 .enqueue(object : Callback<EnrollmentResponse> {

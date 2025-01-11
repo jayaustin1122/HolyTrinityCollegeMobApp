@@ -55,12 +55,8 @@ class StepOneEnrollmentFragment : Fragment() {
             "College" to listOf("1st Year", "2nd Year", "3rd Year", "4th Year"),
             "Senior High" to listOf("Grade 11", "Grade 12")
         )
-
-
         getAllCourses()
         getAllCurriculums()
-
-
         val sectionList = listOf("") + listOf("A", "B")
 
         viewModel.dept_id.observe(viewLifecycleOwner) { deptId ->
@@ -70,8 +66,6 @@ class StepOneEnrollmentFragment : Fragment() {
                 else -> ""
             }
             binding.departmentEditText.setText(selectedDepartment)
-
-            // After setting the department, handle level selection accordingly
             handleDepartmentSelection(selectedDepartment, levelOptions)
         }
 
@@ -84,10 +78,7 @@ class StepOneEnrollmentFragment : Fragment() {
             binding.studentNameTextView.text = name
             Log.d("StepOneFragment", "Updated name: $name")
         }
-
-
         setSpinnerSelection(binding.sectionSpinner, sectionList, viewModel.section.value)
-
         setupRadioButtons()
     }
 
@@ -132,14 +123,10 @@ class StepOneEnrollmentFragment : Fragment() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.curriculumSpinner.adapter = adapter
-
-        // Set the spinner selection listener
         binding.curriculumSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val selectedCurriculumId = curriculumIds.getOrNull(position)
-
-                // Check if selectedCurriculumId is not null before updating the ViewModel
-                if (selectedCurriculumId != null) {
+                 if (selectedCurriculumId != null) {
                     viewModel.setCurrId(selectedCurriculumId)
                 } else {
                     Log.e("StepOneEnrollmentFragment", "Selected curriculum ID is null")
