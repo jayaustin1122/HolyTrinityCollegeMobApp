@@ -54,11 +54,14 @@ class SoaAdapter2(
         fun bind(soa: Soa, studentName: String, position: Int, isRegistrarView: Boolean) {
             binding.tvNo.text = (position + 1).toString()
 
+            // Set balance to 0 if the amount is 80
+            val balanceToShow = if (soa.amount == 80.0) 0.0 else soa.balance
+
             if (isRegistrarView) {
                 binding.tvAmount.visibility = View.VISIBLE
                 binding.tvPaid.visibility = View.GONE
                 binding.tvNo.visibility = View.GONE
-                binding.tvAmount.text = formatCurrency(soa.balance)
+                binding.tvAmount.text = formatCurrency(balanceToShow)
                 binding.tvIdNo.text = "Balance"
                 updateMargin(binding.tvIdNo, marginStartDp = 30, marginEndDp = 100)
             } else {
@@ -66,7 +69,7 @@ class SoaAdapter2(
                 binding.tvAmount.visibility = View.VISIBLE
                 binding.tvPaid.visibility = View.VISIBLE
                 binding.tvNo.visibility = View.VISIBLE
-                binding.tvAmount.text = formatCurrency(soa.balance)
+                binding.tvAmount.text = formatCurrency(balanceToShow)
                 binding.tvPaid.text = formatCurrency(soa.amount)
                 updateMargin(binding.tvIdNo, marginStartDp = 0, marginEndDp = 0)
             }
@@ -85,6 +88,7 @@ class SoaAdapter2(
             return format.format(amount)
         }
     }
+
 
 }
 
