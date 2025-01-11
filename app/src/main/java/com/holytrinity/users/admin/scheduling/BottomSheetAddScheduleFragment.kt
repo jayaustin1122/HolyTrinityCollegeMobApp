@@ -9,11 +9,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.navigation.fragment.findNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.canorecoapp.utils.DialogUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.holytrinity.R
 import com.holytrinity.api.ClassesService
 import com.holytrinity.api.InsertClassService
 import com.holytrinity.api.RetrofitInstance
@@ -71,6 +69,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                 ) {
                     sectionSect = parentView?.getItemAtPosition(position).toString()
                     Log.d("SelectedSection", "Selected Section: $sectionSect")
+                    getAllSubjects(sectionSect)
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -78,7 +77,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                 }
             }
 
-        getAllSubjects()
+
 
 
         binding.doneButton.setOnClickListener {
@@ -162,7 +161,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
             }
         })
     }
-    private fun getAllSubjects() {
+    private fun getAllSubjects(sectionSect: String) {
         val service = RetrofitInstance.create(SubjectService::class.java)
         service.getAllSubjects().enqueue(object : Callback<List<Subject>> {
             override fun onResponse(call: Call<List<Subject>>, response: Response<List<Subject>>) {
@@ -185,7 +184,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                                 selectedSubject_hrs = subjects[position].required_hrs!!
 
                                 // Fetch instructors based on the selected subject
-                                getAllInstructors()
+                                getAllInstructors(sectionSect)
                             }
 
                             override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -201,20 +200,35 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
         })
     }
 
-    private fun getAllInstructors() {
+    private fun getAllInstructors(sectionSect: String) {
         val service = RetrofitInstance.create(UserLoginService::class.java)
-        service.getAllInstructors().enqueue(object : Callback<InstructorsResponse> {
+        service.getAllInstructors(sectionSect).enqueue(object : Callback<InstructorsResponse> {
             override fun onResponse(
                 call: Call<InstructorsResponse>,
                 response: Response<InstructorsResponse>
             ) {
                 if (response.isSuccessful) {
                     val instructorsResponse = response.body()
-                    val instructors = instructorsResponse?.users ?: emptyList()
+                    val instructors = instructorsResponse?.instructors ?: emptyList()
+
+                    // Log the instructor names to see if the data is correct
                     val instructorNames = instructors.map { it.name }
+                    Log.d("Instructor Names", instructorNames.toString())
+
+                    // Check if instructorNames is empty
+                    if (instructorNames.isEmpty()) {
+                        Log.e("Instructor Data", "No instructor names found!")
+                        return
+                    }
 
                     // Set the spinner with instructor names
-                    setSpinnerSelection(binding.instructorSpinner, instructorNames)
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        instructorNames
+                    )
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    binding.instructorSpinner.adapter = adapter
 
                     // When an instructor is selected, refresh the schedule
                     binding.instructorSpinner.onItemSelectedListener =

@@ -15,6 +15,6 @@ interface UserLoginService {
         @Query("password") password: String
     ): Call<UserResponse>
 
-    @GET("crud-android/trinity/getUser.php")
-    fun getAllInstructors(): Call<InstructorsResponse>
+    @GET("crud-android/trinity/getAllInstructors.php")
+    fun getAllInstructors(   @Query("section") username: String): Call<InstructorsResponse>
 }
