@@ -178,38 +178,60 @@ class RegistrarEnrollmentFragment : Fragment() {
     }
 
     private fun getAllStudents(studentId: Int? = null, registrationVerified: Int? = 1) {
-        val studentService = RetrofitInstance.create(StudentService::class.java)
-        studentService.getStudents(studentId, registrationVerified).enqueue(object : Callback<List<Student>> {
-            override fun onResponse(
-                call: Call<List<Student>>,
-                response: retrofit2.Response<List<Student>>
-            ) {
-                if (response.isSuccessful) {
-                    students = response.body() ?: emptyList()
-                    students.forEach { student ->
-                        Log.d(
-                            "StudentData",
-                            "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}"
-                        )
+        val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
+        if (savedPeriod != null) {
+            Log.d(
+                "SavedPeriod", "Year: ${savedPeriod.enrollment_period_id}, Semester: ${savedPeriod.semester}, " +
+                        "Start Date: ${savedPeriod.start_date}, End Date: ${savedPeriod.end_date}"
+            )
 
+            // Normalize semester to the format "1st Sem" or "2nd Sem"
+            val normalizedSemester = normalizeSemester(savedPeriod.semester)
+
+            val studentService = RetrofitInstance.create(StudentService::class.java)
+            studentService.getStudents2(normalizedSemester).enqueue(object : Callback<List<Student>> {
+                override fun onResponse(
+                    call: Call<List<Student>>,
+                    response: retrofit2.Response<List<Student>>
+                ) {
+                    if (response.isSuccessful) {
+                        students = response.body() ?: emptyList()
+                        students.forEach { student ->
+                            Log.d(
+                                "StudentData",
+                                "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}"
+                            )
+                        }
+                        // Correctly associate student name with student_id
+                        studentNamesMap = students.associate { it.student_name!! to it.student_id.toString() }.toMutableMap()
+
+                        loadingDialog.dismiss()
+                        setupAutoCompleteTextView()
+                    } else {
+                        loadingDialog.dismiss()
+                        Log.e("Error", "Failed to fetch students: ${response.code()}")
                     }
-                    // Correctly associate student name with student_id
-                    studentNamesMap = students.associate { it.student_name!! to it.student_id.toString() }.toMutableMap()
-
-                    loadingDialog.dismiss()
-                    setupAutoCompleteTextView()
-                } else {
-                    loadingDialog.dismiss()
-                    Log.e("Error", "Failed to fetch students: ${response.code()}")
                 }
-            }
 
-            override fun onFailure(call: Call<List<Student>>, t: Throwable) {
-                Log.e("Error", "Failed to fetch students: ${t.message}")
-                loadingDialog.dismiss()
-            }
-        })
+                override fun onFailure(call: Call<List<Student>>, t: Throwable) {
+                    Log.e("Error", "Failed to fetch students: ${t.message}")
+                    loadingDialog.dismiss()
+                }
+            })
+        } else {
+            Log.d("SavedPeriod", "No saved period found.")
+        }
     }
+
+    // Normalize the semester to "1st Sem" or "2nd Sem"
+    private fun normalizeSemester(semester: String?): String {
+        return when {
+            semester != null && semester.contains("1st", ignoreCase = true) -> "1st Sem"
+            semester != null && semester.contains("2nd", ignoreCase = true) -> "2nd Sem"
+            else -> semester ?: ""  // Return the original semester if it's not 1st or 2nd
+        }
+    }
+
 
     private fun setupAutoCompleteTextView() {
         val studentNamesList = studentNamesMap.keys.toList()
