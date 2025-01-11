@@ -12,7 +12,7 @@ import java.util.*
 class SoaAdapter2(
     private var soaList: List<Soa>,
     private val studentNames: Map<String, String>,
-    private val isRegistrarView: Boolean // Flag to differentiate views
+    private val isRegistrarView: Boolean
 ) : RecyclerView.Adapter<SoaAdapter2.SoaViewHolder>() {
 
     private var filteredList: List<Soa> = soaList
@@ -55,31 +55,20 @@ class SoaAdapter2(
             binding.tvNo.text = (position + 1).toString()
 
             if (isRegistrarView) {
-                // Show only student name and balance
                 binding.tvAmount.visibility = View.VISIBLE
                 binding.tvPaid.visibility = View.GONE
-                binding.tvName.visibility = View.GONE
                 binding.tvNo.visibility = View.GONE
                 binding.tvAmount.text = formatCurrency(soa.balance)
                 binding.tvIdNo.text = "Balance"
-                binding.tvName.text = studentName
-
-                // Add 50dp margin to tvIdNo (start and end) and tvName (start only)
                 updateMargin(binding.tvIdNo, marginStartDp = 30, marginEndDp = 100)
-                updateMargin(binding.tvName, marginStartDp = 50, marginEndDp = 0)
             } else {
                 binding.tvIdNo.text = soa.student_id
-                binding.tvName.text = studentName
                 binding.tvAmount.visibility = View.VISIBLE
                 binding.tvPaid.visibility = View.VISIBLE
-                binding.tvName.visibility = View.VISIBLE
                 binding.tvNo.visibility = View.VISIBLE
                 binding.tvAmount.text = formatCurrency(soa.balance)
-                binding.tvPaid.text = formatCurrency(soa.total_paid)
-
-                // Reset margin for tvIdNo and tvName
+                binding.tvPaid.text = formatCurrency(soa.amount)
                 updateMargin(binding.tvIdNo, marginStartDp = 0, marginEndDp = 0)
-                updateMargin(binding.tvName, marginStartDp = 0, marginEndDp = 0)
             }
         }
 

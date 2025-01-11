@@ -13,5 +13,6 @@ data class Soa(
     val total_due: Double,
     val total_paid: Double,           // Payment made (Changed to Double for currency representation)
     val student_name: String   ,        // Payment made (Changed to Double for currency representation)
-    val balance: Double           // Payment made (Changed to Double for currency representation)
+    val balance: Double      ,     // Payment made (Changed to Double for currency representation)
+    val amount: Double           // Payment made (Changed to Double for currency representation)
 )

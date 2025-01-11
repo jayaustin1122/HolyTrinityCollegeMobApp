@@ -63,15 +63,12 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
 
         getAllStudents()
 
-        // Set click listener on the PDF/Print chip
         binding.pdfChip.setOnClickListener {
-            // Proceed only if a student is selected
             if (currentStudent == null) {
                 Toast.makeText(requireContext(), "Please select a student first.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Show SweetAlert for PDF or Print options
             SweetAlertDialog(requireContext(), SweetAlertDialog.NORMAL_TYPE)
                 .setTitleText("Options")
                 .setContentText("Download PDF or Print?")
@@ -89,9 +86,6 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
         }
     }
 
-    // ---------------------------------------------------------------------
-    // 1) Fetch all students for the autocomplete dropdown
-    // ---------------------------------------------------------------------
     private fun getAllStudents() {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents().enqueue(object : Callback<List<Student>> {
@@ -99,8 +93,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 loadingDialog.dismiss()
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
-                    // Build a map: studentName -> studentID
-                    studentNamesMap = students.associate {
+                   studentNamesMap = students.associate {
                         it.student_name.toString() to it.student_id.toString()
                     }.toMutableMap()
                     setupAutoCompleteTextView()
@@ -117,11 +110,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
             }
         })
     }
-
-    // ---------------------------------------------------------------------
-    // 2) Setup AutoCompleteTextView for student selection
-    // ---------------------------------------------------------------------
-    private fun setupAutoCompleteTextView() {
+ private fun setupAutoCompleteTextView() {
         val studentNamesList = studentNamesMap.keys.toList()
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, studentNamesList)
         binding.searchStudentTextView.setAdapter(adapter)
@@ -142,23 +131,19 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
                 binding.studentNumber.text = selectedStudent.student_id.toString()
                 binding.studentName.text = selectedStudent.student_name
 
-                // Fetch the SOA for the selected student and update the RecyclerView
-                fetchAllSoa(selectedStudent.student_id.toString())
+               fetchAllSoa(selectedStudent.student_id.toString())
             }
         }
     }
 
-    // ---------------------------------------------------------------------
-    // 3) Fetch all SOA records for the selected student
-    // ---------------------------------------------------------------------
-    private fun fetchAllSoa(studentId: String? = null) {
+     private fun fetchAllSoa(studentId: String? = null) {
         val service = RetrofitInstance.create(SoaService::class.java)
         service.getAllSoa(studentId).enqueue(object : Callback<List<Soa>> {
             override fun onResponse(call: Call<List<Soa>>, response: Response<List<Soa>>) {
                 if (response.isSuccessful) {
                     soaList = response.body() ?: emptyList()
                     if (soaList.isNotEmpty()) {
-                        // Update the adapter with the new data and refresh the RecyclerView
+                        // Update the RecyclerView with fetched SOA data
                         searchStudents()
                     } else {
                         Log.e("No Data", "No SOA records found for student ID: $studentId")
@@ -180,9 +165,7 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
         })
     }
 
-    // ---------------------------------------------------------------------
-    // 4) Search and map student names for the adapter
-    // ---------------------------------------------------------------------
+
     private fun searchStudents() {
         val studentService = RetrofitInstance.create(StudentService::class.java)
         studentService.getStudents().enqueue(object : Callback<List<Student>> {
@@ -215,18 +198,12 @@ class StatementsOfAccountsLedgerFragment : Fragment() {
         })
     }
 
-    // ---------------------------------------------------------------------
-    // 5) Setup RecyclerView with SOA data
-    // ---------------------------------------------------------------------
     private fun setupRecyclerView(soaList: List<Soa>) {
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         soaAdapter = SoaAdapter2(soaList, studentNames, false)
         binding.recyclerView.adapter = soaAdapter
     }
 
-    // ---------------------------------------------------------------------
-    // 6) Export Student SOA to PDF
-    // ---------------------------------------------------------------------
     private fun exportStudentSoaToPdf(student: Student) {
         try {
             val pdfDocument = PdfDocument()

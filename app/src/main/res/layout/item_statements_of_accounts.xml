@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1"
+        android:layout_marginStart="6dp"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="#000000" />
@@ -28,16 +29,6 @@
         android:textSize="16sp"
         android:textColor="#000000" />
 
-    <!-- Column for 'Name' -->
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Well D. Fargo"
-        android:textSize="16sp"
-        android:textColor="#000000" />
-    <!-- Column for 'Name' -->
     <TextView
         android:id="@+id/tvPaid"
         android:layout_width="wrap_content"
