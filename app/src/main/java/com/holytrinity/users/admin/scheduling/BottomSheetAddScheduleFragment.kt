@@ -70,7 +70,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                     id: Long
                 ) {
                     sectionSect = parentView?.getItemAtPosition(position).toString()
-                    Log.d("SelectedInstructor", "Selected Instructor section: $sectionSect")
+                    Log.d("SelectedSection", "Selected Section: $sectionSect")
                 }
 
                 override fun onNothingSelected(parentView: AdapterView<*>?) {
@@ -78,20 +78,19 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                 }
             }
 
-        // Fetch and set subjects
         getAllSubjects()
 
-        getAllInstructors()
+
         binding.doneButton.setOnClickListener {
             val savedPeriod = SharedPrefsUtil.getSelectedPeriod(requireContext())
-            val enrollmentperiod = savedPeriod!!.enrollment_period_id
+            val enrollmentPeriod = savedPeriod!!.enrollment_period_id
             loadingDialog = DialogUtils.showLoading(requireActivity())
             loadingDialog.show()
 
             uploadDB(
                 selectedSubject_id,
                 selectedInstructor_id,
-                enrollmentperiod,
+                enrollmentPeriod,
                 sched,
                 sectionSect,
                 30
@@ -163,60 +162,6 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
             }
         })
     }
-
-    private fun getAllClassesWithSched(selectedInstructor_id: Int, selectedSubject_hrs: Int) {
-        val service = RetrofitInstance.create(ClassesService::class.java)
-        service.getAllClassesWithSched(selectedInstructor_id, selectedSubject_hrs)
-            .enqueue(object : Callback<SuggestedSchedule> {
-                override fun onResponse(
-                    call: Call<SuggestedSchedule>,
-                    response: Response<SuggestedSchedule>
-                ) {
-                    if (response.isSuccessful) {
-                        val suggestedSchedule = response.body()
-                        suggestedSchedule?.suggested_schedules?.let { schedules ->
-                            val scheduleStrings = schedules.map { "${it.day} ${it.time}" }  // Convert to readable format
-                            val adapter = ArrayAdapter(
-                                this@BottomSheetAddScheduleFragment.requireContext(),
-                                android.R.layout.simple_spinner_item,
-                                scheduleStrings
-                            )
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                            binding.schedSpinner.adapter = adapter
-
-                            binding.schedSpinner.onItemSelectedListener =
-                                object : AdapterView.OnItemSelectedListener {
-                                    override fun onItemSelected(
-                                        parentView: AdapterView<*>?,
-                                        view: View?,
-                                        position: Int,
-                                        id: Long
-                                    ) {
-                                        val selectedSchedule = scheduleStrings[position]
-                                        sched = selectedSchedule
-                                        Log.d("SelectedInstructor", "Selected Instructor sched: $selectedSchedule")
-                                    }
-
-                                    override fun onNothingSelected(parentView: AdapterView<*>?) {}
-                                }
-                        } ?: run {
-                            Log.e("API_ERROR", "No suggested schedules available")
-                        }
-
-                    } else {
-                        Log.e("API_ERROR", "Error fetching classes: ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<SuggestedSchedule>, t: Throwable) {
-                    Log.e("API_FAILURE", "Error fetching classes", t)
-                }
-            })
-    }
-
-
-
-
     private fun getAllSubjects() {
         val service = RetrofitInstance.create(SubjectService::class.java)
         service.getAllSubjects().enqueue(object : Callback<List<Subject>> {
@@ -226,6 +171,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                     val subjectNames = subjects.map { it.name }
                     setSpinnerSelection(binding.subjectSpinner, subjectNames)
 
+                    // When a subject is selected, fetch the instructors
                     binding.subjectSpinner.onItemSelectedListener =
                         object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
@@ -237,10 +183,9 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                                 selectedSubject = subjects[position]
                                 selectedSubject_id = subjects[position].subject_id!!
                                 selectedSubject_hrs = subjects[position].required_hrs!!
-                                Log.d(
-                                    "SelectedInstructor",
-                                    "Selected Instructor ID: ${subjects[position].required_hrs}"
-                                )
+
+                                // Fetch instructors based on the selected subject
+                                getAllInstructors()
                             }
 
                             override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -271,6 +216,7 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                     // Set the spinner with instructor names
                     setSpinnerSelection(binding.instructorSpinner, instructorNames)
 
+                    // When an instructor is selected, refresh the schedule
                     binding.instructorSpinner.onItemSelectedListener =
                         object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
@@ -279,24 +225,11 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
                                 position: Int,
                                 id: Long
                             ) {
-
-
                                 selectedInstructor = instructors[position]
                                 selectedInstructor_id = instructors[position].user_id.toInt()
-                                getAllClassesWithSched(selectedInstructor_id, selectedSubject_hrs)
-                                Log.d(
-                                    "SelectedInstructor",
-                                    "Selected Instructor ID: $selectedInstructor_id"
-                                )
-                                Log.d(
-                                    "SelectedSubjectHrs",
-                                    "Selected Subject Hours: $selectedSubject_hrs"
-                                )
-                                Log.d(
-                                    "SelectedSubjectHrs",
-                                    "Selected Subject Hours: ${instructors[position].user_id.toInt()}"
-                                )
 
+                                // Fetch the available schedule based on the selected subject and instructor
+                                getAllClassesWithSched(selectedInstructor_id, selectedSubject_hrs)
                             }
 
                             override fun onNothingSelected(parentView: AdapterView<*>?) {}
@@ -312,7 +245,47 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
         })
     }
 
+    private fun getAllClassesWithSched(selectedInstructor_id: Int, selectedSubject_hrs: Int) {
+        val service = RetrofitInstance.create(ClassesService::class.java)
+        service.getAllClassesWithSched(selectedInstructor_id, selectedSubject_hrs)
+            .enqueue(object : Callback<SuggestedSchedule> {
+                override fun onResponse(
+                    call: Call<SuggestedSchedule>,
+                    response: Response<SuggestedSchedule>
+                ) {
+                    if (response.isSuccessful) {
+                        val suggestedSchedule = response.body()
+                        suggestedSchedule?.suggested_schedules?.let { schedules ->
+                            val scheduleStrings = schedules.map { "${it.day} ${it.time}" }
+                            setSpinnerSelection(binding.schedSpinner, scheduleStrings)
 
+                            binding.schedSpinner.onItemSelectedListener =
+                                object : AdapterView.OnItemSelectedListener {
+                                    override fun onItemSelected(
+                                        parentView: AdapterView<*>?,
+                                        view: View?,
+                                        position: Int,
+                                        id: Long
+                                    ) {
+                                        sched = scheduleStrings[position]
+                                        Log.d("SelectedSchedule", "Selected Schedule: $sched")
+                                    }
+
+                                    override fun onNothingSelected(parentView: AdapterView<*>?) {}
+                                }
+                        } ?: run {
+                            Log.e("API_ERROR", "No suggested schedules available")
+                        }
+                    } else {
+                        Log.e("API_ERROR", "Error fetching classes: ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<SuggestedSchedule>, t: Throwable) {
+                    Log.e("API_FAILURE", "Error fetching classes", t)
+                }
+            })
+    }
     private fun setSpinnerSelection(spinner: Spinner, options: List<String>) {
         val adapter = ArrayAdapter(spinner.context, android.R.layout.simple_spinner_item, options)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
