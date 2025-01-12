@@ -53,7 +53,7 @@ data class Student(
     val last_name: String? = null,
     val first_name: String? = null,
     val line1: String? = null,
-    val balance: String? = null,
+    val balance: Int? = null,
     val line2: String? = null,
     val middle_name: String? = null,
     val municipality: String? = null,

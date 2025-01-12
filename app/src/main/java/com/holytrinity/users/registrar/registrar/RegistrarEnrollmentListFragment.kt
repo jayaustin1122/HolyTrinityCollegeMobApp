@@ -460,7 +460,9 @@ class RegistrarEnrollmentListFragment : Fragment(){
             ) {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
-                    filteredStudents = students.filter { it.official_status == "Official" }
+                    filteredStudents = students.filter {
+                        it.official_status == "Official" && (it.balance == null || it.balance == 0)
+                    }
                     studentsAdapter.updateData(filteredStudents)
                     binding.countTitleTextView.text = "Results: ${filteredStudents.size}"
                 } else {
@@ -473,6 +475,7 @@ class RegistrarEnrollmentListFragment : Fragment(){
             }
         })
     }
+
 
     // ------------------------------------------------------------------------
     // 5) filterStudents()
