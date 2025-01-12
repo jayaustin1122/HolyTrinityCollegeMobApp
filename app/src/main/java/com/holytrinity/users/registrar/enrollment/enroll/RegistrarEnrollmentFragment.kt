@@ -185,7 +185,6 @@ class RegistrarEnrollmentFragment : Fragment() {
                         "Start Date: ${savedPeriod.start_date}, End Date: ${savedPeriod.end_date}"
             )
 
-            // Normalize semester to the format "1st Sem" or "2nd Sem"
             val normalizedSemester = normalizeSemester(savedPeriod.semester)
 
             val studentService = RetrofitInstance.create(StudentService::class.java)
@@ -195,7 +194,6 @@ class RegistrarEnrollmentFragment : Fragment() {
                     response: retrofit2.Response<List<Student>>
                 ) {
                     if (response.isSuccessful) {
-                        // Filter out students with a non-zero or null balance
                         students = response.body()?.filter { it.balance != null && it.balance > 0 } ?: emptyList()
 
                         students.forEach { student ->
@@ -204,8 +202,6 @@ class RegistrarEnrollmentFragment : Fragment() {
                                 "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}"
                             )
                         }
-
-                        // Correctly associate student name with student_id
                         studentNamesMap = students.associate { it.student_name!! to it.student_id.toString() }.toMutableMap()
 
                         loadingDialog.dismiss()
@@ -226,28 +222,24 @@ class RegistrarEnrollmentFragment : Fragment() {
         }
     }
 
-
-    // Normalize the semester to "1st Sem" or "2nd Sem"
     private fun normalizeSemester(semester: String?): String {
         return when {
             semester != null && semester.contains("1st", ignoreCase = true) -> "1st Sem"
             semester != null && semester.contains("2nd", ignoreCase = true) -> "2nd Sem"
-            else -> semester ?: ""  // Return the original semester if it's not 1st or 2nd
+            else -> semester ?: ""
         }
     }
 
 
     private fun setupAutoCompleteTextView() {
-        // Filter out students with a balance of 0 or null
+
         val filteredStudentNamesMap = studentNamesMap.filter { studentName ->
             val student = students.find { it.student_name == studentName.key }
             student?.balance != null && student.balance > 0
         }
 
-        // Get the list of student names from the filtered map
         val studentNamesList = filteredStudentNamesMap.keys.toList()
 
-        // Set up the adapter for AutoCompleteTextView
         val adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_dropdown_item_1line,
