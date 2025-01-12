@@ -194,14 +194,17 @@ class RegistrarEnrollmentFragment : Fragment() {
                     response: retrofit2.Response<List<Student>>
                 ) {
                     if (response.isSuccessful) {
-                        students = response.body()?.filter { it.balance != null && it.balance > 0 } ?: emptyList()
+                        // Filter to include only students with balance == 0 or balance == null
+                        students = response.body()?.filter { it.balance == null || it.balance == 0 } ?: emptyList()
 
                         students.forEach { student ->
                             Log.d(
                                 "StudentData",
-                                "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}"
+                                "ID: ${student.student_id}, Name: ${student.student_name}, Dept: ${student.dept_id}, Balance: ${student.balance}"
                             )
                         }
+
+                        // Map student names to their IDs
                         studentNamesMap = students.associate { it.student_name!! to it.student_id.toString() }.toMutableMap()
 
                         loadingDialog.dismiss()
@@ -222,6 +225,8 @@ class RegistrarEnrollmentFragment : Fragment() {
         }
     }
 
+
+
     private fun normalizeSemester(semester: String?): String {
         return when {
             semester != null && semester.contains("1st", ignoreCase = true) -> "1st Sem"
@@ -232,13 +237,8 @@ class RegistrarEnrollmentFragment : Fragment() {
 
 
     private fun setupAutoCompleteTextView() {
-
-        val filteredStudentNamesMap = studentNamesMap.filter { studentName ->
-            val student = students.find { it.student_name == studentName.key }
-            student?.balance != null && student.balance > 0
-        }
-
-        val studentNamesList = filteredStudentNamesMap.keys.toList()
+        // Use the already filtered studentNamesMap from getAllStudents
+        val studentNamesList = studentNamesMap.keys.toList()
 
         val adapter = ArrayAdapter(
             requireContext(),
@@ -249,9 +249,7 @@ class RegistrarEnrollmentFragment : Fragment() {
 
         binding.useridTextView.setOnItemClickListener { parent, _, position, _ ->
             val selectedName = parent.getItemAtPosition(position) as String
-            val selectedStudentID = filteredStudentNamesMap[selectedName]
-
-            // Find the student using the selected ID
+            val selectedStudentID = studentNamesMap[selectedName]
             val selectedStudent = students.find { it.student_id.toString() == selectedStudentID }
 
             if (selectedStudent != null) {
@@ -262,6 +260,7 @@ class RegistrarEnrollmentFragment : Fragment() {
                 Log.d("ViewModelAssignment", "studentID: ${selectedStudent.student_id}")
                 Log.d("ViewModelAssignment", "name: ${selectedStudent.student_name}")
                 Log.d("ViewModelAssignment", "dept_id: ${selectedStudent.dept_id}")
+                Log.d("ViewModelAssignment", "balance: ${selectedStudent.balance}")
 
                 binding.viewPager.visibility = View.VISIBLE
             } else {
@@ -269,6 +268,4 @@ class RegistrarEnrollmentFragment : Fragment() {
             }
         }
     }
-
-
 }
