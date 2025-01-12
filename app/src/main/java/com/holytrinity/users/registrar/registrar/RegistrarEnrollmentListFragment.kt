@@ -22,13 +22,14 @@ import com.holytrinity.api.StudentService
 import com.holytrinity.databinding.FragmentRegistratEnrollmentListBinding
 import com.holytrinity.model.Student
 import com.holytrinity.users.registrar.adapter.EnrolledAdapter
+import com.holytrinity.users.registrar.admisson.BottomSheetFilterAdmissionFragment
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.*
 
-class RegistrarEnrollmentListFragment : Fragment() {
+class RegistrarEnrollmentListFragment : Fragment(){
 
     private lateinit var binding: FragmentRegistratEnrollmentListBinding
     private var filteredStudents: List<Student> = emptyList()
@@ -48,7 +49,29 @@ class RegistrarEnrollmentListFragment : Fragment() {
         }
         return binding.root
     }
+    private fun applyFilter(year: String?) {
+        filterStudentsByLevel(year)
+    }
 
+    private fun filterStudentsByLevel(year: String?) {
+        // Map year levels to corresponding values
+        val level = when (year) {
+            "1st Year" -> "1"
+            "2nd Year" -> "2"
+            "3rd Year" -> "3"
+            "4th Year" -> "4"
+            else -> null
+        }
+
+        // Filter students by level (year) and only include "Official" students
+        val filteredList = students.filter {
+            (level == null || it.level == level) && it.official_status == "Official"
+        }
+
+        // Update RecyclerView with filtered data
+        studentsAdapter.updateData(filteredList)
+        binding.countTitleTextView.text = "Results: ${filteredList.size}"
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -61,7 +84,14 @@ class RegistrarEnrollmentListFragment : Fragment() {
             val query = it.toString().trim()
             filterStudents(query)
         }
-
+        binding.btnFilter.setOnClickListener {
+            val bottomSheet = BottomSheetFilterFragment().apply {
+                setFilterListener { year ->
+                    applyFilter(year)
+                }
+            }
+            bottomSheet.show(childFragmentManager, "BottomSheetFilterFragment")
+        }
         // Fetch data
         getAllStudents()
 
