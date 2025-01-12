@@ -58,7 +58,7 @@ class SummaryOfAccountsLedgerFragment : Fragment() {
 
     private fun fetchAllStudents() {
         val studentService = RetrofitInstance.create(SoaService::class.java)
-        studentService.getAllSoa().enqueue(object : Callback<List<Soa>> {
+        studentService.getAllSoa2().enqueue(object : Callback<List<Soa>> {
             override fun onResponse(call: Call<List<Soa>>, response: Response<List<Soa>>) {
                 if (response.isSuccessful) {
                     val students = response.body() ?: emptyList()
