@@ -460,9 +460,7 @@ class RegistrarEnrollmentListFragment : Fragment(){
             ) {
                 if (response.isSuccessful) {
                     students = response.body() ?: emptyList()
-                    filteredStudents = students.filter {
-                        it.official_status == "Official" && (it.balance == null || it.balance == 0)
-                    }
+                    filteredStudents = students.filter { it.official_status == "Official" }
                     studentsAdapter.updateData(filteredStudents)
                     binding.countTitleTextView.text = "Results: ${filteredStudents.size}"
                 } else {
@@ -476,22 +474,19 @@ class RegistrarEnrollmentListFragment : Fragment(){
         })
     }
 
-
     // ------------------------------------------------------------------------
     // 5) filterStudents()
     // ------------------------------------------------------------------------
     private fun filterStudents(query: String) {
         filteredStudents = if (query.isEmpty()) {
-            students.filter { it.official_status == "Official" && (it.balance == null || it.balance == 0) }
+            students.filter { it.official_status == "Official" }
         } else {
             students.filter {
                 it.official_status == "Official" &&
-                        (it.balance == null || it.balance == 0) &&
                         it.student_name?.contains(query, ignoreCase = true) == true
             }
         }
         studentsAdapter.updateData(filteredStudents)
         binding.countTitleTextView.text = "Count: ${filteredStudents.size}"
     }
-
 }
