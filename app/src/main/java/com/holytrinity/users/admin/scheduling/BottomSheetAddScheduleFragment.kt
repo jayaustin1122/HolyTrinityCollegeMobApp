@@ -136,31 +136,46 @@ class BottomSheetAddScheduleFragment : BottomSheetDialogFragment() {
             ) {
                 if (response.isSuccessful && response.body() != null) {
                     val resp = response.body()!!
+                    loadingDialog.dismiss()
                     if (resp.status == "success") {
                         Log.d("UploadDB", "Class inserted successfully: ${resp.message}")
-                        loadingDialog.dismiss()
                         Toast.makeText(
                             requireContext(),
-                            "Class Schedule inserted successfully",
+                            resp.message ?: "Class Schedule inserted successfully",
                             Toast.LENGTH_SHORT
                         ).show()
                         dismiss()
                     } else {
-                        loadingDialog.dismiss()
-                        Log.e("UploadDB", "Error inserting class: ${resp.error}")
+                        Log.e("UploadDB", "Error: ${resp.message}")
+                        Toast.makeText(
+                            requireContext(),
+                            resp.message ?: "Class schedule conflict or error",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 } else {
                     loadingDialog.dismiss()
                     Log.e("UploadDB", "Error: ${response.errorBody()?.string()}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to insert class. Please try again.",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<InsertClassResponse>, t: Throwable) {
                 loadingDialog.dismiss()
                 Log.e("UploadDB", "Failed to insert class", t)
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to connect to the server. Please try again.",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         })
     }
+
     private fun getAllSubjects(sectionSect: String) {
         val service = RetrofitInstance.create(SubjectService::class.java)
         service.getAllSubjects().enqueue(object : Callback<List<Subject>> {

@@ -20,6 +20,7 @@ class ClassesAdapter(
             binding.sectionTextView.text = classItem.section
             binding.unitTextView.text = classItem.units.toString()
             binding.scheduleTextView.text = classItem.schedule
+            binding.tvInstructor.text = "Instructor:   ${classItem.instructor_name}"
 
             // Set click listener on the entire item view
             binding.root.setOnClickListener {

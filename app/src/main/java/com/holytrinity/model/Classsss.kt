@@ -10,6 +10,7 @@ data class ClassResponses(
     val class_id: Int,
     val subject_id: Int,
     val instructor_user_id: Int,
+    val instructor_name: String,
     val enrollment_period_id: Int,
     val schedule: String,
     val section: String,
