@@ -146,7 +146,7 @@ class StepTwoCashierPaymentFragment : Fragment() {
 
     private fun fetchAllSoa(studentId: String? = null) {
         val service = RetrofitInstance.create(SoaService::class.java)
-        service.getAllSoa(studentId).enqueue(object : Callback<List<Soa>> {
+        service.getAllSoa2(studentId).enqueue(object : Callback<List<Soa>> {
             override fun onResponse(call: Call<List<Soa>>, response: retrofit2.Response<List<Soa>>) {
                 if (response.isSuccessful) {
                     soaList = response.body() ?: emptyList()
