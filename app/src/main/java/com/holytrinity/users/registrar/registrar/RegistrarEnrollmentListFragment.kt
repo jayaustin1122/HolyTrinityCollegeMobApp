@@ -482,14 +482,16 @@ class RegistrarEnrollmentListFragment : Fragment(){
     // ------------------------------------------------------------------------
     private fun filterStudents(query: String) {
         filteredStudents = if (query.isEmpty()) {
-            students.filter { it.official_status == "Official" }
+            students.filter { it.official_status == "Official" && (it.balance == null || it.balance == 0) }
         } else {
             students.filter {
                 it.official_status == "Official" &&
+                        (it.balance == null || it.balance == 0) &&
                         it.student_name?.contains(query, ignoreCase = true) == true
             }
         }
         studentsAdapter.updateData(filteredStudents)
         binding.countTitleTextView.text = "Count: ${filteredStudents.size}"
     }
+
 }
